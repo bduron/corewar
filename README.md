@@ -1,2 +1,2 @@
-# corewar
-42 corewar project
+# Corewar
+Corewar 42
