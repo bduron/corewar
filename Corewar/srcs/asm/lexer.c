@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/14 19:20:06 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/16 16:05:29 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,31 @@ static char				*ft_stradd(char **str, char c)
 	*str = ft_strjoin(*str, dup);
 	ft_strdel(&tmp);
 	return (*str);
+}
+
+static int				ft_iskeyword(char *word)
+{
+	int					i;
+
+	i = 0;
+	while (op_tab[i].name)
+	{
+		if (!(ft_strcmp(op_tab[i].name, word)))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int						ft_strisdigit(char *str)
+{
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
 }
 
 t_token					lexer(int fd)
@@ -65,13 +90,51 @@ t_token					lexer(int fd)
 			return (token);
 		}
 	}
-	chr = scanner(fd);
+	if (ft_strchr(SYMBOL_CHARS, chr.cargo))
+	{
+		token = (t_token){ft_stradd(&(token.cargo), chr.cargo),
+					chr.line_index, chr.col_index, (t_types){Symbol}};
+		chr = scanner(fd);
+		return (token);
+	}
+	if (ft_strchr(LABEL_CHARS, chr.cargo))
+	{
+		token = (t_token){ft_stradd(&(token.cargo), chr.cargo),
+					chr.line_index, chr.col_index, (t_types){Label}};
+		chr = scanner(fd);
+		while (ft_strchr(LABEL_CHARS, chr.cargo))
+		{
+			token.cargo = ft_stradd(&(token.cargo), chr.cargo);
+			chr = scanner(fd);
+		}
+		if (ft_iskeyword(token.cargo))
+			token.type = (t_types){Keyword};
+		else if (ft_strisdigit(token.cargo))
+			token.type = (t_types){Number};
+		return (token);
+	}
+	if (chr.cargo == '"')
+	{
+		token = (t_token){ft_stradd(&(token.cargo), chr.cargo),
+					chr.line_index, chr.col_index, (t_types){String}};
+		chr = scanner(fd);
+		while (chr.cargo != '"')
+		{
+			if (chr.cargo == 0)
+				return (token);
+			token.cargo = ft_stradd(&(token.cargo), chr.cargo);
+			chr = scanner(fd);
+		}
+		token.cargo = ft_stradd(&(token.cargo), chr.cargo);
+		chr = scanner(fd);
+		return (token);
+	}
 	return (token);
 }
 
 int					main(int argc, char **argv)
 {
-	char			*str_type[11] = {"None", "Whitespace", "Label", "Keyword", "Comment", "Separator", "Register", "Direct", "Indirect", "Name", "Description"};
+	char			*str_type[11] = {"None", "Whitespace", "Label", "Keyword", "Comment", "Symbol", "String", "Number"};
 	t_token			token;
 	int				fd;
 

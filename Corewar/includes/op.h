@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/14 18:09:33 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/16 14:49:34 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define SEPARATOR_CHAR			','
 
 # define LABEL_CHARS			"abcdefghijklmnopqrstuvwxyz_0123456789"
-# define WHITESPACE_CHARS		"\t\n\v\f\r "
 
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"

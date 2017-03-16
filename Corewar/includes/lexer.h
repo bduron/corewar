@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/14 18:37:28 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/16 14:54:06 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "op.h"
 # include "scanner.h"
 
+# define WHITESPACE_CHARS		"\t\n\v\f\r "
+# define SYMBOL_CHARS			"#:%,.-+"
+
 typedef enum		e_types
 {
 	None,
@@ -27,12 +30,9 @@ typedef enum		e_types
 	Label,
 	Keyword,
 	Comment,
-	Separator,
-	Register,
-	Direct,
-	Indirect,
-	Name,
-	Description
+	Symbol,
+	String,
+	Number
 }					t_types;
 
 typedef struct		s_token
@@ -43,6 +43,6 @@ typedef struct		s_token
 	t_types			type;
 }					t_token;
 
-t_token				lexel(int fd);
+t_token				lexer(int fd);
 
 #endif

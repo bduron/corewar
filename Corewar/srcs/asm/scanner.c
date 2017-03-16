@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 15:52:23 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/14 16:58:09 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/16 16:02:57 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_character		scanner(int fd)
 		col_index = -1;
 	}
 	col_index++;
-	if (read(fd, &c, 1))
+	if (read(fd, &c, 1) > 0)
 		character = (t_character){c, source_index, line_index, col_index};
 	else
-		character = (t_character){0, source_index, line_index, col_index};
+		character = (t_character){-1, source_index, line_index, col_index};
 	return (character);
 }
