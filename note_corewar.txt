@@ -91,13 +91,13 @@ BIG ENDIANNESS:
 
 Doubts: 
 =======
-- .name .comment chargé dans l'arene ? 
+- .name .comment chargé dans l'arene ? 														## No
 - carry modifier en cas d'echec d'op - qu'est qu'un echec ? 
-- num player commence a 0 ou 1 ? 
+- num player commence a 0 ou 1 ? 															## 1
 - que signifie kill le process (p6) ? 
 - NBR_LIVE = MAX LIVES emis par un seul champion ou le total des LIVES emis par tous ? 
 - voir le format exact du dump sur la VM 42
-- CHAMP_MAX_SIZE inclut-il .name .comment ? (probablement pas)
+- CHAMP_MAX_SIZE inclut-il .name .comment ? (probablement pas)								## No
 
 
 Structure:
