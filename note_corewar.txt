@@ -115,6 +115,7 @@ To try:
 VM Setup 
 	- getopt - parsing des options
 	- get players
+		- input error handling
 	- generate arena
 	- read & init process
 	- load process 

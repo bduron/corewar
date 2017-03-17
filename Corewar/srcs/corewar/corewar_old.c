@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/17 17:55:08 by bduron           ###   ########.fr       */
+/*   Created: 2017/02/09 13:15:08 by kcosta            #+#    #+#             */
+/*   Updated: 2017/02/11 13:13:49 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "corewar.h"
-#include "vm.h"
 #include "libft.h"
-
-
-
-
-
-
-
-
-
-
-
-
 
 int				regs[ REG_NUMBER ];
 unsigned int	pc = 0;
