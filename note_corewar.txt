@@ -100,17 +100,44 @@ Doubts:
 - CHAMP_MAX_SIZE inclut-il .name .comment ? (probablement pas)								## No
 
 
-Structure:
-==========
-
-
-
 
 To try:
 =======
 [ ] checker les options de l'ASM, Corewar
 [ ] nm les fonctions de corewar
 [ ] checker les memory dump de corewar
+
+
+********************************  
+*          Structure           *      
+********************************      
+
+VM Setup 
+	- getopt - parsing des options
+	- get players
+	- generate arena
+	- read & init process
+	- load process 
+
+Main loop	
+	- cycle - while (process alive)
+	- update VM parameters - every x cycles
+	- update process - every cycle
+		- launch each process op - when ready (not casting)
+			- update arena/VM
+		- kill and fork process - when necessary
+
+Select Winner 
+	- print last Live Player/champion  
+
+Clean VM 
+	- free process
+	- free vm 
+	- free players 	
+		  
+	
+
+
 
 
 ********************************  
