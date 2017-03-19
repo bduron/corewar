@@ -140,17 +140,21 @@ Clean VM
 
 
 
-
 ********************************  
 *             To do            *      
 ********************************      
 
-[ ] Memory dump option
-[ ] Clean getops to parse options
-[ ] Opcodes functions
-[ ] VM structure & cycle management
-[ ]  
-
+Player input
+	[x] ERROR - Invalid name extension .cor
+	[x] ERROR - Too big program
+	[x] ERROR - Wrong chmod permission denied 
+	[x] ERROR - Can't open the file - read return 
+	[x] ERROR - Wrong exec_magic - file type 
+	[x] ERROR - Too many players - MAX_PLAYERS  
+	[ ] Automatic player numbering
+	[ ] Getopt support 
+		
+	
 
 
 

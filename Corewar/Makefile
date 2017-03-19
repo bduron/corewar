@@ -1,104 +1,69 @@
-#* ************************************************************************** *#
-#*                                                                            *#
-#*                                                        :::      ::::::::   *#
-#*   Makefile                                           :+:      :+:    :+:   *#
-#*                                                    +:+ +:+         +:+     *#
-#*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        *#
-#*                                                +#+#+#+#+#+   +#+           *#
-#*   Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#             *#
-#*   Updated: 2017/02/09 15:22:28 by kcosta           ###   ########.fr       *#
-#*                                                                            *#
-#* ************************************************************************** *#
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bduron <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
+#    Updated: 2017/03/09 17:23:17 by bduron           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# =========== Colors =========== #
-CLEAR			:= "\033[2K"
-UP				:= "\033[A"
-EOC				:= "\033[0;0m"
-BLACK			:= "\033[0;30m"
-RED				:= "\033[0;31m"
-GREEN			:= "\033[0;32m"
-YELLOW			:= "\033[0;33m"
-BLUE			:= "\033[0;34m"
-PURPLE			:= "\033[0;35m"
-CYAN			:= "\033[0;36m"
-WHITE			:= "\033[0;37m"
-# ============================== #
+COREWAR= corewar
 
-# ========== Editable ========== #
-ASM				:= asm
-COREWAR			:= corewar
-# ============================== #
+CC= gcc
+CFLAGS= -Wall -Wextra -Werror -g -fsanitize=address
+LIBFT= -Llibft -lft 
 
-# ========== Standard ========== #
-CC				:= gcc
-FLAGS			:= -Wall -Wextra -Werror #-fsanitize=address
-# ============================== #
+MKDIR= mkdir -p
+RM= rm -rf
 
-# =========== Files ============ #
-ASM_SRCS_FILES		:=	op.c		\
-						asm.c
-CORE_SRCS_FILES		:=	op.c		\
-						corewar.c
-ASM_HEADER_FILES	:=	op.h		\
-						asm.h
-CORE_HEADERS_FILES	:=	op.h		\
-			 			corewar.h
-# ============================== #
+INC_DIR= includes/
 
-# ========== Sources =========== #
-ASM_PATH		:= srcs/asm/
-CORE_PATH		:= srcs/corewar/
-ASM_SRCS		:= $(addprefix $(ASM_PATH), $(ASM_SRCS_FILES))
-CORE_SRCS		:= $(addprefix $(CORE_PATH), $(CORE_SRCS_FILES))
-# ============================== #
+SRC= \
+corewar.c \
+get_players.c \
+get_players_errors.c \
+vm_init_free.c \
 
-# ========== Objects =========== #
-OBJS_PATH		:= objs/
-ASM_OBJS		:= $(addprefix $(OBJS_PATH), $(ASM_SRCS_FILES:.c=.o))
-CORE_OBJS 		:= $(addprefix $(OBJS_PATH), $(CORE_SRCS_FILES:.c=.o))
-# ============================== #
 
-# ========== Includes ========== #
-INCLUDES_PATH	:= includes/
-INCLUDES		:= -I $(INCLUDES_PATH)
-ASM_HEADERS		:= $(addprefix $(INCLUDES_PATH), $(ASM_HEADERS_FILES))
-CORE_HEADERS	:= $(addprefix $(INCLUDES_PATH), $(CORE_HEADERS_FILES))
-# ============================== #
+OBJ= $(SRC:.c=.o)
 
-# ========== Libraries ========= #
-LIBFT_PATH		:= libft/
-LIBFT_INCLUDES	:= -I libft/includes
-LIBFT			:= -L $(LIBFT_PATH) -lft
-# ============================== #
+VPATH= srcs/corewar
 
-.PHONY: all libft clean fclean re
+########################
+#    Makefile rules    # 
+########################
 
-all: libft $(ASM) $(COREWAR)
+all: libft $(COREWAR)
 
 libft:
-	@make -C $(LIBFT_PATH)
+	@make -C libft
 
-$(OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS)
-	@mkdir $(OBJS_PATH) 2> /dev/null || true
-	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
+# Executables 
 
-$(OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS)
-	@mkdir $(OBJS_PATH) 2> /dev/null || true
-	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
+$(COREWAR): $(OBJ)
+	@$(CC) -o $@ $(CFLAGS) $^ -I $(INC_DIR) $(LIBFT) 
+	@echo "Compiling [$@]"
 
-$(ASM): $(ASM_OBJS)
-	$(CC) $(FLAGS) $(LIBFT) $(ASM_OBJS) -o $@
+# Object files 
 
-$(COREWAR): $(CORE_OBJS)
-	$(CC) $(FLAGS) $(LIBFT) $(CORE_OBJS) -o $@
+$(OBJ): $(SRC)
+	@$(CC) -c $^ $(CFLAGS) -I $(INC_DIR) 
+	@echo "Compiling [$^]"
+
+# Cleaning rules 
 
 clean:
-	@make -C $(LIBFT_PATH) clean &> /dev/null
-	@rm -fv $(ASM_OBJS) $(CORE_OBJS)
-	@rmdir $(OBJS_PATH) 2> /dev/null || true
+	@rm -f $(OBJ)
+	@echo "Cleaning [$(OBJ)]"	
 
 fclean: clean
-	@make -C $(LIBFT_PATH) fclean &> /dev/null
-	@rm -fv $(ASM) $(COREWAR)
+	@rm -rf $(COREWAR)
+	@make fclean -C libft
+	@echo "Cleaning [libft corewar]"	
 
 re: fclean all
+
+.PHONY: clean fclean re libft 
