@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "corewar.h"
+# define RES "\x1B[0m"
 
 void dump(t_player p) // N'affiche pas le dernier octet 0a :s
 {
@@ -41,9 +42,27 @@ void dump(t_player p) // N'affiche pas le dernier octet 0a :s
 	}
 }
 
+void print_arena(t_vm *v)
+{
+	
+	for (int i = 0; i < MEM_SIZE; i++)	
+	{
+		if (i % 64 == 0)
+			ft_printf("\n");
+	//	if (i %  == 0)
+	//		ft_printf(" ");
+		if (v->arena_fmt[i] == -1)
+			ft_printf("%02x", v->arena[i]);	
+		else 
+			ft_printf("\033[%dm%02x" RES, 31 + v->arena_fmt[i], v->arena[i]);	
+
+	}
+}
+
 void test_print_v(t_vm *v, int argc)
 {
 
+	ft_printf("\n[Nb players = %d]\n\n", v->nplayer);
 	for (int i = 0; i < argc - 1; i++)
 	{
 		ft_printf("nplayer = %d\n", v->p[i].nplayer);
@@ -52,6 +71,8 @@ void test_print_v(t_vm *v, int argc)
 		dump(v->p[i]);
 		ft_printf("\n\n\n");
 	}
+	print_arena(v);
+	
 
 }
 
@@ -61,8 +82,8 @@ int			main(int argc, char **argv)
 	
 	vm_init(&v);
 	get_players(argc, argv, &v);
+	load_arena(&v);		
 	test_print_v(&v, argc); //test
-//	setup_arena();		
 //	run_game();
 //	get_winner();	
 //	vm_free();

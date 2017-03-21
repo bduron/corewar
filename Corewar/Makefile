@@ -26,6 +26,8 @@ corewar.c \
 get_players.c \
 get_players_errors.c \
 vm_init_free.c \
+load_arena.c \
+#vm_game.c \
 
 
 OBJ= $(SRC:.c=.o)

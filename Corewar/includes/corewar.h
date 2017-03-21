@@ -36,6 +36,13 @@ typedef struct	s_process
 
 }				t_process;
 
+//typedef struct s_cell
+//{
+//	unsigned char val;
+//	int player;
+//	int type;
+//}				t_cell;
+
 typedef struct	s_player
 {
 	int				nplayer;
@@ -49,7 +56,9 @@ typedef struct	s_player
 typedef struct	s_vm
 {
 	t_list			*process_lst;
+//	t_cell			arena[MEM_SIZE];
 	unsigned char	arena[MEM_SIZE];
+	char			arena_fmt[MEM_SIZE];
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;		
 	int				last_live_id;
@@ -69,6 +78,9 @@ int is_corewar_execmagic(char *file);
 int get_prog_size(char *file);
 int is_valid_player(char *file);
 int is_cor_file(char *file);
+void load_arena(t_vm *v);
+void load_champions(t_vm *v);
+void load_processes(t_vm *v);
 void vm_init(t_vm *v);
 void vm_free(t_vm *v);
 

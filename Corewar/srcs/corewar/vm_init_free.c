@@ -6,6 +6,7 @@ void vm_init(t_vm *v)
 	int i;
 
 	ft_memset(v->arena, 0, sizeof(unsigned char) * MEM_SIZE);
+	ft_memset(v->arena_fmt, -1, sizeof(unsigned char) * MEM_SIZE);
 	v->process_lst = NULL;
 	i = 0;
 	while (i < MAX_PLAYERS)

@@ -38,4 +38,5 @@ void get_players(int argc, char **argv, t_vm *v)
 			xerror("Error: invalid champion", -1);
 		i++;
 	}
+	v->nplayer = argc - 1;
 }
