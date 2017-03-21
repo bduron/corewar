@@ -2,14 +2,25 @@
 #include "corewar.h"
 
 
-//void load_processes(tm_v *v)
-//{
-//	v->process_lst = ft_lstnew();
-//
-//
-//
-//
-//}
+void load_processes(tm_v *v)
+{
+	t_process p;
+	int i;
+
+	i = 0;
+	while (i < v->nplayer)	
+	{
+		ft_lstappend(&(v->process_lst), ft_lstnew(&p, sizeof(t_process)));
+		v->process_lst->content->carry = 0;			
+		v->process_lst->content->pc = 0;			
+		v->process_lst->content->op_cast = 0;			
+		v->process_lst->content->live_count = 0;			
+	}
+
+
+
+
+}
 
 void load_champions(t_vm *v)
 {

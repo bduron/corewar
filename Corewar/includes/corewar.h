@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/21 17:43:36 by bduron           ###   ########.fr       */
+/*   Updated: 2017/03/21 18:09:41 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ typedef struct	s_player
 typedef struct	s_vm
 {
 	t_list			*process_lst;
-
 	t_arena			a;
-	//unsigned char	arena[MEM_SIZE];
 	char			arena_fmt[MEM_SIZE];
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;		
