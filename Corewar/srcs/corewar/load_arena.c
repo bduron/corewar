@@ -22,8 +22,8 @@ void load_champions(t_vm *v)
 	n = 0;
 	while (n < v->nplayer)
 	{	
-		ft_memcpy(&(v->arena[i]), v->p[n].code, v->p[n].prog_len);
-		ft_memset(&(v->arena_fmt[i]), n, v->p[n].prog_len);
+		ft_memcpy(&(v->a.arena[i]), v->p[n].code, v->p[n].prog_len);
+		ft_memset(&(v->a.owner[i]), n, v->p[n].prog_len);
 		i += space;
 		n++;
 	}

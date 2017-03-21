@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/17 17:54:46 by bduron           ###   ########.fr       */
+/*   Updated: 2017/03/21 17:43:36 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #ifndef COREWAR_H
 # define COREWAR_H
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "op.h"
 
@@ -36,12 +36,12 @@ typedef struct	s_process
 
 }				t_process;
 
-//typedef struct s_cell
-//{
-//	unsigned char val;
-//	int player;
-//	int type;
-//}				t_cell;
+typedef struct s_arena
+{
+	unsigned char	arena[MEM_SIZE];
+	char			owner[MEM_SIZE];
+	char			type[MEM_SIZE];
+}				t_arena;
 
 typedef struct	s_player
 {
@@ -56,8 +56,9 @@ typedef struct	s_player
 typedef struct	s_vm
 {
 	t_list			*process_lst;
-//	t_cell			arena[MEM_SIZE];
-	unsigned char	arena[MEM_SIZE];
+
+	t_arena			a;
+	//unsigned char	arena[MEM_SIZE];
 	char			arena_fmt[MEM_SIZE];
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;		
@@ -66,8 +67,6 @@ typedef struct	s_vm
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
 	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd		
-
-
 
 }				t_vm;
 

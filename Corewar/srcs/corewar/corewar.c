@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/17 17:55:08 by bduron           ###   ########.fr       */
+/*   Updated: 2017/03/21 17:47:33 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void print_arena(t_vm *v)
 	{
 		if (i % 64 == 0)
 			ft_printf("\n");
-	//	if (i %  == 0)
-	//		ft_printf(" ");
-		if (v->arena_fmt[i] == -1)
-			ft_printf("%02x", v->arena[i]);	
+		if (i % 1 == 0) //
+			ft_printf(" "); //
+		if (v->a.owner[i] == -1)
+			ft_printf("%02x", v->a.arena[i]);	
 		else 
-			ft_printf("\033[%dm%02x" RES, 31 + v->arena_fmt[i], v->arena[i]);	
+			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);	
 
 	}
 }
