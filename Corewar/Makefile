@@ -27,6 +27,7 @@ get_players.c \
 get_players_errors.c \
 vm_init_free.c \
 load_arena.c \
+vm_debbug.c \
 #vm_game.c \
 
 

@@ -83,4 +83,10 @@ void vm_free(t_vm *v);
 
 void xerror(char *error_msg, int error_id); // move to libft
 
+/*** debug ***/
+void dump(t_player p);
+void print_arena(t_vm *v);
+void test_print_v(t_vm *v, int argc);
+void print_processes(t_vm *v);
+
 #endif

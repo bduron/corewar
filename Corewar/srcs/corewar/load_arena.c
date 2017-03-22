@@ -2,23 +2,23 @@
 #include "corewar.h"
 
 
-void load_processes(tm_v *v)
+void load_processes(t_vm *v)
 {
 	t_process p;
 	int i;
-
+  
 	i = 0;
 	while (i < v->nplayer)	
 	{
-		ft_lstappend(&(v->process_lst), ft_lstnew(&p, sizeof(t_process)));
-		v->process_lst->content->carry = 0;			
-		v->process_lst->content->pc = 0;			
-		v->process_lst->content->op_cast = 0;			
-		v->process_lst->content->live_count = 0;			
+		ft_lstpush(&(v->process_lst), ft_lstnew(&p, sizeof(t_process))); // le dernier joueur aura le 1er processus dans l'ordre d'execution
+		((t_process *)v->process_lst->content)->carry = 0; //  1 ou 0 telle est la question ?			
+		((t_process *)v->process_lst->content)->pc = 0; // addresse relative / ablsolue ?			
+		((t_process *)v->process_lst->content)->live_count = 0;			
+		((t_process *)v->process_lst->content)->op_cast = 0;			
+		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
+		((t_process *)v->process_lst->content)->reg[i] = v->p[i].nplayer;			
+		i++;
 	}
-
-
-
 
 }
 
@@ -43,6 +43,6 @@ void load_champions(t_vm *v)
 void load_arena(t_vm *v)
 {
 	load_champions(v);
-	//load_processes(v);
+	load_processes(v);
 }
 
