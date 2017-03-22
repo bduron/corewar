@@ -11,30 +11,15 @@ void print_processes(t_vm *v)
 	while (tmp)	
 	{
 		ft_printf("\n======= %d =======\n", i);		
-		ft_printf("|_carry:        %d\n", ((t_process *)v->process_lst->content)->carry);
-		ft_printf("|_pc:           %d\n", ((t_process *)v->process_lst->content)->pc);
-		ft_printf("|_live count:   %d\n", ((t_process *)v->process_lst->content)->live_count);
-		ft_printf("|_op cast:      %d\n", ((t_process *)v->process_lst->content)->op_cast);
+		ft_printf("|_carry:        %d\n", ((t_process *)tmp->content)->carry);
+		ft_printf("|_pc:           %d\n", ((t_process *)tmp->content)->pc);
+		ft_printf("|_live count:   %d\n", ((t_process *)tmp->content)->live_count);
+		ft_printf("|_op cast:      %d\n", ((t_process *)tmp->content)->op_cast);
 		ft_printf(" _______________________________________________________________\n");
 		ft_printf("| r1| r2| r3| r4| r5| r6| r7| r8| r9|r10|r11|r12|r13|r14|r15|r16|\n");
-		ft_printf("|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|% 3d|\n\n", 
-			((t_process *)v->process_lst->content)->reg[0],
-			((t_process *)v->process_lst->content)->reg[1],
-			((t_process *)v->process_lst->content)->reg[2],
-			((t_process *)v->process_lst->content)->reg[3],
-			((t_process *)v->process_lst->content)->reg[4],
-			((t_process *)v->process_lst->content)->reg[5],
-			((t_process *)v->process_lst->content)->reg[6],
-			((t_process *)v->process_lst->content)->reg[7],
-			((t_process *)v->process_lst->content)->reg[8],
-			((t_process *)v->process_lst->content)->reg[9],
-			((t_process *)v->process_lst->content)->reg[10],
-			((t_process *)v->process_lst->content)->reg[11],
-			((t_process *)v->process_lst->content)->reg[12],
-			((t_process *)v->process_lst->content)->reg[13],
-			((t_process *)v->process_lst->content)->reg[14],
-			((t_process *)v->process_lst->content)->reg[15],
-			((t_process *)v->process_lst->content)->reg[16]);
+		for (int j = 0; j < REG_NUMBER; j++)
+			ft_printf("|% 3d", ((t_process *)tmp->content)->reg[j]);
+		ft_printf("|\n\n");
 		tmp = tmp->next;
 		i++;
 	}
@@ -95,6 +80,7 @@ void test_print_v(t_vm *v, int argc)
 		ft_printf("nplayer = %d\n", v->p[i].nplayer);
 		ft_printf("name = %s\n", v->p[i].name);
 		ft_printf("comment = %s\n", (v->p[i].comment));
+		ft_printf("pc_address = %d\n", (v->p[i].pc_address));
 		dump(v->p[i]);
 		ft_printf("\n\n\n");
 	}

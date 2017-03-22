@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/21 18:09:41 by bduron           ###   ########.fr       */
+/*   Updated: 2017/03/22 15:34:56 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_player
 	unsigned char	code[CHAMP_MAX_SIZE];
 	int				prog_len;
 	int				exec_magic;
+	int				pc_address;
 }				t_player;
 
 typedef struct	s_vm
