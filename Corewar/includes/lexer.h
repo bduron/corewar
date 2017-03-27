@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/16 14:54:06 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/27 18:56:05 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,26 @@ typedef enum		e_types
 	Whitespace,
 	Label,
 	Keyword,
+	Register,
 	Comment,
 	Symbol,
 	String,
 	Number
 }					t_types;
 
+/*
 typedef struct		s_token
 {
 	char			*cargo;
 	unsigned short	line_index;
 	unsigned short	col_index;
+	t_types			type;
+}					t_token;
+*/
+
+typedef struct		s_token
+{
+	char			*str;
 	t_types			type;
 }					t_token;
 

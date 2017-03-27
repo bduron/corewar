@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/16 14:49:34 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/03/27 16:06:52 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct					s_op
 	unsigned int				cycle;
 	char						*description;
 	unsigned char				octal;
-	unsigned char				unknown;
+	unsigned char				carry;
 }								t_op;
 
 extern t_op						op_tab[17];

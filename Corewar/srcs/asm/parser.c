@@ -1,30 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner.h                                          :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/14 15:37:20 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/27 16:52:33 by kcosta           ###   ########.fr       */
+/*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
+/*   Updated: 2017/03/17 17:24:01 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCANNER_H
-# define SCANNER_H
+#include "parser.h"
 
-# include <fcntl.h>
-# include <stdio.h>
-# include "libft.h"
 
-typedef struct		s_character
-{
-	char			cargo;
-	unsigned short	source_index;
-	unsigned short	line_index;
-	unsigned short	col_index;
-}					t_character;
-
-char				scanner(int fd);
-
-#endif
