@@ -10,12 +10,11 @@ void print_processes(t_vm *v)
 	i = 0;			
 	while (tmp)	
 	{
-		ft_printf("\n======= %d =======\n", i);		
-		ft_printf("|_carry:        %d\n", ((t_process *)tmp->content)->carry);
-		ft_printf("|_pc:           %d\n", ((t_process *)tmp->content)->pc);
-		ft_printf("|_live count:   %d\n", ((t_process *)tmp->content)->live_count);
-		ft_printf("|_op cast:      %d\n", ((t_process *)tmp->content)->op_cast);
-		ft_printf(" _______________________________________________________________\n");
+		ft_printf("\n============ %d ============\n", i);		
+		ft_printf("|_carry:                  %d\n", ((t_process *)tmp->content)->carry);
+		ft_printf("|_pc:                     %d\n", ((t_process *)tmp->content)->pc);
+		ft_printf("|_live count:             %d\n", ((t_process *)tmp->content)->live_count);
+		ft_printf("|_op cast:                %d\n", ((t_process *)tmp->content)->op_cast);
 		ft_printf("| r1| r2| r3| r4| r5| r6| r7| r8| r9|r10|r11|r12|r13|r14|r15|r16|\n");
 		for (int j = 0; j < REG_NUMBER; j++)
 			ft_printf("|% 3d", ((t_process *)tmp->content)->reg[j]);

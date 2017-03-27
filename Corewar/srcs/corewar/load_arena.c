@@ -11,7 +11,7 @@ void load_processes(t_vm *v)
 	while (i < v->nplayer)	
 	{
 		ft_lstadd(&(v->process_lst), ft_lstnew(&p, sizeof(t_process))); // le dernier joueur aura le 1er processus dans l'ordre d'execution
-		((t_process *)v->process_lst->content)->carry = 1; //  1 ou 0 telle est la question ?			
+		((t_process *)v->process_lst->content)->carry = 0; //  1 ou 0 telle est la question ?			
 		((t_process *)v->process_lst->content)->pc = v->p[i].pc_address; // addresse relative 			
 		((t_process *)v->process_lst->content)->live_count = 0;			
 		((t_process *)v->process_lst->content)->op_cast = 0;			
