@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.c                                          :+:      :+:    :+:   */
+/*   operation_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/28 14:50:33 by cpoulet          ###   ########.fr       */
+/*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
+/*   Updated: 2017/03/28 17:34:46 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			main(int argc, char **argv)
+void	op_zjmp(t_vm *v, t_list *process)
 {
-	t_vm	v;
-	
-	vm_init(&v);
-	get_players(argc, argv, &v);
-	load_arena(&v);		
-	print_processes(&v);		// test print
-	test_print_v(&v, argc);		// test print
-	run_game(&v);
-//	get_winner();	
-//	vm_free();
+	printf("Decale toi de : %hd\n", *(short*)&ARENA[PC + 1]);
+}
 
-	return (0);
+void	op_fork(t_vm *v, t_list *process)
+{
+	(void)v;
+	(void)process;
+}
+
+void	op_lfork(t_vm *v, t_list *process)
+{
+	(void)v;
+	(void)process;
 }

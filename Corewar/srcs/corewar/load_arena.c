@@ -15,6 +15,7 @@ void load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->pc = v->p[i].pc_address; // addresse relative 			
 		((t_process *)v->process_lst->content)->live_count = 0;			
 		((t_process *)v->process_lst->content)->op_cast = 0;			
+		((t_process *)v->process_lst->content)->next_op = 0;			
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;			
 		i++;

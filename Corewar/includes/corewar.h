@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/27 18:06:23 by bduron           ###   ########.fr       */
+/*   Updated: 2017/03/28 16:55:23 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,22 @@
 # include <fcntl.h>
 # include "libft.h"
 # include "op.h"
+# include <stdio.h> // to be removed
 
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
+# define ARENA		v->a.arena
+# define PC			(((t_process *)process->content)->pc)
+# define NEXT_OP	(((t_process *)process->content)->next_op)
+# define OP_CAST	(((t_process *)process->content)->op_cast)
 
 typedef struct	s_process
 {
 	int carry;
-	int reg[REG_NUMBER];	
+	int reg[REG_NUMBER];
 	int pc;
-	int op_cast; // launch op when cast == 0 
-	int live_count;	// count emitted lives between CYCLE_TO_DIE 	
+	int op_cast; // launch op when cast == 0
+	int live_count;	// count emitted lives between CYCLE_TO_DIE
 	unsigned char next_op;
-
 }				t_process;
 
 typedef struct s_arena
@@ -58,15 +62,13 @@ typedef struct	s_vm
 {
 	t_list			*process_lst;
 	t_arena			a;
-	char			arena_fmt[MEM_SIZE];
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;		
 	int				last_live_id;
-	int				ncycle;		
+	int				ncycle;
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
-	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd		
-
+	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd
 }				t_vm;
 
 
@@ -81,6 +83,9 @@ void load_champions(t_vm *v);
 void load_processes(t_vm *v);
 void vm_init(t_vm *v);
 void vm_free(t_vm *v);
+
+void	run_game(t_vm *v);
+void	operate_process(t_vm *v, t_list *process);
 
 void xerror(char *error_msg, int error_id); // move to libft
 
