@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/28 16:55:23 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/03/28 18:00:57 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
 # define ARENA		v->a.arena
 # define PC			(((t_process *)process->content)->pc)
+# define REG		(((t_process *)process->content)->reg)
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 
@@ -86,6 +87,8 @@ void vm_free(t_vm *v);
 
 void	run_game(t_vm *v);
 void	operate_process(t_vm *v, t_list *process);
+void	octal_error(t_list *process, unsigned char n);
+int		reverse_bytes(unsigned char *addr, int nbytes);
 
 void xerror(char *error_msg, int error_id); // move to libft
 
