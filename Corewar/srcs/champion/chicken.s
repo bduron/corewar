@@ -21,7 +21,7 @@
 
 		ld	116, r16
 		sti r1, %:live, %1
-		ld	%1879310801, r3
+		ld	%1879310724, r3
 		ld	%65540, r1
 		ld	60, r4
 		ld	59, r5
@@ -36,11 +36,11 @@
 		ld	50, r14
 		ld	49, r15
 loop:	add r1, r3, r3
-		st r4, 465
+		st r4, 388
 		st r3, -4
 		and	r3, %1048576, r16
 		zjmp %:loop
 live:	live %1
-		ld	%1879310801, r3
+		ld	%1879310724, r3
 		ld %0, r2
-		zjmp %430
+		zjmp %353
