@@ -1,9 +1,12 @@
 
 #include "corewar"
 
+
+
 void update_process(t_vm *v, t_list *process) 
 {
 	if (((t_process *)process->content)->op_cast == 0)
+		
 		//decode_op 
 		//launch_op 
 	else 		

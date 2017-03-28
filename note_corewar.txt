@@ -88,6 +88,18 @@ BIG ENDIANNESS:
 			 return (0);
 		}
 
+VM: 
+  - Save opcode during the first cycle
+  - Execute the operation at the end of the cast time
+	- using the saved opcode (even if the memory is different now) 
+	- use the current parameters / args 
+  - Error : If the parameters are now invalid
+	- do nothing, and move the opcode one cell further
+
+
+
+
+
 
 Doubts: 
 =======

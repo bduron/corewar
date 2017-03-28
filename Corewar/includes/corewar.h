@@ -32,7 +32,7 @@ typedef struct	s_process
 	int pc;
 	int op_cast; // launch op when cast == 0 
 	int live_count;	// count emitted lives between CYCLE_TO_DIE 	
-
+	unsigned char next_op;
 
 }				t_process;
 
