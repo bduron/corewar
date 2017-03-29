@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/28 18:00:57 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/03/29 11:02:32 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define REG		(((t_process *)process->content)->reg)
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
+# define LIVE		(((t_process *)process->content)->live_count)
 
 typedef struct	s_process
 {
