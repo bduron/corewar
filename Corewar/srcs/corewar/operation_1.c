@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/02 16:19:15 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/02 19:51:37 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	op_ld(t_vm *v, t_list *process)
 			val = reverse_bytes(&ARENA[PC + 2], 4 - ((B_OCT & 0x60) >> 5));
 			val = (val && B_OCT == 0xd0) ? val % IDX_MOD : val;
 			printf("val = %d\n", val);
-			REG[ARENA[PC + 6 - ((B_OCT & 0x60) >> 5)] - 1] =
-			(B_OCT == 0x90) ? val : ARENA[PC + val];
+			val = B_OCT == 0x90 ? val : ARENA[PC + val];
+			REG[ARENA[PC + 6 - ((B_OCT & 0x60) >> 5)] - 1] = val;
+			CARRY = val ? CARRY : 0;
 		}
 	}
 	octal_shift(process, B_OCT, 4, 2);
