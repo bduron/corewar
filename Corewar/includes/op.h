@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/28 16:55:10 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/02 18:04:00 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define NBR_LIVE				21
 # define MAX_CHECKS				10
 
-typedef char					t_arg_type;
+typedef unsigned char			t_arg_type;
 
 # define T_REG					1
 # define T_DIR					2
