@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 16:13:02 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 16:59:17 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	op_st(t_vm *v, t_list *process)
 void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
-		printf("aff = |%d|\n", (unsigned char)REG[ARENA(PC + 2) - 1]);
+		printf("aff = |%d|\n", (u_char)REG[ARENA(PC + 2) - 1]);
 	octal_shift(process, B_OCT, 4, 1);
 }
