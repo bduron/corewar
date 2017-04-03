@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 16:14:11 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 18:25:31 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	op_add(t_vm *v, t_list *process)
 {
-	int	val;
+	int		val;
+	char	nb_arg;
 
-	if (B_OCT == 0x54)
+	nb_arg = 3;
+	if (check_arg(3, B_OCT, nb_arg))
 	{
 		if (ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16 &&
 			ARENA(PC + 3) >= 1 && ARENA(PC + 3) <= 16 &&
@@ -28,14 +30,16 @@ void	op_add(t_vm *v, t_list *process)
 			REG[ARENA(PC + 4) - 1] = val;
 		}
 	}
-	octal_shift(process, B_OCT, 4, 3);
+	octal_shift(process, B_OCT, 4, nb_arg);
 }
 
 void	op_sub(t_vm *v, t_list *process)
 {
-	int	val;
+	int		val;
+	char	nb_arg;
 
-	if (B_OCT == 0x54)
+	nb_arg = 3;
+	if (check_arg(4, B_OCT, nb_arg))
 	{
 		if (ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16 &&
 			ARENA(PC + 3) >= 1 && ARENA(PC + 3) <= 16 &&
@@ -47,16 +51,19 @@ void	op_sub(t_vm *v, t_list *process)
 			REG[ARENA(PC + 4) - 1] = val;
 		}
 	}
-	octal_shift(process, B_OCT, 4, 3);
+	octal_shift(process, B_OCT, 4, nb_arg);
 }
 
 void	op_and(t_vm *v, t_list *process)
 {
-	if (check_arg(5, B_OCT, 3))
+	char	nb_arg;
+
+	nb_arg = 3;
+	if (check_arg(5, B_OCT, nb_arg))
 	{
 		(void)v;
 	}
-	octal_shift(process, B_OCT, 4, 3);
+	octal_shift(process, B_OCT, 4, nb_arg);
 }
 
 void	op_or(t_vm *v, t_list *process)

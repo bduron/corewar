@@ -6,16 +6,16 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 16:07:24 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 17:00:23 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		check_arg(size_t arg, size_t n, size_t arg_nb)
+int		check_arg(u_char arg, u_char n, u_char arg_nb)
 {
-	size_t n00;
-	size_t n01;
+	u_char n00;
+	u_char n01;
 	int shift;
 	int k;
 
@@ -36,7 +36,7 @@ int		check_arg(size_t arg, size_t n, size_t arg_nb)
 	return (1);
 }
 
-void	octal_shift(t_list *process, size_t n, size_t label_size, size_t arg_nb)
+void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb)
 {
 	int shift;
 
