@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/02 16:06:31 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 16:16:02 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute_op(t_vm *v, t_list *process)
 
 void	init_next_op(t_vm *v, t_list *process)
 {
-	if (ARENA[PC] > 16 || !ARENA[PC])
+	if (ARENA(PC) > 16 || !ARENA(PC))
 	{
 		NEXT_OP = 0;
 		PC++;
@@ -50,9 +50,9 @@ void	init_next_op(t_vm *v, t_list *process)
 	}
 	else
 	{
-		NEXT_OP = ARENA[PC] - 1;
+		NEXT_OP = ARENA(PC) - 1;
 		OP_CAST = op_tab[NEXT_OP].cycle - 1; // arbitraire pour le moment
-		printf("numero d'op : %2x\t", ARENA[PC]);
+		printf("numero d'op : %2x\t", ARENA(PC));
 		printf("cast moi ce spell noob : %2d\n", OP_CAST);
 	}
 }

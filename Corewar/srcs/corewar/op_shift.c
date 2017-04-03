@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/02 19:47:15 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 16:07:24 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	octal_shift(t_list *process, size_t n, size_t label_size, size_t arg_nb)
 		n >>= 2;
 	}
 	PC += shift;
+	PC %= MEM_SIZE;
 }

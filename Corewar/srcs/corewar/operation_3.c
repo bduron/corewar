@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/03/28 17:34:46 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/03 16:18:01 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,44 @@
 
 void	op_zjmp(t_vm *v, t_list *process)
 {
-	printf("Decale toi de : %hd\n", *(short*)&ARENA[PC + 1]);
+	int shift;
+
+	if (CARRY == 1)
+	{
+		shift = reverse_bytes(&ARENA(PC + 1), 2);
+		shift %= IDX_MOD;
+		printf("PC before : %d\t", PC);
+		printf("Decale toi de : %d\t", shift);
+		PC = (unsigned int)(PC + shift) % MEM_SIZE;
+		printf("PC after : %d\n", PC);
+		ARENA(PC) = 0xFF; //DEBUG
+		print_arena(v); //DEBUG
+	}
 }
 
 void	op_fork(t_vm *v, t_list *process)
 {
-	(void)v;
-	(void)process;
+	int shift;
+
+	shift = reverse_bytes(&ARENA(PC + 1), 2);
+	shift %= IDX_MOD;
+	printf("PC PARENT : %d\t", PC);
+	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
+	PC += 3;
+	PC %= MEM_SIZE;
+	printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
+	print_arena(v); //DEBUG
 }
 
 void	op_lfork(t_vm *v, t_list *process)
 {
-	(void)v;
-	(void)process;
+	int shift;
+
+	shift = reverse_bytes(&ARENA(PC + 1), 2);
+	printf("PC PARENT : %d\t", PC);
+	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
+	PC += 3;
+	PC %= MEM_SIZE;
+	printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
+	print_arena(v); //DEBUG
 }

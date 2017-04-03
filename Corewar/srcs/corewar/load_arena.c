@@ -1,6 +1,21 @@
 
 #include "corewar.h"
 
+void add_process(t_vm *v, t_list *process, unsigned int son_pc)
+{
+	t_process	son;
+	int			k;
+  
+	ft_lstadd(&(v->process_lst), ft_lstnew(&son, sizeof(t_process)));
+	((t_process *)v->process_lst->content)->carry = CARRY;
+	((t_process *)v->process_lst->content)->pc = son_pc;
+	((t_process *)v->process_lst->content)->live_count = 0;
+	((t_process *)v->process_lst->content)->op_cast = 0;
+	((t_process *)v->process_lst->content)->next_op = 0;
+	k = 16;
+	while (k--)
+		((t_process *)v->process_lst->content)->reg[k] = REG[k];
+}
 
 void load_processes(t_vm *v)
 {
