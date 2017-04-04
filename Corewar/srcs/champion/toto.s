@@ -3,4 +3,5 @@
 .name		"fork_hacking"
 .comment	"cheating like a pinson..."
 
-	sti r1, 0, %40
+	ld 0, r1
+	st r1, 50

@@ -6,11 +6,24 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 17:00:23 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 18:35:49 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr)
+{
+	char i;
+	
+	i = 4;
+	while (i--)
+	{
+		OWNER(addr) = OWNER(PC);
+		ARENA(addr--) = val & 0xFF;
+		val >>= 8;
+	}
+}
 
 int		check_arg(u_char arg, u_char n, u_char arg_nb)
 {

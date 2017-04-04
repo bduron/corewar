@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/04 12:01:16 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 18:27:07 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
 # define ARENA(x)	v->a.arena[(unsigned int)(x) % MEM_SIZE]
+# define OWNER(x)	v->a.owner[(unsigned int)(x) % MEM_SIZE]
 # define PC			(((t_process *)process->content)->pc)
 # define CARRY		(((t_process *)process->content)->carry)
 # define REG		(((t_process *)process->content)->reg)
@@ -95,6 +96,7 @@ void vm_free(t_vm *v);
 
 void	run_game(t_vm *v);
 void	operate_process(t_vm *v, t_list *process);
+void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
 void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
 int		reverse_bytes(unsigned char *addr, int nbytes);

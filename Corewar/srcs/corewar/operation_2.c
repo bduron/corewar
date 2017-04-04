@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 12:35:34 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 12:48:34 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void	op_xor(t_vm *v, t_list *process)
 		REG[val[0]] = val[1] ^ val[2];
 		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 		CARRY = REG[val[0]] ? 0 : 1;
-		}
 	}
 	octal_shift(process, B_OCT, 4, 3);
 }

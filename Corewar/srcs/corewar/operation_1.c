@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 12:24:18 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 18:33:47 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ void	op_st(t_vm *v, t_list *process)
 			shift = reverse_bytes(&ARENA(PC + 3), 2);
 			shift %= IDX_MOD;
 			val = REG[ARENA(PC + 2) - 1];
-			while (val)
-			{
-				ARENA((PC + shift-- + 3)) = val & 0xFF;
-				val >>= 8;
-			}
+			print_reg(v, process, val, PC + shift + 3);
 		}
 	}
 	print_arena(v); //DEBUG

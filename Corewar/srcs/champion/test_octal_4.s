@@ -3,7 +3,4 @@
 .name		"fork_hacking"
 .comment	"cheating like a pinson..."
 
-		ld	%525654, r1 
-		fork %:modif
-		add r1, r1, r2
-modif:	st r1, -7
+	sti r1, r3, %580
