@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/02 18:53:58 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 12:01:16 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # include <stdio.h> // to be removed
 
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
-# define ARENA		v->a.arena
+# define ARENA(x)	v->a.arena[(unsigned int)(x) % MEM_SIZE]
 # define PC			(((t_process *)process->content)->pc)
 # define CARRY		(((t_process *)process->content)->carry)
 # define REG		(((t_process *)process->content)->reg)
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
-# define B_OCT		(ARENA[PC + 1])
+# define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
 # define OCT_02(x)	((x & 0b1100) >> 2)
@@ -95,9 +95,11 @@ void vm_free(t_vm *v);
 
 void	run_game(t_vm *v);
 void	operate_process(t_vm *v, t_list *process);
-void	octal_shift(t_list *process, size_t n, size_t label_size, size_t arg_nb);
+int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
+void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
 int		reverse_bytes(unsigned char *addr, int nbytes);
-int		check_arg(size_t arg, size_t n, size_t arg_nb);
+int		check_arg(u_char arg, u_char n, u_char arg_nb);
+void	add_process(t_vm *v, t_list *process, unsigned int son_pc);
 
 void xerror(char *error_msg, int error_id); // move to libft
 

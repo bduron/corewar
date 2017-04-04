@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 17:01:46 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 12:09:00 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	op_lld(t_vm *v, t_list *process)
 			else
 			{
 				shift = reverse_bytes(&ARENA(PC + 2), 2);
-				shift = reverse_bytes(&ARENA((unsigned int)(PC + shift)), 4);
+				shift = reverse_bytes(&ARENA((PC + shift)), 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
-			printf("val_saved = %x\n", shift);
+			printf("val_saved = %x\n", shift); //DEBUG
 			CARRY = shift ? 0 : 1;
 		}
 	}
