@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 12:09:00 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/04 12:14:56 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	op_ldi(t_vm *v, t_list *process)
 	if (check_arg(9, B_OCT, arg_nb))
 	{
 		(void)v;
+		//CARRY = XXX ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 2, arg_nb);
 }
