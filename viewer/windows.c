@@ -69,6 +69,7 @@ typedef struct	s_viewer
 	WINDOW		*win_infos;
 	t_rk_sema	sem_ready2core;
 	t_rk_sema	sem_ready2show;
+	t_rk_sema	sem_pause;
 	int			step;
 }				t_viewer;
 
@@ -110,6 +111,14 @@ void *core(void * arg)
 	pthread_exit(0);
 }
 
+void *timer(void * arg)
+{
+	while (1)
+	{
+		sleep(1);
+	}
+}
+
 void *show(void * arg)
 {
 	t_viewer *v;
@@ -132,6 +141,7 @@ void *show(void * arg)
 	// raw();
 	// nonl();
 	noecho();
+	nodelay(stdscr, TRUE);
 	refresh();
 	v->win_arena = create_newwin(LINES - 10, 2 * (LINES - 10), 0, 0, "Arena");
 	i = -1;
@@ -144,12 +154,6 @@ void *show(void * arg)
 
 	while(input != 'q' && input != 'Q')
 	{
-		werase(v->win_infos);
-		mvwprintw(v->win_infos, 2, 3, "recording one frame every %d laps.\t\t(edit width 'k' & 'l')", v->step);
-		mvwprintw(v->win_infos, 3, 3, "actual speed is %d sec, %d usec.\t\t(edit width 'o' & 'p')", tv.tv_sec, tv.tv_usec);
-		mvwprintw(v->win_infos, 4, 3, "Press 'q' to quit");
-		wrefresh(v->win_infos);
-
 		rk_sema_wait(&v->sem_ready2show);
 
 		i = -1;
@@ -161,103 +165,51 @@ void *show(void * arg)
 		}
 		rk_sema_post(&v->sem_ready2core);
 
-		fd_set fds;
-		FD_ZERO(&fds);
-		FD_SET(STDIN_FILENO, &fds);
-
-		int status = select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv);
-
-        /*  Check for error  */
-
-        if ( status == -1 ) {
-
-            /*  select() returned with an error.  */
-
-            if ( errno != EINTR ) {
-
-                /*  If interrupted by a signal, no problem,
-                 *  keep going. Otherwise, let's just quit.  */
-
-                // stop_curses(&cinfo);
-                perror("error calling select()");
-                pthread_exit(0);
-            }
-        }
-        else if ( FD_ISSET(STDIN_FILENO, &fds) ) {
-            /*  Only call getch() if input is ready.
-             *  getch() will not block when we do it this way.  */
-            if ( (input = getch()) == ERR ) {
-                // stop_curses(&cinfo);
-                fprintf(stderr, "ERR returned from getch()\n");
-                pthread_exit(0);
-            }
-			else if (input == 'o')
+		if ((input = getch()) == ERR)
+		{
+			// stop_curses(&cinfo);
+			// fprintf(stderr, "ERR returned from getch()\n");
+			// pthread_exit(0);
+		}
+		else if (input == 'o')
+		{
+			tv.tv_usec /= 2;
+			if (tv.tv_sec == 1)
+				tv.tv_usec += 500000;
+			tv.tv_sec /= 2;
+		}
+		else if (input == 'p')
+		{
+			tv.tv_sec *= 2;
+			tv.tv_usec *= 2;
+			if (tv.tv_usec > 999999)
 			{
-				tv.tv_usec /= 2;
-				if (tv.tv_sec == 1)
-					tv.tv_usec += 500000;
-				tv.tv_sec /= 2;
+				tv.tv_sec += tv.tv_usec / 1000000;
+				tv.tv_usec %= 1000000;
 			}
-			else if (input == 'p')
-			{
-				tv.tv_sec *= 2;
-				tv.tv_usec *= 2;
-				if (tv.tv_usec > 999999)
-				{
-					tv.tv_sec += tv.tv_usec / 1000000;
-					tv.tv_usec %= 1000000;
-				}
-			}
-			else if (input == 'k')
-			{
-				if (v->step > 1)
-					v->step /= 2;
-			}
-			else if (input == 'l')
-			{
-				if (v->step < 800)
-					v->step *= 2;
-			}
-        }
+		}
+		else if (input == 'k')
+		{
+			if (v->step > 1)
+				v->step /= 2;
+		}
+		else if (input == 'l')
+		{
+			if (v->step < 800)
+				v->step *= 2;
+		}
+		else if (input == 'q')
+			break ;
+		werase(v->win_infos);
+		mvwprintw(v->win_infos, 2, 3, "recording one frame every %d laps.\t\t(edit width 'k' & 'l')", v->step);
+		mvwprintw(v->win_infos, 3, 3, "actual speed is %d sec, %d usec.\t\t(edit width 'o' & 'p')", tv.tv_sec, tv.tv_usec);
+		mvwprintw(v->win_infos, 4, 3, "Press 'q' to quit");
+		wrefresh(v->win_infos);
+		sleep(1);
 	}
 	endwin();
 	pthread_exit(0);
 }
-
-// void *show(void * arg)
-// {
-// 	t_viewer *v;
-// 	int ch;
-// 	int i;
-// 	int index;
-//
-// 	v = (t_viewer *)arg;
-// 	initscr();
-// 	cbreak();
-// 	keypad(stdscr, TRUE);
-// 	noecho();
-// 	refresh();
-// 	v->win_arena = create_newwin(LINES - 10, 2 * (LINES - 10), 0, 0, "Arena");
-// 	i = -1;
-// 	while (++i < 4)
-// 		v->win_champions[i] = create_newwin(10, 2 * (LINES - 10) / 4, LINES - 10, i * 2 * (LINES - 10) / 4, v->names[i]);
-// 	v->win_infos = create_newwin(LINES, COLS - 2 * (LINES - 10), 0, 2 * (LINES - 10), "Informations");
-// 	while(1)
-// 	{
-// 		rk_sema_wait(&v->sem_ready2show);
-// 		i = -1;
-// 		while (++i < 4)
-// 		{
-// 			werase(v->win_champions[i]);
-// 			mvwprintw(v->win_champions[i], 0, 0, v->events[i]);
-// 			wrefresh(v->win_champions[i]);
-// 		}
-// 		rk_sema_post(&v->sem_ready2core);
-// 		sleep(1);
-// 	}
-// 	endwin();
-// 	pthread_exit(0);
-// }
 
 int main(int argc, char *argv[])
 {
@@ -273,6 +225,7 @@ int main(int argc, char *argv[])
 
 	rk_sema_init(&v.sem_ready2core, 0);
 	rk_sema_init(&v.sem_ready2show, 0);
+	rk_sema_init(&v.sem_pause, -1);
 
 	if (pthread_create(&th_core, NULL, &core, &v) < 0) {
 	  fprintf(stderr, "pthread_create error for th_core\n");
