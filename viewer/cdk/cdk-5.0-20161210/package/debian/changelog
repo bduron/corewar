@@ -1,0 +1,92 @@
+cdk (5.0.20161210) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 10 Dec 2016 08:04:19 -0500
+
+cdk (5.0.20161204) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 04 Dec 2016 06:57:51 -0500
+
+cdk (5.0.20161120) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 20 Nov 2016 08:43:47 -0500
+
+cdk (5.0.20161119) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 19 Nov 2016 08:24:00 -0500
+
+cdk (5.0.20160131) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 31 Jan 2016 14:34:10 -0500
+
+cdk (5.0.20150928) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Fri, 25 Sep 2015 07:58:10 -0400
+
+cdk (5.0.20150103) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 03 Jan 2015 20:43:29 -0500
+
+cdk (5.0.20141106) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 02 Nov 2014 08:42:09 -0500
+
+cdk (5.0.20140118) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 18 Jan 2014 09:01:14 -0500
+
+cdk (5.0.20140101) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Wed, 01 Jan 2014 17:15:01 -0500
+
+cdk (5.0.20131117) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 17 Nov 2013 09:10:09 -0500
+
+cdk (5.0.20131107) unstable; urgency=low
+
+  * maintenance updates
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 02 Nov 2013 11:36:50 -0400
+
+cdk (5.0-20130901) unstable; urgency=low
+
+  * improvements to configure script
+  * minor fixes
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 15 Jun 2013 10:55:30 -0400
+
+cdk (5.0-20120323) unstable; urgency=low
+
+  * bug-report for gmtime/localtime usage.
+  * Fixes for package scripts.
+  * Debian #500161
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 18 Mar 2012 19:38:57 -0400
+
+cdk (5.0-20110517) unstable; urgency=high
+
+  * Initial package release
+
+ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 14 May 2011 08:15:31 -0400
