@@ -1,2 +1,2 @@
 all:
-	gcc -lncurses windows.c
+	gcc -pthread -lncurses windows.c
