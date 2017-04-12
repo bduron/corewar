@@ -94,7 +94,6 @@ void *core(void * arg)
 		// ----------------------------
 		// put the program logic here
 		// ...
-		++v->arena[laps % 1024];
 		// ...
 		// ...
 		// ----------------------------
@@ -146,12 +145,15 @@ void *controls(void * arg)
 		}
 		else if (v->input == 'p')
 		{
-			v->tv.tv_sec *= 2;
-			v->tv.tv_usec *= 2;
-			if (v->tv.tv_usec > 999999)
+			if (v->tv.tv_sec < 2)
 			{
-				v->tv.tv_sec += v->tv.tv_usec / 1000000;
-				v->tv.tv_usec %= 1000000;
+				v->tv.tv_sec *= 2;
+				v->tv.tv_usec *= 2;
+				if (v->tv.tv_usec > 999999)
+				{
+					v->tv.tv_sec += v->tv.tv_usec / 1000000;
+					v->tv.tv_usec %= 1000000;
+				}
 			}
 		}
 		else if (v->input == 'k')
@@ -210,10 +212,10 @@ void *show(void * arg)
 
 	while(v->input != 'q' && v->input != 'Q')
 	{
-		if (v->flag_pause)
-			rk_sema_wait(&v->sem_pause);
 		rk_sema_wait(&v->sem_coreDone);
 		rk_sema_wait(&v->sem_sleepDone);
+		if (v->flag_pause)
+			rk_sema_wait(&v->sem_pause);
 		i = -1;
 		while (++i < 4)
 		{
@@ -221,8 +223,11 @@ void *show(void * arg)
 			mvwprintw(v->win_champions[i], 0, 0, v->events[i]);
 			wrefresh(v->win_champions[i]);
 		}
+		// if (v->flag_pause)
+			// rk_sema_wait(&v->sem_pause);
 		rk_sema_post(&v->sem_ready2core);
 		rk_sema_post(&v->sem_ready2sleep);
+
 	}
 	pthread_exit(0);
 }
