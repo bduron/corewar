@@ -8,7 +8,6 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
-#include <time.h>
 #include <sys/select.h>
 
 #ifdef __APPLE__
@@ -68,9 +67,12 @@ typedef struct		s_viewer
 	WINDOW			*win_arena;
 	WINDOW			*win_champions[4];
 	WINDOW			*win_infos;
-	t_rk_sema		sem_core;
+	t_rk_sema		sem_coreDone;
+	t_rk_sema		sem_ready2core;
 	t_rk_sema		sem_show;
 	t_rk_sema		sem_pause;
+	t_rk_sema		sem_sleepDone;
+	t_rk_sema		sem_ready2sleep;
 	char			flag_pause;
 	int				step;
 	int				input;
@@ -107,8 +109,8 @@ void *core(void * arg)
 				bzero(v->events + i, 100);
 				sprintf(v->events[i], "%d %s", 100000 - laps, v->names[i]);
 			}
-			rk_sema_post(&v->sem_core);
-			rk_sema_wait(&v->sem_show);
+			rk_sema_post(&v->sem_coreDone);
+			rk_sema_wait(&v->sem_ready2core);
 			counter = v->step;
 		}
 		// ----------------------------
@@ -179,27 +181,39 @@ void *controls(void * arg)
 	pthread_exit(0);
 }
 
+void *sleep_routine(void *arg)
+{
+	t_viewer	*v;
+	int			i;
+
+	v = (t_viewer *)arg;
+	i = 0;
+	while(v->input != 'q' && v->input != 'Q')
+	{
+		rk_sema_wait(&v->sem_ready2sleep);
+		usleep(v->tv.tv_sec * 1000000 + v->tv.tv_usec);
+		werase(v->win_arena);
+		mvwprintw(v->win_arena, 2, 3, "%d", i++);
+		wrefresh(v->win_arena);
+		rk_sema_post(&v->sem_sleepDone);
+	}
+	pthread_exit(0);
+}
+
 void *show(void * arg)
 {
 	t_viewer *v;
 	int i;
 	int index;
-	struct timespec start, end;
 
-	uint64_t dt;
 	v = (t_viewer *)arg;
 
-	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 	while(v->input != 'q' && v->input != 'Q')
 	{
-		clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 		if (v->flag_pause)
 			rk_sema_wait(&v->sem_pause);
-		dt = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-		if (dt < v->tv.tv_sec * 1000000 + v->tv.tv_usec)
-			usleep(v->tv.tv_sec * 1000000 + v->tv.tv_usec - dt); // s'il a commencé à dormir alors qu'il y avait un pas de temps trop long on est mort !
-		clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-		rk_sema_wait(&v->sem_core);
+		rk_sema_wait(&v->sem_coreDone);
+		rk_sema_wait(&v->sem_sleepDone);
 		i = -1;
 		while (++i < 4)
 		{
@@ -207,8 +221,8 @@ void *show(void * arg)
 			mvwprintw(v->win_champions[i], 0, 0, v->events[i]);
 			wrefresh(v->win_champions[i]);
 		}
-		rk_sema_post(&v->sem_show);
-
+		rk_sema_post(&v->sem_ready2core);
+		rk_sema_post(&v->sem_ready2sleep);
 	}
 	pthread_exit(0);
 }
@@ -216,7 +230,7 @@ void *show(void * arg)
 int main(int argc, char *argv[])
 {
 	t_viewer	v;
-	pthread_t	th_core, th_show, th_controls;
+	pthread_t	th_core, th_show, th_controls, th_sleep;
 	void		*ret;
 	int			i;
 
@@ -224,14 +238,18 @@ int main(int argc, char *argv[])
 	v.names[1] = "Mc Ron";
 	v.names[2] = "Eude Herbert";
 	v.names[3] = "Jacques-Henri";
+
 	v.step = 40;
 	v.tv.tv_sec = 1;
 	v.tv.tv_usec = 0;
 	v.flag_pause = 0;
+
 	bzero(v.arena, 1024);
 
-	rk_sema_init(&v.sem_core, 0);
-	rk_sema_init(&v.sem_show, 0);
+	rk_sema_init(&v.sem_ready2core, 0);
+	rk_sema_init(&v.sem_ready2sleep, 1);
+	rk_sema_init(&v.sem_coreDone, 0);
+	rk_sema_init(&v.sem_sleepDone, 0);
 	rk_sema_init(&v.sem_pause, 1);
 
 	initscr();
@@ -239,6 +257,7 @@ int main(int argc, char *argv[])
 	cbreak();
 	noecho();
 	refresh();
+
 	v.win_arena = create_newwin(32, (32 + 2) * 2, 0, 0, "Arena");
 	i = -1;
 	while (++i < 1024)
@@ -269,6 +288,11 @@ int main(int argc, char *argv[])
 	  exit(1);
 	}
 
+	if (pthread_create(&th_sleep, NULL, &sleep_routine, &v) < 0) {
+	  fprintf(stderr, "pthread_create error for th_sleep\n");
+	  exit(1);
+	}
+
 	if (pthread_create(&th_show, NULL, &show, &v) < 0) {
 	  fprintf(stderr, "pthread_create error for th_show\n");
 	  exit(1);
@@ -277,6 +301,7 @@ int main(int argc, char *argv[])
 	(void)pthread_join(th_core, &ret);
 	(void)pthread_join(th_controls, &ret);
 	(void)pthread_join(th_show, &ret);
+	(void)pthread_join(th_sleep, &ret);
 
 	endwin();
 
