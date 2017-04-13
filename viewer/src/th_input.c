@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/12 18:46:47 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/13 12:11:40 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,52 @@
 void	*th_input_routine(void *p_data)
 {
 	t_viewer	*v;
+	int			input;
 
 	v = (t_viewer *)p_data;
+	pthread_mutex_lock(&v->mutex);
 	werase(v->win_infos);
-	mvwprintw(v->win_infos, 2, 3, "actual display time is %d usec.\t\t(edit width %c & %c)", v->fps, FPS_LL, FPS_PP);
-	mvwprintw(v->win_infos, 3, 3, "recording one frame every %d laps.\t\t(edit width %c & %c)", v->lpf, LPF_LL, LPF_PP);
-	mvwprintw(v->win_infos, 4, 3, "Press 'q' to quit");
+	mvwprintw(v->win_infos, 0, 0, "FPS: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", 1048576 / v->fps, KEY_FPS_PP, KEY_FPS_LL);
+	mvwprintw(v->win_infos, 1, 0, "LPF: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
+	mvwprintw(v->win_infos, 2, 0, "PAUSE: %s\t\tCONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
+	mvwprintw(v->win_infos, 3, 0, "QUIT:\t\t\tCONTROLS: [ '%c' ]", KEY_QUIT);
 	wrefresh(v->win_infos);
-	while(v->input != 'q' && v->input != 'Q')
+	pthread_mutex_unlock(&v->mutex);
+	while(1)
 	{
-		if ((v->input = getch()) == ERR)
+		if (((input = getch()) == ERR)
+			|| input == KEY_QUIT)
 		{
-			// stop_curses(&cinfo);
-			// fprintf(stderr, "ERR returned from getch()\n");
-			// pthread_exit(0);
+			pthread_mutex_lock(&v->mutex);
+			v->event_flags |= FLAG_EVENT_QUIT;
+			pthread_cond_broadcast(&v->cond);
+			pthread_mutex_unlock(&v->mutex);
+			pthread_exit(0);
 		}
-		else if (v->input == FPS_LL)
-			v->fps /= (v->fps > 4096) ? 2 : 1;
-		else if (v->input == FPS_PP)
-			v->fps *= (v->fps < 1048576) ? 2 : 1;
-		else if (v->input == LPF_LL)
-			v->lpf /= (v->lpf > 1) ? 2 : 1;
-		else if (v->input == LPF_PP)
-			v->lpf *= (v->lpf < 1000) ? 2 : 1;
-		else if (v->input == ' ')
+		else
 		{
-			if (!(v->flag_pause = !v->flag_pause))
-				sem_port_post(&v->sem_pause);
+			pthread_mutex_lock(&v->mutex);
+			if (input == KEY_FPS_LL)
+				v->fps /= (v->fps > 4096) ? 2 : 1;
+			else if (input == KEY_FPS_PP)
+				v->fps *= (v->fps < 1048576) ? 2 : 1;
+			else if (input == KEY_LPF_LL)
+				v->lpf /= (v->lpf > 1) ? 2 : 1;
+			else if (input == KEY_LPF_PP)
+				v->lpf *= (v->lpf < 1000) ? 2 : 1;
+			else if (input == KEY_PAUSE)
+			{
+				v->event_flags ^= FLAG_EVENT_PAUSE;
+				pthread_cond_broadcast(&v->cond);
+			}
+			werase(v->win_infos);
+			mvwprintw(v->win_infos, 0, 0, "FPS: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", 1048576 / v->fps, KEY_FPS_PP, KEY_FPS_LL);
+			mvwprintw(v->win_infos, 1, 0, "LPF: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
+			mvwprintw(v->win_infos, 2, 0, "PAUSE: %s\t\tCONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
+			mvwprintw(v->win_infos, 3, 0, "QUIT:\t\t\tCONTROLS: [ '%c' ]", KEY_QUIT);
+			wrefresh(v->win_infos);
+			pthread_mutex_unlock(&v->mutex);
 		}
-		else if (v->input == 'q')
-			break ;
-		werase(v->win_infos);
-		mvwprintw(v->win_infos, 2, 3, "actual display time is %d usec.\t\t(edit width %c & %c)", v->fps, FPS_LL, FPS_PP);
-		mvwprintw(v->win_infos, 3, 3, "recording one frame every %d laps.\t\t(edit width %c & %c)", v->lpf, LPF_LL, LPF_PP);
-		mvwprintw(v->win_infos, 4, 3, "Press 'q' to quit");
-		mvwprintw(v->win_infos, 5, 3, v->flag_pause ? "PAUSE" : "");
-		wrefresh(v->win_infos);
 	}
 	pthread_exit(0);
 }

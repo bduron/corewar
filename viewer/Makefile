@@ -6,7 +6,7 @@
 #    By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/05 10:51:03 by wolrajht          #+#    #+#              #
-#    Updated: 2017/04/12 18:50:25 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/13 11:26:29 by wolrajhti        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,15 +39,12 @@ INC_DIR	= ./inc/
 OBJ_DIR	= ./obj/
 
 SRC_FILES =	main.c \
-			sem_port_apple.c \
-			sem_port_other.c \
 			th_core.c \
 			th_input.c \
 			th_render.c \
 			th_timer.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
-INC_FILES = sem_port.h \
-			corewar_viewer.h
+INC_FILES = corewar_viewer.h
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 INC = $(addprefix $(INC_DIR), $(INC_FILES))

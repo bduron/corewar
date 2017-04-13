@@ -6,12 +6,11 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:41:16 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/12 18:57:11 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/13 11:49:52 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar_viewer.h"
-#include "sem_port.h"
 
 int main(void)
 {
@@ -27,20 +26,19 @@ int main(void)
 
 	v.lpf = 1;
 	v.fps = 1048576;
-	v.flag_pause = 0;
+
+	pthread_mutex_init(&v.mutex, NULL);
+	pthread_cond_init(&v.cond, NULL);
+
+	v.event_flags = 0;
 
 	bzero(v.arena, 1024);
-
-	sem_port_init(&v.sem_ready2core, 0);
-	sem_port_init(&v.sem_ready2sleep, 1);
-	sem_port_init(&v.sem_coreDone, 0);
-	sem_port_init(&v.sem_sleepDone, 0);
-	sem_port_init(&v.sem_pause, 1);
 
 	initscr();
 	keypad(stdscr, TRUE);
 	cbreak();
 	noecho();
+	curs_set(0);
 	refresh();
 
 	v.win_arena = create_newwin(LINES / 6, COLS, 0, 0, "Arena");
@@ -69,6 +67,11 @@ int main(void)
 	// 	v.win_champions[i] = create_newwin(10, 2 * (LINES - 10) / 4, LINES - 10, i * 2 * (LINES - 10) / 4, v.names[i]);
 	// v.win_infos = create_newwin(LINES, COLS - 2 * (LINES - 10), 0, 2 * (LINES - 10), "Informations");
 
+	if (pthread_create(&th_render, NULL, &th_render_routine, &v) < 0) {
+		fprintf(stderr, "pthread_create error for th_render\n");
+		exit(1);
+	}
+
 	if (pthread_create(&th_core, NULL, &th_core_routine, &v) < 0) {
 		fprintf(stderr, "pthread_create error for th_core\n");
 		exit(1);
@@ -84,10 +87,7 @@ int main(void)
 		exit(1);
 	}
 
-	if (pthread_create(&th_render, NULL, &th_render_routine, &v) < 0) {
-		fprintf(stderr, "pthread_create error for th_render\n");
-		exit(1);
-	}
+
 
 	(void)pthread_join(th_core, &ret);
 	(void)pthread_join(th_input, &ret);

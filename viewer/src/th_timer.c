@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:39:05 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/12 18:45:48 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/13 11:49:13 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,27 @@ void	*th_timer_routine(void *p_data)
 
 	v = (t_viewer *)p_data;
 	i = 0;
-	while(v->input != 'q' && v->input != 'Q')
+	pthread_mutex_lock(&v->mutex);
+	while(1)
 	{
-		sem_port_wait(&v->sem_ready2sleep);
-		usleep(v->fps);
-		werase(v->win_arena);
-		mvwprintw(v->win_arena, 2, 3, "%d", i++);
-		wrefresh(v->win_arena);
-		sem_port_post(&v->sem_sleepDone);
+		if (v->event_flags & FLAG_EVENT_QUIT)
+		{
+			pthread_mutex_unlock(&v->mutex);
+			pthread_exit(0);
+		}
+		if (v->event_flags & FLAG_EVENT_TIMER)
+			pthread_cond_wait(&v->cond, &v->mutex);
+		else
+		{
+			pthread_mutex_unlock(&v->mutex);
+			/* next code will be executed in parallel with other threads */
+			usleep(v->fps);
+			/* ... */
+			pthread_mutex_lock(&v->mutex);
+			v->event_flags |= FLAG_EVENT_TIMER;
+			pthread_cond_broadcast(&v->cond);
+		}
 	}
+	pthread_mutex_unlock(&v->mutex);
 	pthread_exit(0);
 }
