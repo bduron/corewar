@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/13 16:27:04 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 17:29:08 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	op_st(t_vm *v, t_list *process)
 			print_reg(v, process, val, PC + shift + 3);
 		}
 	}
-	print_arena(v); //DEBUG
+	if (v->display_mode == 1)
+		print_arena(v); //DEBUG
 	octal_shift(process, B_OCT, 4, 2);
 }
 

@@ -6,11 +6,56 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/13 16:21:09 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 18:03:36 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+static void	viewer_init_colors()
+{
+	if (has_colors() == FALSE)
+	{
+		endwin();
+		printf("Your terminal does not support color\n");
+		exit(1);
+	}
+	start_color();
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_BLUE, COLOR_BLACK);
+	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(5, COLOR_CYAN, COLOR_BLACK);
+}
+
+static void	viewer_init_ncurses(t_viewer *v)
+{
+	int i;
+	int win_arena_height;
+
+	initscr();
+	viewer_init_colors();
+	keypad(stdscr, TRUE);
+	cbreak();
+	noecho();
+	curs_set(0);
+	refresh();
+
+	win_arena_height = LINES - (v->vm->nplayer * 3 + 6);
+	v->win_arena = create_newwin(win_arena_height, COLS, 0, 0, "Arena");
+	i = -1;
+	while (++i < v->vm->nplayer)
+		v->win_champions[i] = create_newwin(3, COLS, win_arena_height + 3 * i, 0, (char *)v->vm->p[i].name);
+	v->win_infos = create_newwin(6, COLS, win_arena_height + v->vm->nplayer * 3, 0, "Informations");
+
+	// v->win_arena = create_newwin(LINES / (v->vm->nplayer + 2), COLS, 0, 0, "Arena");
+	// i = -1;
+	// while (++i < v->vm->nplayer)
+	// 	v->win_champions[i] = create_newwin(LINES / (v->vm->nplayer + 2), COLS,
+	// 		(i + 1) * LINES / (v->vm->nplayer + 2), 0, (char *)v->vm->p[i].name);
+	// v->win_infos = create_newwin(LINES / (v->vm->nplayer + 2), COLS,
+	// 	(v->vm->nplayer + 1) * LINES / (v->vm->nplayer + 2), 0, "Informations");
+}
 
 void	viewer_init(t_viewer *v, t_vm *vm)
 {
@@ -21,25 +66,6 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);
 	viewer_init_ncurses(v);
-}
-
-void	viewer_init_ncurses(t_viewer *v)
-{
-	int i;
-
-	initscr();
-	keypad(stdscr, TRUE);
-	cbreak();
-	noecho();
-	curs_set(0);
-	refresh();
-	v->win_arena = create_newwin(LINES / (v->vm->nplayer + 2), COLS, 0, 0, "Arena");
-	i = -1;
-	while (++i < v->vm->nplayer)
-		v->win_champions[i] = create_newwin(LINES / (v->vm->nplayer + 2), COLS,
-			(i + 1) * LINES / (v->vm->nplayer + 2), 0, (char *)v->vm->p[i].name);
-	v->win_infos = create_newwin(LINES / (v->vm->nplayer + 2), COLS,
-		(v->vm->nplayer + 1) * LINES / (v->vm->nplayer + 2), 0, "Informations");
 }
 
 void	viewer_run(t_viewer *v)

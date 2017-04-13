@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/13 16:26:42 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 17:30:38 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ void	op_zjmp(t_vm *v, t_list *process)
 	{
 		shift = reverse_bytes(&ARENA(PC + 1), 2);
 		shift %= IDX_MOD;
-		printf("PC before : %d\t", PC);
-		printf("Decale toi de : %d\t", shift);
+		if (v->display_mode == 1)
+		{
+			printf("PC before : %d\t", PC);
+			printf("Decale toi de : %d\t", shift);
+		}
 		PC = (unsigned int)(PC + shift) % MEM_SIZE;
-		printf("PC after : %d\n", PC);
+		if (v->display_mode == 1)
+			printf("PC after : %d\n", PC);
 		ARENA(PC) = 0xFF; //DEBUG
-		print_arena(v); //DEBUG
+		if (v->display_mode == 1)
+			print_arena(v); //DEBUG
 	}
 }
 
@@ -35,12 +40,16 @@ void	op_fork(t_vm *v, t_list *process)
 
 	shift = reverse_bytes(&ARENA(PC + 1), 2);
 	shift %= IDX_MOD;
-	printf("PC PARENT : %d\t", PC);
+	if (v->display_mode == 1)
+		printf("PC PARENT : %d\t", PC);
 	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
 	PC += 3;
 	PC %= MEM_SIZE;
-	printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
-	print_arena(v); //DEBUG
+	if (v->display_mode == 1)
+	{
+		printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
+		print_arena(v); //DEBUG
+	}
 }
 
 void	op_lfork(t_vm *v, t_list *process)
@@ -48,10 +57,14 @@ void	op_lfork(t_vm *v, t_list *process)
 	int shift;
 
 	shift = reverse_bytes(&ARENA(PC + 1), 2);
-	printf("PC PARENT : %d\t", PC);
+	if (v->display_mode == 1)
+		printf("PC PARENT : %d\t", PC);
 	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
 	PC += 3;
 	PC %= MEM_SIZE;
-	printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
-	print_arena(v); //DEBUG
+	if (v->display_mode == 1)
+	{
+		printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
+		print_arena(v); //DEBUG
+	}
 }

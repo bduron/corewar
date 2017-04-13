@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 18:51:33 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/13 17:34:45 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	op_ldi(t_vm *v, t_list *process)
 		}
 		REG[val[0]] = reverse_bytes(&ARENA(PC + (val[1] + val[2]) % IDX_MOD), 4);
 		CARRY = REG[val[0]] ? 0 : 1;
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 	}
 	octal_shift(process, B_OCT, 2, 3);
 }
@@ -57,7 +58,8 @@ void	op_lld(t_vm *v, t_list *process)
 				shift = reverse_bytes(&ARENA((PC + shift)), 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
-			printf("val_saved = %x\n", shift); //DEBUG
+			if (v->display_mode == 1)
+				printf("val_saved = %x\n", shift); //DEBUG
 			CARRY = shift ? 0 : 1;
 		}
 	}
@@ -85,7 +87,8 @@ void	op_lldi(t_vm *v, t_list *process)
 		}
 		REG[val[0]] = reverse_bytes(&ARENA(PC + val[1] + val[2]), 4);
 		CARRY = REG[val[0]] ? 0 : 1;
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 	}
 	octal_shift(process, B_OCT, 2, 3);
 }
@@ -112,12 +115,17 @@ void	op_sti(t_vm *v, t_list *process)
 			else
 				val[arg_nb] = get_ar(v, process, &shift, type + 4); //+ 4 -> direct code sur 2 oct
 		}
-		printf("[0] = %x\t[1] = %x\treg[%x]\n", val[0], val[1], val[2]); //DEBUG
+		if (v->display_mode == 1)
+			printf("[0] = %x\t[1] = %x\treg[%x]\n", val[0], val[1], val[2]); //DEBUG
 		ret = val[0] + val[1];
-		printf("addr = %x\n", ret);
-		print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
-//		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+		{
+			printf("addr = %x\n", ret);
+			print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
+	//		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		}
 	}
-	print_arena(v); //DEBUG
+	if (v->display_mode == 1)
+		print_arena(v); //DEBUG
 	octal_shift(process, B_OCT, 2, 3);
 }

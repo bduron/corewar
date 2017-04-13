@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 16:20:46 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 18:24:28 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	*th_render_routine(void *p_data)
 {
 	t_viewer	*v;
 	int			i;
+	// int			y;
+	// int			x;
+	// int			max_y;
+	// int			max_x;
 
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
@@ -31,6 +35,26 @@ void	*th_render_routine(void *p_data)
 			&& (v->event_flags & FLAG_EVENT_TIMER)
 			&& !(v->event_flags & FLAG_EVENT_PAUSE))
 		{
+			werase(v->win_arena);
+			wmove(v->win_arena, 0, 0);
+			// getyx(v->win_arena, y, x);
+			// getmaxyx(v->win_arena, max_y, max_x);
+			// while (y < max_y + 1)
+			// {
+			// 	while (x < max_x)
+			// 	{
+			//
+			// 		++x;
+			// 	}
+			// 	++y;
+			// }
+			i = -1;
+			while (++i < MEM_SIZE)
+			{
+				wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+				wprintw(v->win_arena, "%.2x ", v->vm->a.arena[i]);
+			}
+			wrefresh(v->win_arena);
 			i = -1;
 			while (++i < 4)
 			{

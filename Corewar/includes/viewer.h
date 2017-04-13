@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 16:06:28 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 17:51:25 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void				*th_input_routine(void *p_data);
 void				*th_render_routine(void *p_data);
 
 void				viewer_init(t_viewer *v, t_vm *vm);
-void				viewer_init_ncurses(t_viewer *v);
 void				viewer_run(t_viewer *v);
 
 #endif
