@@ -3,18 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bduron <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/02 14:25:02 by cpoulet          ###   ########.fr        #
+#    Updated: 2017/04/13 14:37:19 by wolrajhti        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COREWAR= corewar
 
-CC= gcc
-CFLAGS= -Wall -Wextra -Werror -g -fsanitize=address
-LIBFT= -Llibft -lft 
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+LFLAGS	= -lncurses
+LIBFT = -Llibft -lft -lncurses -lpthread
 
 MKDIR= mkdir -p
 RM= rm -rf
@@ -35,15 +36,18 @@ operation_2.c \
 operation_3.c \
 operation_4.c \
 op_shift.c \
-op.c
-
+op.c \
+th_core.c \
+th_input.c \
+th_render.c \
+th_timer.c \
 
 OBJ= $(SRC:.c=.o)
 
 VPATH= srcs/corewar
 
 ########################
-#    Makefile rules    # 
+#    Makefile rules    #
 ########################
 
 all: libft $(COREWAR)
@@ -51,29 +55,29 @@ all: libft $(COREWAR)
 libft:
 	@make -C libft
 
-# Executables 
+# Executables
 
 $(COREWAR): $(OBJ)
-	@$(CC) -o $@ $(CFLAGS) $^ -I $(INC_DIR) $(LIBFT) 
+	@$(CC) -o $@ $(CFLAGS) $(LFLAGS) $^ -I $(INC_DIR) $(LIBFT)
 	@echo "Compiling [$@]"
 
-# Object files 
+# Object files
 
 $(OBJ): $(SRC)
-	@$(CC) -c $^ $(CFLAGS) -I $(INC_DIR) 
+	@$(CC) -c $^ $(CFLAGS) -I $(INC_DIR)
 	@echo "Compiling [$^]"
 
-# Cleaning rules 
+# Cleaning rules
 
 clean:
 	@rm -f $(OBJ)
-	@echo "Cleaning [$(OBJ)]"	
+	@echo "Cleaning [$(OBJ)]"
 
 fclean: clean
 	@rm -rf $(COREWAR)
 	@make fclean -C libft
-	@echo "Cleaning [libft corewar]"	
+	@echo "Cleaning [libft corewar]"
 
 re: fclean all
 
-.PHONY: clean fclean re libft 
+.PHONY: clean fclean re libft

@@ -6,11 +6,11 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:39:05 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 11:49:13 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 14:29:43 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar_viewer.h"
+#include "viewer.h"
 
 void	*th_timer_routine(void *p_data)
 {

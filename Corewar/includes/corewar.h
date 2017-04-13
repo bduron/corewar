@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/04 18:27:07 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/13 14:48:13 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include "libft.h"
 # include "op.h"
+# include "viewer.h"
 # include <stdio.h> // to be removed
 
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
@@ -73,12 +74,13 @@ typedef struct	s_vm
 	t_list			*process_lst;
 	t_arena			a;
 	t_player		p[MAX_PLAYERS];
-	int				nplayer;		
+	int				nplayer;
 	int				last_live_id;
 	int				ncycle;
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
 	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd
+	int				display_mode; // 1: raw, 2: interactive
 }				t_vm;
 
 

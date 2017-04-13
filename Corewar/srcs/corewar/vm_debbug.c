@@ -7,10 +7,10 @@ void print_processes(t_vm *v)
 	int i;
 
 	tmp = v->process_lst;
-	i = 0;			
-	while (tmp)	
+	i = 0;
+	while (tmp)
 	{
-		ft_printf("\n============ %d ============\n", i);		
+		ft_printf("\n============ %d ============\n", i);
 		ft_printf("|_carry:                  %d\n", ((t_process *)tmp->content)->carry);
 		ft_printf("|_pc:                     %d\n", ((t_process *)tmp->content)->pc);
 		ft_printf("|_live count:             %d\n", ((t_process *)tmp->content)->live_count);
@@ -27,16 +27,16 @@ void print_processes(t_vm *v)
 void dump(t_player p) // N'affiche pas le dernier octet 0a :s
 {
 	int j;
-	int k; 
+	int k;
 	int c;
 
 	j = 0;
 	while (j <= p.prog_len)
-	{	
+	{
 		(j == p.prog_len) ? ft_printf("%*c", (((16 - j % 16) * 5) / 2), ' ') : 0;
-		if (j % 16 == 0 || p.prog_len == j) 
+		if (j % 16 == 0 || p.prog_len == j)
 		{
-			ft_printf("  ");	
+			ft_printf("  ");
 			k = (p.prog_len == j) ? j - j % 16 : j - 16;
 			while (k < j && j != 0)
 			{
@@ -55,17 +55,17 @@ void dump(t_player p) // N'affiche pas le dernier octet 0a :s
 
 void print_arena(t_vm *v)
 {
-	
-	for (int i = 0; i < MEM_SIZE; i++)	
+
+	for (int i = 0; i < MEM_SIZE; i++)
 	{
 		if (i % 64 == 0)
 			ft_printf("\n");
 		if (i % 1 == 0) //
 			ft_printf(" "); //
 		if (v->a.owner[i] == -1)
-			ft_printf("%02x", v->a.arena[i]);	
-		else 
-			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);	
+			ft_printf("%02x", v->a.arena[i]);
+		else
+			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);
 
 	}
 }
@@ -74,7 +74,7 @@ void test_print_v(t_vm *v, int argc)
 {
 
 	ft_printf("\n[Nb players = %d]\n\n", v->nplayer);
-	for (int i = 0; i < argc - 1; i++)
+	for (int i = 0; i < argc - v->display_mode; i++) //OMG a for loop !!!
 	{
 		ft_printf("nplayer = %d\n", v->p[i].nplayer);
 		ft_printf("name = %s\n", v->p[i].name);

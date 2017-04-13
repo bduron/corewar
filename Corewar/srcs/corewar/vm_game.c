@@ -1,12 +1,12 @@
 
 #include "corewar.h"
 
-void update_process(t_vm *v, t_list *process) 
+void update_process(t_vm *v, t_list *process)
 {
 	if (OP_CAST == 0)
-		operate_process(v, process); 
-		//launch_op 
-	else 		
+		operate_process(v, process);
+		//launch_op
+	else
 		OP_CAST -= 1; // to optimize
 }
 
@@ -17,7 +17,7 @@ void browse_processes_lst(t_vm *v)
 	tmp = v->process_lst;
 	while (tmp)
 	{
-		update_process(v, tmp);			
+		update_process(v, tmp);
 		tmp = tmp->next;
 	}
 
