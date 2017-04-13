@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 18:33:47 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/13 16:27:04 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	op_live(t_vm *v, t_list *process)
 
 	LIVE++; // maybe uniquement dans le cas ou le numero du live correspond a un playeur valide
 	live = reverse_bytes(&ARENA(PC + 1), 4);
-	printf("LIVE : %x\n", live);
+	if (v->display_mode == 1)
+		printf("LIVE : %x\n", live);
 	octal_shift(process, B_OCT, 4, 1);
 }
 
@@ -40,7 +41,8 @@ void	op_ld(t_vm *v, t_list *process)
 				shift = reverse_bytes(&ARENA((PC + shift)), 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
-			printf("val_saved = %x\n", shift);
+			if (v->display_mode == 1)
+				printf("val_saved = %x\n", shift);
 			CARRY = shift ? 0 : 1;
 		}
 	}
@@ -71,6 +73,7 @@ void	op_st(t_vm *v, t_list *process)
 void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
-		printf("aff = |%d|\n", (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
+		if (v->display_mode == 1)
+			printf("aff = |%d|\n", (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
 	octal_shift(process, B_OCT, 4, 1);
 }

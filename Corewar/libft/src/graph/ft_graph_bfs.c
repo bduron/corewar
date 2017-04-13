@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_graph_bfs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 17:58:44 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/09 18:04:55 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/13 16:02:18 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	initialize_bfs(t_graph *g)
 	i = 0;
 	while (i < g->nvertices)
 	{
-		g->bfs_processed[i] = FALSE;
-		g->bfs_discovered[i] = FALSE;
+		g->bfs_processed[i] = FT_FALSE;
+		g->bfs_discovered[i] = FT_FALSE;
 		g->bfs_parent[i] = -1;
 		i++;
 	}
@@ -48,23 +48,23 @@ void	process_edge(int v, int y)
 void	bfs_norme(t_graph *g, int start, t_bfs *b)
 {
 	b->queue = ft_lstnew(&start, sizeof(start));
-	g->bfs_discovered[start] = TRUE;
+	g->bfs_discovered[start] = FT_TRUE;
 	while (b->queue != NULL)
 	{
 		b->pop = ft_lstpop(&(b->queue));
 		b->v = *(b->pop);
 		process_vertex_early(b->v);
-		g->bfs_processed[b->v] = TRUE;
+		g->bfs_processed[b->v] = FT_TRUE;
 		b->p = g->edges[b->v];
 		while (b->p != NULL)
 		{
 			b->y = b->p->y;
-			if (g->bfs_processed[b->y] == FALSE)
+			if (g->bfs_processed[b->y] == FT_FALSE)
 				process_edge(b->v, b->y);
-			if (g->bfs_discovered[b->y] == FALSE)
+			if (g->bfs_discovered[b->y] == FT_FALSE)
 			{
 				ft_lstappend(&(b->queue), ft_lstnew(&(b->y), sizeof(int)));
-				g->bfs_discovered[b->y] = TRUE;
+				g->bfs_discovered[b->y] = FT_TRUE;
 				g->bfs_parent[b->y] = b->v;
 			}
 			b->p = b->p->next;
@@ -87,23 +87,23 @@ void	bfs_norme(t_graph *g, int start, t_bfs *b)
 **	t_edgenode	*p;
 **
 **	queue = ft_lstnew(&start, sizeof(start));
-**	g->bfs_discovered[start] = TRUE;
+**	g->bfs_discovered[start] = FT_TRUE;
 **	while (queue != NULL)
 **	{
 **		pop = ft_lstpop(&queue);
 **		v = *pop;
 **		process_vertex_early(v);
-**		g->bfs_processed[v] = TRUE;
+**		g->bfs_processed[v] = FT_TRUE;
 **		p = g->edges[v];
 **		while (p != NULL)
 **		{
 **			y = p->y;
-**			if (g->bfs_processed[y] == FALSE)
+**			if (g->bfs_processed[y] == FT_FALSE)
 **				process_edge(v, y);
-**			if (g->bfs_discovered[y] == FALSE)
+**			if (g->bfs_discovered[y] == FT_FALSE)
 **			{
 **				ft_lstappend(&queue, ft_lstnew(&y, sizeof(int)));
-**				g->bfs_discovered[y] = TRUE;
+**				g->bfs_discovered[y] = FT_TRUE;
 **				g->bfs_parent[y] = v;
 **			}
 **			p = p->next;

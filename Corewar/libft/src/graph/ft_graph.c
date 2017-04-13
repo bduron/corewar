@@ -57,8 +57,8 @@ void	insert_edge(t_graph *g, int x, int y, t_bool directed)
 	p->next = g->edges[x];
 	g->edges[x] = p;
 	g->degree[x]++;
-	if (directed == FALSE)
-		insert_edge(g, y, x, TRUE);
+	if (directed == FT_FALSE)
+		insert_edge(g, y, x, FT_TRUE);
 	else
 		g->nedges++;
 }

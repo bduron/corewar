@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 14:29:34 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 16:20:51 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	*th_input_routine(void *p_data)
 	pthread_mutex_unlock(&v->mutex);
 	while(1)
 	{
+		// printf("INPUT");
 		if (((input = getch()) == ERR)
 			|| input == KEY_QUIT)
 		{

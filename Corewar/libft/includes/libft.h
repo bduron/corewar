@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 17:42:08 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/09 17:34:31 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/13 16:01:37 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 typedef enum
 {
-	FALSE,
-	TRUE
+	FT_FALSE,
+	FT_TRUE
 }	t_bool;
 
 typedef struct	s_list

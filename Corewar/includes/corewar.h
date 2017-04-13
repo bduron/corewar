@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/13 14:48:13 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 16:06:08 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void vm_init(t_vm *v);
 void vm_free(t_vm *v);
 
 void	run_game(t_vm *v);
+void 	browse_processes_lst(t_vm *v);
 void	operate_process(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);

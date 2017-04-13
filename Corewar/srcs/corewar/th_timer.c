@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:39:05 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 14:29:43 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 16:20:42 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*th_timer_routine(void *p_data)
 	pthread_mutex_lock(&v->mutex);
 	while(1)
 	{
+		// printf("TIMER");
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{
 			pthread_mutex_unlock(&v->mutex);

@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 14:29:30 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/13 16:20:54 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*th_core_routine(void *p_data)
 	pthread_mutex_lock(&v->mutex);
 	while (1)
 	{
+		// printf("CORE");
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{
 			pthread_mutex_unlock(&v->mutex);
@@ -39,16 +40,17 @@ void	*th_core_routine(void *p_data)
 			while (cooldown)
 			{
 				/* ... */
+				browse_processes_lst(v->vm);
 				++laps;
 				--cooldown;
 			}
 			/* ... */
 			pthread_mutex_lock(&v->mutex);
 			i = -1;
-			while (++i < 4)
+			while (++i < v->vm->nplayer)
 			{
 				bzero(v->events + i, 100);
-				sprintf(v->events[i], "%d %s", laps, v->names[i]);
+				sprintf(v->events[i], "%d %s", laps, v->vm->p[i].name);
 			}
 			v->event_flags |= FLAG_EVENT_CORE;
 			pthread_cond_broadcast(&v->cond);

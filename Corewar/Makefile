@@ -6,7 +6,7 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/13 14:37:19 by wolrajhti        ###   ########.fr        #
+#    Updated: 2017/04/13 16:07:04 by wolrajhti        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ th_core.c \
 th_input.c \
 th_render.c \
 th_timer.c \
+viewer.c
 
 OBJ= $(SRC:.c=.o)
 

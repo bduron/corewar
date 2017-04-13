@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 17:32:29 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/13 15:39:58 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int reverse_bytes(unsigned char *addr, int nbytes)
 
 void	execute_op(t_vm *v, t_list *process)
 {
-	printf("EXECUTION : %s\n", op_tab[NEXT_OP].name);
+	if (v->display_mode == 1)
+		printf("EXECUTION : %s\n", op_tab[NEXT_OP].name);
 	op_tab[NEXT_OP].f(v, process);
 }
 
@@ -69,14 +70,18 @@ void	init_next_op(t_vm *v, t_list *process)
 	{
 		NEXT_OP = 0;
 		PC++;
-		printf("FAIL !\n");
+		if (v->display_mode == 1)
+			printf("FAIL !\n");
 	}
 	else
 	{
 		NEXT_OP = ARENA(PC) - 1;
 		OP_CAST = op_tab[NEXT_OP].cycle - 1; // arbitraire pour le moment
-		printf("numero d'op : %2x\t", ARENA(PC));
-		printf("cast moi ce spell noob : %2d\n", OP_CAST);
+		if (v->display_mode == 1)
+		{
+			printf("numero d'op : %2x\t", ARENA(PC));
+			printf("cast moi ce spell noob : %2d\n", OP_CAST);
+		}
 	}
 }
 

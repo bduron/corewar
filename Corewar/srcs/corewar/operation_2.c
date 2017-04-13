@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 12:48:34 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/13 16:25:00 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	op_add(t_vm *v, t_list *process)
 			ARENA(PC + 4) >= 1 && ARENA(PC + 4) <= 16)
 		{
 			val = REG[ARENA(PC + 2) - 1] + REG[ARENA(PC + 3) - 1];
-			printf("val = %d\n", val); //DEBUG
+			if (v->display_mode == 1)
+				printf("val = %d\n", val); //DEBUG
 			CARRY = val ? 0 : 1;
 			REG[ARENA(PC + 4) - 1] = val;
 		}
@@ -46,7 +47,8 @@ void	op_sub(t_vm *v, t_list *process)
 			ARENA(PC + 4) >= 1 && ARENA(PC + 4) <= 16)
 		{
 			val = REG[ARENA(PC + 2) - 1] - REG[ARENA(PC + 3) - 1];
-			printf("val = %d\n", val); //DEBUG
+			if (v->display_mode == 1)
+				printf("val = %d\n", val); //DEBUG
 			CARRY = val ? 0 : 1;
 			REG[ARENA(PC + 4) - 1] = val;
 		}
@@ -74,7 +76,8 @@ void	op_and(t_vm *v, t_list *process)
 										get_ar(v, process, &shift, type);
 		}
 		REG[val[0]] = val[1] & val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
@@ -100,7 +103,8 @@ void	op_or(t_vm *v, t_list *process)
 										get_ar(v, process, &shift, type);
 		}
 		REG[val[0]] = val[1] | val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
@@ -126,7 +130,8 @@ void	op_xor(t_vm *v, t_list *process)
 										get_ar(v, process, &shift, type);
 		}
 		REG[val[0]] = val[1] ^ val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+		if (v->display_mode == 1)
+			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
