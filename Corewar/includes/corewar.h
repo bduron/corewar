@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/13 17:42:55 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/14 12:24:33 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
 # define ARENA(x)	v->a.arena[(unsigned int)(x) % MEM_SIZE]
 # define OWNER(x)	v->a.owner[(unsigned int)(x) % MEM_SIZE]
+/*
+** pboutelo
+** proposition :
+**     # define PC process->pc à la place
+** cast du t_list dans les appels de fonction, pour éviter de caster n fois...
+*/
 # define PC			(((t_process *)process->content)->pc)
 # define CARRY		(((t_process *)process->content)->carry)
 # define REG		(((t_process *)process->content)->reg)
@@ -41,24 +47,24 @@
 # define OCT_01(x)	((x & 0b110000) >> 4)
 # define OCT_00(x)	((x & 0b11000000) >> 6)
 
-typedef struct	s_process
-{
-	int carry;
-	int reg[REG_NUMBER];
-	int pc;
-	int op_cast; // launch op when cast == 0
-	int live_count;	// count emitted lives between CYCLE_TO_DIE
-	unsigned char next_op;
-}				t_process;
-
-typedef struct s_arena
+typedef struct		s_arena
 {
 	unsigned char	arena[MEM_SIZE];
 	char			owner[MEM_SIZE];
 	char			type[MEM_SIZE];
-}				t_arena;
+}					t_arena;
 
-typedef struct	s_player
+typedef struct		s_process
+{
+	int				carry;
+	int				reg[REG_NUMBER];
+	int				pc;
+	int				op_cast; // launch op when cast == 0
+	int				live_count;	// count emitted lives between CYCLE_TO_DIE
+	unsigned char	next_op;
+}					t_process;
+
+typedef struct		s_player
 {
 	int				nplayer;
 	unsigned char	name[PROG_NAME_LENGTH + 1];
@@ -67,9 +73,9 @@ typedef struct	s_player
 	int				prog_len;
 	int				exec_magic;
 	int				pc_address;
-}				t_player;
+}					t_player;
 
-typedef struct	s_vm
+typedef struct		s_vm
 {
 	t_list			*process_lst;
 	t_arena			a;
@@ -80,9 +86,8 @@ typedef struct	s_vm
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
 	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd
-	int				display_mode; // 1: raw, 2: interactive
-}				t_vm;
-
+	int				display_mode; // pboutelo: 1: raw, 2: interactive
+}					t_vm;
 
 void save_player(char *file, t_vm *v, int i);
 void get_players(int argc, char **argv, t_vm *v);

@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 16:20:54 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/14 11:37:12 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	*th_core_routine(void *p_data)
 			while (cooldown)
 			{
 				/* ... */
+				v->vm->ncycle++;
 				browse_processes_lst(v->vm);
 				++laps;
 				--cooldown;

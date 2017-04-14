@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 16:20:51 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/14 11:57:41 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	*th_input_routine(void *p_data)
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
 	werase(v->win_infos);
-	mvwprintw(v->win_infos, 0, 0, "FPS: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", 1048576 / v->fps, KEY_FPS_PP, KEY_FPS_LL);
-	mvwprintw(v->win_infos, 1, 0, "LPF: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
-	mvwprintw(v->win_infos, 2, 0, "PAUSE: %s\t\tCONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
-	mvwprintw(v->win_infos, 3, 0, "QUIT:\t\t\tCONTROLS: [ '%c' ]", KEY_QUIT);
+	mvwprintw(v->win_infos, 0, 0, "FPS:   %-10d CONTROLS: [ << '%c' ] [ '%c' >> ]", 1048576 / v->fps, KEY_FPS_PP, KEY_FPS_LL);
+	mvwprintw(v->win_infos, 1, 0, "LPF:   %-10d CONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
+	mvwprintw(v->win_infos, 2, 0, "PAUSE: %-10s CONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
+	mvwprintw(v->win_infos, 3, 0, "QUIT:             CONTROLS: [ '%c' ]", KEY_QUIT);
 	wrefresh(v->win_infos);
 	pthread_mutex_unlock(&v->mutex);
 	while(1)
@@ -54,12 +54,12 @@ void	*th_input_routine(void *p_data)
 				v->event_flags ^= FLAG_EVENT_PAUSE;
 				pthread_cond_broadcast(&v->cond);
 			}
-			werase(v->win_infos);
-			mvwprintw(v->win_infos, 0, 0, "FPS: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", 1048576 / v->fps, KEY_FPS_PP, KEY_FPS_LL);
-			mvwprintw(v->win_infos, 1, 0, "LPF: %d\t\t\tCONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
-			mvwprintw(v->win_infos, 2, 0, "PAUSE: %s\t\tCONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
-			mvwprintw(v->win_infos, 3, 0, "QUIT:\t\t\tCONTROLS: [ '%c' ]", KEY_QUIT);
+
+			mvwprintw(v->win_infos, 0, 7, "%-10d", 1048576 / v->fps);
+			mvwprintw(v->win_infos, 1, 7, "%-10d", v->lpf);
+			mvwprintw(v->win_infos, 2, 7, "%-10s", ONOFF(v->event_flags & FLAG_EVENT_PAUSE));
 			wrefresh(v->win_infos);
+
 			pthread_mutex_unlock(&v->mutex);
 		}
 	}

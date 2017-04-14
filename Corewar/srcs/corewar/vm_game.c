@@ -10,7 +10,7 @@ void update_process(t_vm *v, t_list *process)
 		OP_CAST -= 1; // to optimize
 }
 
-void browse_processes_lst(t_vm *v)
+void browse_processes_lst(t_vm *v) //pboutelo TODO : utilier ft_lstiter
 {
 	t_list *tmp;
 
@@ -20,7 +20,6 @@ void browse_processes_lst(t_vm *v)
 		update_process(v, tmp);
 		tmp = tmp->next;
 	}
-
 }
 
 void run_game(t_vm *v)

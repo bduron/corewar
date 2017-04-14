@@ -6,16 +6,18 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/13 17:51:25 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/14 11:04:25 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VIEWER_H
 # define VIEWER_H
 # include <libc.h>
+# include "libft.h"
 # include <ncurses.h>
 # include <pthread.h>
 # include "corewar.h"
+// # include "event.h"
 # define KEY_FPS_LL 'p'
 # define KEY_FPS_PP 'o'
 # define KEY_LPF_LL 'k'
@@ -28,7 +30,9 @@
 # define FLAG_EVENT_QUIT 8
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 
-typedef struct
+typedef struct s_vm	t_vm;
+
+typedef struct		s_viewer
 {
 	char			events[4][100];
 	WINDOW			*win_arena;
@@ -49,7 +53,9 @@ typedef struct
 	int				event_flags;
 
 	t_vm			*vm;
-}	t_viewer;
+
+	t_list			*event_list;
+}					t_viewer;
 
 WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
 void				destroy_win(WINDOW *local_win);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/03 16:57:24 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/14 11:06:58 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ typedef unsigned char			u_char;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct					header_s
+typedef struct					s_header
 {
-  unsigned int					magic;
-  char							prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int					prog_size;
-  char							comment[COMMENT_LENGTH + 1];
-}								header_t;
+	unsigned int				magic;
+	char						prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int				prog_size;
+	char						comment[COMMENT_LENGTH + 1];
+}								t_header;
 
-typedef struct	s_vm			t_vm;
+typedef	struct s_vm				t_vm;
 
 typedef struct					s_op
 {
@@ -84,22 +84,22 @@ typedef struct					s_op
 	void						(*f)(t_vm *v, t_list *process);
 }								t_op;
 
-void	op_live(t_vm *v, t_list *process);
-void	op_ld(t_vm *v, t_list *process);
-void	op_st(t_vm *v, t_list *process);
-void	op_add(t_vm *v, t_list *process);
-void	op_sub(t_vm *v, t_list *process);
-void	op_and(t_vm *v, t_list *process);
-void	op_or(t_vm *v, t_list *process);
-void	op_xor(t_vm *v, t_list *process);
-void	op_zjmp(t_vm *v, t_list *process);
-void	op_ldi(t_vm *v, t_list *process);
-void	op_sti(t_vm *v, t_list *process);
-void	op_fork(t_vm *v, t_list *process);
-void	op_lld(t_vm *v, t_list *process);
-void	op_lldi(t_vm *v, t_list *process);
-void	op_lfork(t_vm *v, t_list *process);
-void	op_aff(t_vm *v, t_list *process);
+void							op_live(t_vm *v, t_list *process);
+void							op_ld(t_vm *v, t_list *process);
+void							op_st(t_vm *v, t_list *process);
+void							op_add(t_vm *v, t_list *process);
+void							op_sub(t_vm *v, t_list *process);
+void							op_and(t_vm *v, t_list *process);
+void							op_or(t_vm *v, t_list *process);
+void							op_xor(t_vm *v, t_list *process);
+void							op_zjmp(t_vm *v, t_list *process);
+void							op_ldi(t_vm *v, t_list *process);
+void							op_sti(t_vm *v, t_list *process);
+void							op_fork(t_vm *v, t_list *process);
+void							op_lld(t_vm *v, t_list *process);
+void							op_lldi(t_vm *v, t_list *process);
+void							op_lfork(t_vm *v, t_list *process);
+void							op_aff(t_vm *v, t_list *process);
 
 extern t_op						op_tab[17];
 
