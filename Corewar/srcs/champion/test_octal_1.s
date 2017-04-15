@@ -1,6 +1,6 @@
 #by cpoulet, classic imp
 
-.name		"fork_hacking"
+.name		"TEST"
 .comment	"cheating like a pinson..."
 
 	sti r1, 0, %40
