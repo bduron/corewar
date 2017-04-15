@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 00:32:06 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/16 01:45:00 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ t_arg				parse_arg(int input, t_token *token, int opcode)
 	int				sign;
 
 	arg = (t_arg){-1, -1, -1};
-	while ((*token = lexer(input)).type == (t_types){Whitespace})
-		;
+	while (token->type == (t_types){Whitespace})
+		*token = lexer(input);
 	printf("%10s\t%s\n", str_type[token->type], token->str);
 	if (token->type == (t_types){Symbol})
 	{
@@ -119,14 +119,28 @@ int					parse_opcode(int input, int output, t_token *token, int opcode)
 	par = 0;
 	i = 0;
 	printf("%10s\t%s\n", str_type[token->type], token->str);
+	*token = lexer(input);
 	while (i < op_tab[opcode].nb_arg)
 	{
-		*token = lexer(input);
+		if (i && token->type == (t_types){Symbol} && *(token->str) == SEPARATOR_CHAR)
+			*token = lexer(input);
+		else if (i)
+			return (2);
 		if ((arg[i] = parse_arg(input, token, opcode)).size == -1)
 			return (1);
-		par = (par << 1) + arg[i].type;
+		if (!(op_tab[opcode].args[i] & arg[i].type))
+			return (3);
+		par = (par << 2) + arg[i].type;
 		i++;
 	}
+	int j = i;
+	while (j++ < 4)
+		par = par << 2;
+	j = -1;
+	if (op_tab[opcode].octal)
+		write (output, &par, 1);
+	while (++j < i)
+		write (output, &(arg[j].value), arg[j].size);
 	return (0);
 }
 
