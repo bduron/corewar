@@ -28,7 +28,7 @@ void run_game(t_vm *v)
 	int i;
 
 	i = 0;
-	while (++i < 300)//v->nlive_bctd != 0) // condition modif
+	while (++i < 700)//v->nlive_bctd != 0) // condition modif
 	{
 		printf("\ncycle = %d :\n", v->ncycle);
 		v->ncycle++;

@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/03 16:18:01 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/15 14:20:46 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,14 @@ void	op_zjmp(t_vm *v, t_list *process)
 		printf("Decale toi de : %d\t", shift);
 		PC = (unsigned int)(PC + shift) % MEM_SIZE;
 		printf("PC after : %d\n", PC);
-		ARENA(PC) = 0xFF; //DEBUG
 		print_arena(v); //DEBUG
+	}
+	else
+	{
+		printf("CARRY == 0\n");
+		printf("PC before : %d\t", PC);
+		PC += 3;
+		printf("PC after : %d\n", PC);
 	}
 }
 
