@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/15 14:59:24 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/16 00:16:58 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ static char				lexer_manage_label(t_token *token, char chr, int fd)
 		token->str = ft_stradd(&(token->str), chr);
 		chr = scanner(fd);
 	}
-	if (ft_iskeyword(token->str))
+	if (chr == LABEL_CHAR)
+		;
+	else if (ft_iskeyword(token->str))
 		token->type = (t_types){Keyword};
 	else if (ft_strisdigit(token->str))
 		token->type = (t_types){Number};

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/27 16:06:52 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/15 23:38:43 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct					s_op
 	unsigned int				cycle;
 	char						*description;
 	unsigned char				octal;
-	unsigned char				carry;
+	unsigned char				label; // ALELOUYA G PIGER KESAKO --> Si label == 1 alors DIR_SIZE = DIR_SIZE / 2 sinon DIR_SIZE = DIR_SIZE
 }								t_op;
 
 extern t_op						op_tab[17];
