@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/30 18:04:54 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/15 14:59:24 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int				ft_iskeyword(char *word)
 
 int						ft_strisdigit(char *str)
 {
+	if (!*str)
+		return (0);
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
@@ -56,9 +58,14 @@ int						ft_strisdigit(char *str)
 
 static int				ft_isregister(char *word)
 {
+	int		value;
+
 	if (*word != 'r')
 		return (0);
 	if (!ft_strisdigit(word + 1))
+		return (0);
+	value = ft_atoi(word + 1);
+	if (value > 16 || value <= 0)
 		return (0);
 	return (1);
 }
@@ -143,26 +150,4 @@ t_token					lexer(int fd)
 	else if (ft_strchr(LABEL_CHARS, chr))
 		chr = lexer_manage_label(&token, chr, fd);
 	return (token);
-}
-
-int					main(int argc, char **argv)
-{
-	char			*str_type[10] = {"None", "Comment", "Whitespace", "Newline", "Label", "Keyword", "Register", "Symbol", "String", "Number"};
-	t_token			token;
-	int				fd;
-
-	token = (t_token){0, 0};
-	if (argc != 2)
-		return (1);
-	if ((fd = open(argv[1], O_RDONLY)) < 0)
-		return (2);
-	while (1)
-	{
-		if (token.str)
-			ft_strdel(&(token.str));
-		token = lexer(fd);
-		printf("%10s\t%s\n", str_type[token.type], token.str);
-		if (token.type == (t_types){None})
-			return (0);
-	}
 }

@@ -1,0 +1,66 @@
+#--------------------- HEADER --------------------#
+
+if Symbol == .
+	if Label == name
+		if String
+			encode String
+		else
+			ERROR
+	else
+		ERROR
+else
+	ERROR
+
+if Symbol == .
+	if Label == comment
+		if String
+			encode String
+		else
+			ERROR
+	else
+		ERROR
+else
+	ERROR
+
+#------------------ OPCODE ----------------#
+
+if Label
+	if Symbol == :
+		continue
+	else
+		ERROR
+else if Keyword
+	foreach args in op_tab separated by Symbol == ,
+		if Arguments get != Argument require
+			ERROR
+		else
+			encode
+else
+	ERROR
+
+#------------------- ARGUMENTS -------------------#
+
+if Symbol == %
+	if Symbol == :
+		if Label exist
+			encode Direct Label
+		else
+			ERROR
+	else if Symbol == = || Symbol == +
+		if Number
+			encore Direct Number
+		else
+			ERROR
+	else if Number
+		encode Direct Number
+	else
+		ERROR
+else if Symbol == - || Symbol == +
+	if Number
+		encode Indirect Number
+	else
+		ERROR
+else if Number
+	encode Indirect Number
+else if Register
+	encode Register
