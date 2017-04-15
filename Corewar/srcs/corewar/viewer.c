@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/14 11:13:11 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/15 17:34:52 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	viewer_init_colors()
 	init_pair(3, COLOR_BLUE, COLOR_BLACK);
 	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(5, COLOR_CYAN, COLOR_BLACK);
+	init_pair(6, COLOR_BLACK, COLOR_MAGENTA);
 }
 
 static void	viewer_init_ncurses(t_viewer *v)
@@ -45,8 +46,9 @@ static void	viewer_init_ncurses(t_viewer *v)
 	v->win_arena = create_newwin(win_arena_height, COLS, 0, 0, "Arena");
 	i = -1;
 	while (++i < v->vm->nplayer)
-		v->win_champions[i] = create_newwin(3, COLS, win_arena_height + 3 * i, 0, (char *)v->vm->p[i].name);
-	v->win_infos = create_newwin(6, COLS, win_arena_height + v->vm->nplayer * 3, 0, "Informations");
+		v->win_champions[i] = create_newwin(6, 30, LINES - 6, COLS - 120 + 30 * i, (char *)v->vm->p[i].name);
+	v->win_processes = create_newwin(LINES - 6 - win_arena_height, COLS, win_arena_height, 0, "Processes list");
+	v->win_infos = create_newwin(6, COLS - 120, LINES - 6, 0, "Informations");
 
 	// v->win_arena = create_newwin(LINES / (v->vm->nplayer + 2), COLS, 0, 0, "Arena");
 	// i = -1;
@@ -63,6 +65,8 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->lpf = 1;
 	v->fps = 1048576;
 	v->event_flags = 0;
+	v->process_offset = 0;
+	v->anim_flags = 0;
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);
 	viewer_init_ncurses(v);
@@ -100,12 +104,17 @@ WINDOW *create_newwin(int height, int width, int starty, int startx, char *title
 	WINDOW *win_box;
 	WINDOW *win_content;
 	size_t	len;
+	// int y, x;
 
+	// y = 0;
+	// x = 0;
 	win_box = newwin(height, width, starty, startx);
 	box(win_box, 0 , 0);
 	win_content = derwin(win_box, height - 2, width - 4, 1, 2);
 	len = strlen(title);
 	wmove(win_box, 0, (width - len) / 2 - 3);
+	// getmaxyx(win_content, y, x);
+	// wprintw(win_box, " - %s - y : %d x : %d - ", title, y, x);
 	wprintw(win_box, " - %s - ", title);
 	wrefresh(win_box);
 	wrefresh(win_content);

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/14 11:28:18 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/15 14:24:55 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	init_next_op(t_vm *v, t_list *process)
 
 void	operate_process(t_vm *v, t_list *process)
 {
-	if (NEXT_OP)
+	if (NEXT_OP >= 0 && NEXT_OP < 16)
 		execute_op(v, process);
 	init_next_op(v, process);
 }

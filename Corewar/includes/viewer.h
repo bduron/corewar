@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/14 11:04:25 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/15 17:17:53 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <libc.h>
 # include "libft.h"
 # include <ncurses.h>
+# include <menu.h>
 # include <pthread.h>
 # include "corewar.h"
 // # include "event.h"
@@ -22,12 +23,20 @@
 # define KEY_FPS_PP 'o'
 # define KEY_LPF_LL 'k'
 # define KEY_LPF_PP 'l'
+# define KEY_PROCESS_LL 'i'
+# define KEY_PROCESS_PP 'j'
 # define KEY_PAUSE ' '
 # define KEY_QUIT 'q'
 # define FLAG_EVENT_CORE 1
 # define FLAG_EVENT_TIMER 2
 # define FLAG_EVENT_PAUSE 4
 # define FLAG_EVENT_QUIT 8
+// TODO mise a jour de win_infos en fonction des events
+# define FLAG_KEY_EVENT_FPS 16
+# define FLAG_KEY_EVENT_LPF 32
+# define FLAG_KEY_EVENT_PAUSE 64
+# define FLAG_KEY_EVENT_PROCESS 256
+
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 
 typedef struct s_vm	t_vm;
@@ -37,7 +46,10 @@ typedef struct		s_viewer
 	char			events[4][100];
 	WINDOW			*win_arena;
 	WINDOW			*win_champions[4];
+	WINDOW			*win_processes;
 	WINDOW			*win_infos;
+
+	int				process_offset;
 
 	int				fps;
 	int				lpf;
@@ -49,13 +61,22 @@ typedef struct		s_viewer
 	pthread_t		th_render;
 	pthread_t		th_input;
 	pthread_t		th_timer;
+	pthread_t		th_anim[4];
 
 	int				event_flags;
+	int				anim_flags;
 
 	t_vm			*vm;
 
 	t_list			*event_list;
 }					t_viewer;
+
+typedef struct		s_anim
+{
+	t_viewer		*v;
+	int				i;
+	char			*type;
+}					t_anim;
 
 WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
 void				destroy_win(WINDOW *local_win);
@@ -64,8 +85,10 @@ void				*th_core_routine(void *p_data);
 void				*th_timer_routine(void *p_data);
 void				*th_input_routine(void *p_data);
 void				*th_render_routine(void *p_data);
+void				*th_anim_routine(void *p_data);
 
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
+void				wprintw_process(t_viewer *v, int i, t_list *process);
 
 #endif

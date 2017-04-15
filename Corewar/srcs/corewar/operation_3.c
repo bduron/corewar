@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/13 17:30:38 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/15 14:09:07 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	op_zjmp(t_vm *v, t_list *process)
 		PC = (unsigned int)(PC + shift) % MEM_SIZE;
 		if (v->display_mode == 1)
 			printf("PC after : %d\n", PC);
-		ARENA(PC) = 0xFF; //DEBUG
+		// ARENA(PC) = 0xFF; //DEBUG
 		if (v->display_mode == 1)
 			print_arena(v); //DEBUG
 	}
+	else
+		PC += 3;
 }
 
 void	op_fork(t_vm *v, t_list *process)

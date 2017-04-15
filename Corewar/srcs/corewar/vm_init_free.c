@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_init_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/03/22 15:38:24 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/15 15:30:23 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void vm_init(t_vm *v)
 	ft_memset(v->a.owner, -1, sizeof(char) * MEM_SIZE);
 	ft_memset(v->a.type, -1, sizeof(char) * MEM_SIZE);
 	v->process_lst = NULL;
+	v->nprocess = 0;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{

@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/14 12:24:33 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/15 15:45:16 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct		s_vm
 	t_arena			a;
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;
+	int				nprocess;
 	int				last_live_id;
 	int				ncycle;
 	int				nlive_bctd; // lives emitted bctd

@@ -6,6 +6,7 @@ void add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	t_process	son;
 	int			k;
 
+	++v->nprocess;
 	ft_lstadd(&(v->process_lst), ft_lstnew(&son, sizeof(t_process)));
 	((t_process *)v->process_lst->content)->carry = CARRY;
 	((t_process *)v->process_lst->content)->pc = son_pc;
@@ -25,6 +26,7 @@ void load_processes(t_vm *v)
 	i = 0;
 	while (i < v->nplayer)
 	{
+		++v->nprocess;
 		ft_lstadd(&(v->process_lst), ft_lstnew(&p, sizeof(t_process))); // le dernier joueur aura le 1er processus dans l'ordre d'execution
 		((t_process *)v->process_lst->content)->carry = 0; //  1 ou 0 telle est la question ?
 		((t_process *)v->process_lst->content)->pc = v->p[i].pc_address; // addresse relative
