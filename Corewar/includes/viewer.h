@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/15 17:17:53 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/15 17:52:11 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@
 # define FLAG_KEY_EVENT_LPF 32
 # define FLAG_KEY_EVENT_PAUSE 64
 # define FLAG_KEY_EVENT_PROCESS 256
+
+// # define L1 "     "
+// # define L2 "  -  "
+// # define L3 "     "
+//
+// # define L1 "  _  "
+// # define L2 " | | "
+// # define L3 "  -  "
+//
+// # define L1 " ___ "
+// # define L2 "|   |"
+// # define L3 " --- "
+//
+// # define L1 " _ _ "
+// # define L2 "|   |"
+// # define L3 " -   "
+//
+// # define L1 "   _ "
+// # define L2 "    |"
+// # define L3 " -   "
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 
