@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 12:48:34 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/15 12:49:43 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,20 @@ void	op_and(t_vm *v, t_list *process)
 	shift = 0;
 	if (check_arg(5, B_OCT, nb_arg))
 	{
-		while (nb_arg != 1)
+		while (nb_arg)
 		{
 			type = (B_OCT >> (nb_arg-- * 2)) & 0b11;
-			if (type == 1 && (ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+			if (type == 1 && (ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[nb_arg] = !nb_arg ? ARENA(PC + 2 + shift) - 1 :
 										get_ar(v, process, &shift, type);
+			if (!nb_arg)
+			{
+				REG[val[0]] = val[1] & val[2];
+				printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+				CARRY = REG[val[0]] ? 0 : 1;
+			}
 		}
-		REG[val[0]] = val[1] & val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
-		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
 }
@@ -94,14 +97,17 @@ void	op_or(t_vm *v, t_list *process)
 		while (nb_arg)
 		{
 			type = (B_OCT >> (nb_arg-- * 2)) & 0b11;
-			if (type == 1 && (ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+			if (type == 1 && (ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[nb_arg] = !nb_arg ? ARENA(PC + 2 + shift) - 1 :
 										get_ar(v, process, &shift, type);
+			if (!nb_arg)
+			{
+				REG[val[0]] = val[1] | val[2];
+				printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+				CARRY = REG[val[0]] ? 0 : 1;
+			}
 		}
-		REG[val[0]] = val[1] | val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
-		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
 }
@@ -120,14 +126,17 @@ void	op_xor(t_vm *v, t_list *process)
 		while (nb_arg)
 		{
 			type = (B_OCT >> (nb_arg-- * 2)) & 0b11;
-			if (type == 1 && (ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+			if (type == 1 && (ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[nb_arg] = !nb_arg ? ARENA(PC + 2 + shift) - 1 :
 										get_ar(v, process, &shift, type);
+			if (!nb_arg)
+			{
+				REG[val[0]] = val[1] ^ val[2];
+				printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+				CARRY = REG[val[0]] ? 0 : 1;
+			}
 		}
-		REG[val[0]] = val[1] ^ val[2];
-		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
-		CARRY = REG[val[0]] ? 0 : 1;
 	}
 	octal_shift(process, B_OCT, 4, 3);
 }

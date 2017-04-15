@@ -1,8 +1,9 @@
-#by cpoulet, classic imp
+.name		"test_and"
+.comment	"in progress..."
 
-.name		"fork_hacking"
-.comment	"cheating like a pinson..."
-
+		ld %1, r1
+		ld %10, r2
+		ld %15, r3
 		and r1, r2, r3  #54
 		and %0, r2, r3	#94
 		and 0, r2, r3	#d4

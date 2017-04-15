@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/04 18:33:47 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/15 12:51:14 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	op_live(t_vm *v, t_list *process)
 	LIVE++; // maybe uniquement dans le cas ou le numero du live correspond a un playeur valide
 	live = reverse_bytes(&ARENA(PC + 1), 4);
 	printf("LIVE : %x\n", live);
-	octal_shift(process, B_OCT, 4, 1);
+	PC += 5;
 }
 
 void	op_ld(t_vm *v, t_list *process)
