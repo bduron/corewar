@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:28 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 22:05:57 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/16 23:49:51 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_label				*getlabels(void);
 
 int					ft_getkeyword(char *word);
 int					init_label(int input, int *value);
-int					label_value(char *name);
+int					label_index(char *name);
+int					label_value(char *name, int index);
 
 #endif

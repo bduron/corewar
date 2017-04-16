@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 23:05:47 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 00:24:22 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,10 @@ t_arg				parse_arg(int input, t_token *token, int opcode)
 				{
 					*token = lexer(input);
 					printf("%10s\t%s\n", str_type[token->type], token->str);
-					if (label_value(token->str) != INT_MAX)
+					if (label_index(token->str) != -1)
 					{
-						printf("value:\t%d\n", label_value(token->str));
-						arg = (t_arg){T_DIR, label_value(token->str), (op_tab[opcode].label) ? DIR_SIZE / 2 : DIR_SIZE};
+						printf("\tvalue:\t%d\n", label_value(token->str, getlabels()->index));
+						arg = (t_arg){T_DIR, label_value(token->str, getlabels()->index), (op_tab[opcode].label) ? DIR_SIZE / 2 : DIR_SIZE};
 					}
 				}
 			}
@@ -172,17 +172,30 @@ static int			parse_opcode(int input, int output, t_token *token, int opcode)
 			return (1);
 		if (!(op_tab[opcode].args[i] & arg[i].type))
 			return (3);
+		arg[i].type = (arg[i].type == T_IND) ? IND_CODE : arg[i].type;
+//		printf("\tType:\t%10d\n", arg[i].type);
 		par = (par << 2) + arg[i].type;
+//		printf("\tParameter:\t%10.8p\n", par);
 		i++;
 	}
 	int j = i;
 	while (j++ < 4)
+	{
 		par = par << 2;
+//		printf("\tParameter:\t%10.8p\n", par);
+	}
 	j = -1;
 	if (op_tab[opcode].octal)
+	{
 		fixed_write (output, &par, 1);
+		getlabels()->index += 1;
+	}
 	while (++j < i)
+	{
 		fixed_write (output, &(arg[j].value), arg[j].size);
+		getlabels()->index += arg[j].size;
+	}
+	getlabels()->index += 1;
 	return (0);
 }
 
@@ -213,7 +226,6 @@ int					main(int argc, char **argv)
 			printf("%10s\t%s\n", str_type[token.type], token.str);
 			if ((token = lexer(input)).type != (t_types){Symbol} || *(token.str) != LABEL_CHAR)
 				return (5);
-			getlabels()->index += 1;
 			token = lexer(input);
 		}
 		else if (token.type == (t_types){Keyword})

@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 19:43:11 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 22:20:43 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 00:00:14 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void					print_label(void)
 {
 	t_label				*label = getlabels();
 
-	printf("index: %d\n", label->index);
 	t_list				*labels = label->label;
 	while (labels)
 	{
@@ -52,24 +51,17 @@ int						label_index(char *name)
 	return (-1);
 }
 
-int						label_value(char *name)
+int						label_value(char *name, int index)
 {
 	t_list				*labels;
-	int					index;
-	int					value;
 
-	labels = getlabels()->label;
-	index = getlabels()->index;
-	while (index--)
-		labels = labels->next;
-	value = labels->content_size;
 	labels = getlabels()->label;
 	while (labels)
 	{
 		printf("%s == %s\n", name, labels->content);
 		if (labels->content)
 			if (!ft_strcmp(labels->content, name))
-				return (labels->content_size - value);
+				return (labels->content_size - index);
 		labels = labels->next;
 	}
 	return (INT_MAX);
@@ -80,9 +72,14 @@ int						add_label(char *name, int value)
 	t_list				*new_labels;
 	t_list				*labels;
 
-	if (label_index(name) != -1)
-		return (1);
-	new_labels = ft_lstnew(name, ft_strlen(name) + 1);
+	if (name)
+	{
+		if (label_index(name) != -1)
+			return (1);
+		new_labels = ft_lstnew(name, ft_strlen(name) + 1);
+	}
+	else
+		new_labels = ft_lstnew(NULL, 0);
 	new_labels->content_size = value;
 	labels = getlabels()->label;
 	ft_lstaddback(&labels, new_labels);
