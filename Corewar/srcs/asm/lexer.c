@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 00:16:58 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/16 22:20:21 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ static char				lexer_manage_string(t_token *token, char chr, int fd)
 t_token					lexer(int fd)
 {
 	t_token				token;
-	static char			chr = 0;
+	static char			chr = -1;
 	
-	chr = (chr) ? chr : scanner(fd);
+	chr = (chr != -1) ? chr : scanner(fd);
 	token = (t_token){0, 0};
 	if (ft_strchr(WHITESPACE_CHARS, chr) || chr == COMMENT_CHAR)
 		chr = lexer_manage_white(&token, chr, fd);
