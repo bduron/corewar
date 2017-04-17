@@ -6,7 +6,7 @@
 #*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#             *#
-#*   Updated: 2017/02/09 15:22:28 by kcosta           ###   ########.fr       *#
+#*   Updated: 2017/04/17 11:33:27 by kcosta           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -31,16 +31,21 @@ COREWAR			:= corewar
 
 # ========== Standard ========== #
 CC				:= gcc
-FLAGS			:= -Wall -Wextra -Werror #-fsanitize=address
+FLAGS			:= -g #-fsanitize=address #-g -Wall -Wextra -Werror #-fsanitize=address
 # ============================== #
 
 # =========== Files ============ #
 ASM_SRCS_FILES		:=	op.c		\
-						asm.c
+						lexer.c		\
+						label.c		\
+						parser.c	\
+						scanner.c
 CORE_SRCS_FILES		:=	op.c		\
 						corewar.c
 ASM_HEADER_FILES	:=	op.h		\
-						asm.h
+						parser.h	\
+						scanner.h	\
+						lexer.h
 CORE_HEADERS_FILES	:=	op.h		\
 			 			corewar.h
 # ============================== #

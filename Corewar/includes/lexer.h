@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 00:45:57 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 11:20:24 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef enum		e_types
 
 typedef struct		s_token
 {
-	char			*str;
+	char			str[COMMENT_LENGTH + 1];
 	t_types			type;
 }					t_token;
 

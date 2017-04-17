@@ -6,13 +6,13 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 15:52:23 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 00:14:18 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 13:21:56 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scanner.h"
 
-char		scanner(fd)
+char		scanner(int fd)
 {
 	char	c;
 

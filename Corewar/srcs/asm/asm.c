@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/02/09 15:44:30 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 13:28:48 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include "asm.h"
 #include "libft.h"
 
-static int	ft_error(char *msg, int ft_errnum)
+static int		ft_error(char *msg, int ft_errnum)
 {
 	ft_putendl_fd(msg, 2);
 	return (ft_errnum);
 }
 
-static char	*ft_check_file(char *filename)
+static char		*ft_check_file(char *filename)
 {
 	char	*extension;
 	char	*output;
@@ -37,7 +37,7 @@ static char	*ft_check_file(char *filename)
 	return (output);
 }
 
-static int	ft_compile(char *in_name, char *out_name)
+static int		ft_compile(char *in_name, char *out_name)
 {
 	int		input;
 	int		output;
@@ -52,7 +52,7 @@ static int	ft_compile(char *in_name, char *out_name)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char	*output;
 

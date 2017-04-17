@@ -6,27 +6,21 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/16 22:20:21 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 13:24:05 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static char				*ft_stradd(char **str, char c)
+static t_token			ft_tokenupdate(t_token token, t_types type, char chr)
 {
-	char		*tmp;
-	char		dup[2];
+	unsigned int		index;
 
-	dup[0] = c;
-	dup[1] = 0;
-	if (!str)
-		return (NULL);
-	if (!*str)
-		return (ft_strdup(dup));
-	tmp = *str;
-	*str = ft_strjoin(*str, dup);
-	ft_strdel(&tmp);
-	return (*str);
+	token.type = type;
+	index = ft_strlen(token.str);
+	if (index < COMMENT_LENGTH)
+		token.str[ft_strlen(token.str)] = chr;
+	return (token);
 }
 
 static int				ft_iskeyword(char *word)
@@ -76,7 +70,7 @@ static char				lexer_manage_white(t_token *token, char chr, int fd)
 	{
 		while (ft_strchr(WHITESPACE_CHARS, chr))
 		{
-			*token = (t_token){0, (t_types){Whitespace}};
+			token->type = (t_types){Whitespace};
 			while (ft_strchr(WHITESPACE_CHARS, chr))
 			{
 				if (chr == '\n')
@@ -86,7 +80,7 @@ static char				lexer_manage_white(t_token *token, char chr, int fd)
 		}
 		while (chr == COMMENT_CHAR)
 		{
-			*token = (t_token){0, (t_types){Comment}};
+			token->type = (t_types){Comment};
 			while (chr != '\n')
 			{
 				if (chr == 0)
@@ -100,11 +94,11 @@ static char				lexer_manage_white(t_token *token, char chr, int fd)
 
 static char				lexer_manage_label(t_token *token, char chr, int fd)
 {
-	*token = (t_token){ft_stradd(&(token->str), chr), (t_types){Label}};
+	*token = ft_tokenupdate(*token, (t_types){Label}, chr);
 	chr = scanner(fd);
 	while (ft_strchr(LABEL_CHARS, chr))
 	{
-		token->str = ft_stradd(&(token->str), chr);
+		*token = ft_tokenupdate(*token, token->type, chr);
 		chr = scanner(fd);
 	}
 	if (chr == LABEL_CHAR)
@@ -120,13 +114,13 @@ static char				lexer_manage_label(t_token *token, char chr, int fd)
 
 static char				lexer_manage_string(t_token *token, char chr, int fd)
 {
-	*token = (t_token){0, (t_types){String}};
+	token->type = (t_types){String};
 	chr = scanner(fd);
 	while (chr != '"')
 	{
 		if (chr == 0)
 			return (0);
-		token->str = ft_stradd(&(token->str), chr);
+		*token = ft_tokenupdate(*token, token->type, chr);
 		chr = scanner(fd);
 	}
 	chr = scanner(fd);
@@ -137,14 +131,15 @@ t_token					lexer(int fd)
 {
 	t_token				token;
 	static char			chr = -1;
-	
+
 	chr = (chr != -1) ? chr : scanner(fd);
 	token = (t_token){0, 0};
+	ft_memset(token.str, 0, COMMENT_LENGTH + 1);
 	if (ft_strchr(WHITESPACE_CHARS, chr) || chr == COMMENT_CHAR)
 		chr = lexer_manage_white(&token, chr, fd);
 	else if (ft_strchr(SYMBOL_CHARS, chr))
 	{
-		token = (t_token){ft_stradd(&(token.str), chr), (t_types){Symbol}};
+		token = ft_tokenupdate(token, (t_types){Symbol}, chr);
 		chr = scanner(fd);
 	}
 	else if (chr == '"')

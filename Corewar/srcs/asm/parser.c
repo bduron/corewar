@@ -6,13 +6,12 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/17 00:24:22 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 13:26:14 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-char					*str_type[10] = {"None", "Comment", "Whitespace", "Newline", "Label", "Keyword", "Register", "Symbol", "String", "Number"};
 
 int						ft_getkeyword(char *word)
 {
@@ -71,11 +70,11 @@ static int				parse_header(int input, int output, t_token *token, int *value) //
 	while (i < 2)
 	{
 		*token = lexer(input);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
+		while (token->type == (t_types){Whitespace} || token->type == (t_types){Newline})
+			*token = lexer(input);
 		if (token->type != (t_types){Symbol} || *(token->str) != '.')
 			return (1);
 		*token = lexer(input);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		if (token->type != (t_types){Label}
 		|| ft_strcmp(token->str, (i == 0) ? "name" : "comment"))
 			return (2);
@@ -83,7 +82,9 @@ static int				parse_header(int input, int output, t_token *token, int *value) //
 			;
 		if (token->type != (t_types){String})
 			return (3);
-		if (i)
+		if (!i && ft_strlen(token->str) > PROG_NAME_LENGTH)
+			return (4);
+		else if (i)
 			fixed_write (output, value, sizeof(i));
 		write (output, token->str, i == 0 ? PROG_NAME_LENGTH + 4 : COMMENT_LENGTH + 4); // Must be a clean write here we copy garbage char // Dont know why the +4 (Maybe I miss a int somewhere ?)
 		while ((*token = lexer(input)).type != (t_types){Newline})
@@ -102,27 +103,23 @@ t_arg				parse_arg(int input, t_token *token, int opcode)
 	arg = (t_arg){-1, -1, -1};
 	while (token->type == (t_types){Whitespace})
 		*token = lexer(input);
-	printf("%10s\t%s\n", str_type[token->type], token->str);
 	if (token->type == (t_types){Symbol})
 	{
 		if (*(token->str) == DIRECT_CHAR)
 		{
 			*token = lexer(input);
-			printf("%10s\t%s\n", str_type[token->type], token->str);
 			if (token->type == (t_types){Symbol})
 			{
 				if (*(token->str) == '+' || *(token->str) == '-')
 				{
 					sign = (*(token->str) == '+') ? 1 : -1;
 					*token = lexer(input);
-					printf("%10s\t%s\n", str_type[token->type], token->str);
 					if (token->type == (t_types){Number})
 						arg = (t_arg){T_DIR, sign * ft_atoi(token->str), (op_tab[opcode].label) ? DIR_SIZE / 2 : DIR_SIZE};
 				}
 				else if (*(token->str) == LABEL_CHAR)
 				{
 					*token = lexer(input);
-					printf("%10s\t%s\n", str_type[token->type], token->str);
 					if (label_index(token->str) != -1)
 					{
 						printf("\tvalue:\t%d\n", label_value(token->str, getlabels()->index));
@@ -137,7 +134,6 @@ t_arg				parse_arg(int input, t_token *token, int opcode)
 		{
 			sign = (*(token->str) == '+') ? 1 : -1;
 			*token = lexer(input);
-			printf("%10s\t%s\n", str_type[token->type], token->str);
 			if (token->type == (t_types){Number})
 				arg = (t_arg){T_IND, sign * ft_atoi(token->str), IND_SIZE};
 		}
@@ -159,7 +155,6 @@ static int			parse_opcode(int input, int output, t_token *token, int opcode)
 
 	par = 0;
 	i = 0;
-	printf("%10s\t%s\n", str_type[token->type], token->str);
 	*token = lexer(input);
 	fixed_write (output, &(op_tab[opcode].opcode), 1);
 	while (i < op_tab[opcode].nb_arg)
@@ -223,7 +218,6 @@ int					main(int argc, char **argv)
 			token = lexer(input);
 		if (token.type == (t_types){Label})
 		{
-			printf("%10s\t%s\n", str_type[token.type], token.str);
 			if ((token = lexer(input)).type != (t_types){Symbol} || *(token.str) != LABEL_CHAR)
 				return (5);
 			token = lexer(input);
@@ -240,7 +234,7 @@ int					main(int argc, char **argv)
 			}
 		}
 		else if (token.type == (t_types){None})
-			return (8);
+			break ;
 		else
 			printf("ERROR\n");
 	}
