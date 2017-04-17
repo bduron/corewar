@@ -6,13 +6,11 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 19:43:11 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/17 12:19:40 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 18:01:06 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-char					*str_type[10] = {"None", "Comment", "Whitespace", "Newline", "Label", "Keyword", "Register", "Symbol", "String", "Number"};
 
 t_label					*getlabels(void)
 {
@@ -21,18 +19,6 @@ t_label					*getlabels(void)
 	if (labels.label == NULL)
 		labels.label = ft_lstnew(NULL, 0);
 	return (&labels);
-}
-
-void					print_label(void)
-{
-	t_label				*label = getlabels();
-
-	t_list				*labels = label->label;
-	while (labels)
-	{
-		printf("content: %10s\tsize: %zu\n", labels->content, labels->content_size);
-		labels = labels->next;
-	}
 }
 
 int						label_index(char *name)
@@ -60,7 +46,6 @@ int						label_value(char *name, int index)
 	labels = getlabels()->label;
 	while (labels)
 	{
-		printf("%s == %s\n", name, labels->content);
 		if (labels->content)
 			if (!ft_strcmp(labels->content, name))
 				return (labels->content_size - index);
@@ -96,27 +81,21 @@ int						skip_header(int input, t_token *token)
 	while (i < 2)
 	{
 		*token = lexer(input);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		while (token->type == (t_types){Whitespace} || token->type == (t_types){Newline})
 			*token = lexer(input);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		if (token->type != (t_types){Symbol} || *(token->str) != '.')
 			return (1);
 		*token = lexer(input);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		if (token->type != (t_types){Label}
 		|| ft_strcmp(token->str, (i == 0) ? "name" : "comment"))
 			return (2);
 		while ((*token = lexer(input)).type == (t_types){Whitespace})
 			;
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		if (token->type != (t_types){String})
 			return (3);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		while ((*token = lexer(input)).type != (t_types){Newline})
 			if (token->type != (t_types){Whitespace})
 				return (4);
-		printf("%10s\t%s\n", str_type[token->type], token->str);
 		i++;
 	}
 	return (0);
@@ -130,27 +109,23 @@ t_arg				peek_arg(int input, t_token *token, int opcode)
 	arg = (t_arg){-1, -1, -1};
 	while (token->type == (t_types){Whitespace})
 		*token = lexer(input);
-	printf("%10s\t%s\n", str_type[token->type], token->str);
 	if (token->type == (t_types){Symbol})
 	{
 		if (*(token->str) == DIRECT_CHAR)
 		{
 			*token = lexer(input);
-			printf("%10s\t%s\n", str_type[token->type], token->str);
 			if (token->type == (t_types){Symbol})
 			{
 				if (*(token->str) == '+' || *(token->str) == '-')
 				{
 					sign = (*(token->str) == '+') ? 1 : -1;
 					*token = lexer(input);
-					printf("%10s\t%s\n", str_type[token->type], token->str);
 					if (token->type == (t_types){Number})
 						arg = (t_arg){T_DIR, sign * ft_atoi(token->str), (op_tab[opcode].label) ? DIR_SIZE / 2 : DIR_SIZE};
 				}
 				else if (*(token->str) == LABEL_CHAR)
 				{
 					*token = lexer(input);
-					printf("%10s\t%s\n", str_type[token->type], token->str);
 					arg = (t_arg){T_DIR, 0, (op_tab[opcode].label) ? DIR_SIZE / 2 : DIR_SIZE};
 				}
 			}
@@ -161,7 +136,6 @@ t_arg				peek_arg(int input, t_token *token, int opcode)
 		{
 			sign = (*(token->str) == '+') ? 1 : -1;
 			*token = lexer(input);
-			printf("%10s\t%s\n", str_type[token->type], token->str);
 			if (token->type == (t_types){Number})
 				arg = (t_arg){T_IND, sign * ft_atoi(token->str), IND_SIZE};
 		}
@@ -182,7 +156,6 @@ static int			peek_opcode(int input, int *value, t_token *token, int opcode)
 
 	i = 0;
 	*token = lexer(input);
-	printf("%10s\t%s\n", str_type[token->type], token->str);
 	*value += 1;
 	while (i < op_tab[opcode].nb_arg)
 	{
@@ -204,6 +177,38 @@ static int			peek_opcode(int input, int *value, t_token *token, int opcode)
 	return (0);
 }
 
+static int			init_skip_whitespace(int input, t_token *token)
+{
+	while (token->type == (t_types){Whitespace}
+			|| token->type == (t_types){Newline})
+	*token = lexer(input);
+	return (0);
+}
+
+static int			init_manage_label(int input, t_token *token, int *value)
+{
+	if (add_label(token->str, *value))
+		return (1);
+	if ((*token = lexer(input)).type != (t_types){Symbol}
+		|| *(token->str) != LABEL_CHAR)
+		return (2);
+	*token = lexer(input);
+	return (0);
+}
+
+static int			init_manage_opcode(int input, t_token *token, int *value)
+{
+	if (peek_opcode(input, value, token, ft_getkeyword(token->str)))
+			return (1);
+	while (token->type != (t_types){Newline})
+	{
+		if (token->type != (t_types){Whitespace})
+			return (2);
+		*token = lexer(input);
+	}
+	return (0);
+}
+
 int					init_label(int input, int *value)
 {
 	t_token			token;
@@ -213,35 +218,22 @@ int					init_label(int input, int *value)
 		return (1);
 	while (token.type != (t_types){None})
 	{
-		while (token.type == (t_types){Whitespace}
-		|| token.type == (t_types){Newline})
-			token = lexer(input);
+		init_skip_whitespace(input, &token);
 		if (token.type == (t_types){Label})
 		{
-			printf("%10s\t%s\n", str_type[token.type], token.str);
-			if (add_label(token.str, *value))
+			if (init_manage_label(input, &token, value))
 				return (2);
-			if ((token = lexer(input)).type != (t_types){Symbol} || *(token.str) != LABEL_CHAR)
-				return (3);
-			token = lexer(input);
 		}
 		else if (token.type == (t_types){Keyword})
 		{
-			if (peek_opcode(input, value, &token, ft_getkeyword(token.str)))
-					return (6);
-			while (token.type != (t_types){Newline})
-			{
-				if (token.type != (t_types){Whitespace})
-					return (7);
-				token = lexer(input);
-			}
+			if (init_manage_opcode(input, &token, value))
+				return (3);
 		}
 		else if (token.type == (t_types){None})
 			break ;
 		else
-			printf("ERROR\n");
+			return (1);
 	}
 	lseek(input, 0, SEEK_SET);
-	print_label();
 	return (0);
 }

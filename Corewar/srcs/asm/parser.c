@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/17 13:26:14 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/17 17:51:25 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,5 +238,6 @@ int					main(int argc, char **argv)
 		else
 			printf("ERROR\n");
 	}
+	printf("ALL GOOD\n");
 	return (0);
 }
