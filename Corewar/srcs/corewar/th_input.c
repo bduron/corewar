@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/15 17:25:02 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:31:26 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	*th_input_routine(void *p_data)
 {
 	t_viewer	*v;
 	int			input;
-	int			i;
-	t_list		*tmp;
 	t_anim		*a;
 
 	v = (t_viewer *)p_data;
@@ -90,16 +88,7 @@ void	*th_input_routine(void *p_data)
 			mvwprintw(v->win_infos, 2, 7, "%-10s", ONOFF(v->event_flags & FLAG_EVENT_PAUSE));
 			wrefresh(v->win_infos);
 
-			werase(v->win_processes);
-			i = -1;
-			tmp = v->vm->process_lst;
-			while (tmp)
-			{
-				wprintw_process(v, ++i, tmp);
-				tmp = tmp->next;
-			}
-			wrefresh(v->win_processes);
-
+			maj_process(v); // que si on a appuyé sur les touches "i" ou "j" !!!
 			pthread_mutex_unlock(&v->mutex);
 		}
 	}

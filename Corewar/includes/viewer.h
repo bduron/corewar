@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/15 17:52:11 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:29:53 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define FLAG_KEY_EVENT_PAUSE 64
 # define FLAG_KEY_EVENT_PROCESS 256
 
+// " _ _"
+// "| ' |"
+// " \ /"
+
 // # define L1 "     "
 // # define L2 "  -  "
 // # define L3 "     "
@@ -63,7 +67,9 @@ typedef struct s_vm	t_vm;
 
 typedef struct		s_viewer
 {
-	char			events[4][100];
+	unsigned char	arena[MEM_SIZE];
+	unsigned char	arena_flag[MEM_SIZE];
+	char			events[4][100]; // useless
 	WINDOW			*win_arena;
 	WINDOW			*win_champions[4];
 	WINDOW			*win_processes;
@@ -109,6 +115,7 @@ void				*th_anim_routine(void *p_data);
 
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
-void				wprintw_process(t_viewer *v, int i, t_list *process);
+void				maj_process(t_viewer *v);
+void				maj_arena(t_viewer *v);
 
 #endif
