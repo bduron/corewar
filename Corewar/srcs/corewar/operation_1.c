@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/18 17:55:43 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/18 18:34:30 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	op_live(t_vm *v, t_list *process)
 
 	LIVE++;
 	live = reverse_bytes(&ARENA(PC + 1), 4);
+	is_player(v, live);
 	if (v->display_mode == 1)
 		printf("LIVE : %x\n", live);
-
 	PC += 5;
 }
 
