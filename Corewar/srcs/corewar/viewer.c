@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/17 19:24:24 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/18 07:57:28 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static void	viewer_init_ncurses(t_viewer *v)
 	v->win_arena = create_newwin(win_arena_height, COLS, 0, 0, "Arena");
 	i = -1;
 	while (++i < v->vm->nplayer)
-		v->win_champions[i] = create_newwin(6, 30, LINES - 6, COLS - 120 + 30 * i, (char *)v->vm->p[i].name);
+		v->win_champions[i] = create_newwin(6, 20, LINES - 6, COLS - 80 + 20 * i, (char *)v->vm->p[i].name);
 	v->win_processes = create_newwin(LINES - 6 - win_arena_height, COLS, win_arena_height, 0, "Processes list");
-	v->win_infos = create_newwin(6, COLS - 120, LINES - 6, 0, "Informations");
+	v->win_infos = create_newwin(6, COLS - 80, LINES - 6, 0, "Informations");
 }
 
 void	viewer_init(t_viewer *v, t_vm *vm)

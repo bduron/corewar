@@ -31,7 +31,7 @@ void load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->carry = 0; //  1 ou 0 telle est la question ?
 		((t_process *)v->process_lst->content)->pc = v->p[i].pc_address; // addresse relative
 		((t_process *)v->process_lst->content)->live_count = 0;
-		((t_process *)v->process_lst->content)->op_cast = 0;
+		((t_process *)v->process_lst->content)->op_cast = 0; // pboutelo : la 1ère action lu par les processus est déclenché au tour 0, initialisation à modifier
 		((t_process *)v->process_lst->content)->next_op = 0;
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;

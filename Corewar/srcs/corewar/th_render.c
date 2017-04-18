@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/17 19:36:44 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/18 08:00:12 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	maj_arena(t_viewer *v)
 		{
 			wattron(v->win_arena, A_BOLD);
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
-			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x ", v->vm->a.arena[i]);
+			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
 			v->arena[i] = v->vm->a.arena[i];
 			v->arena_flag[i] = 1;
 			wattroff(v->win_arena, A_BOLD);
 		}
-		else if (v->arena_flag[i]) // réécrire à la fin du tour en police normale pour se passer de arena_flag...
+		else if (v->arena_flag[i])
 		{
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
-			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x ", v->vm->a.arena[i]);
+			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
 			v->arena_flag[i] = 0;
 		}
 	}
@@ -83,6 +83,14 @@ void	maj_process(t_viewer *v)
 		process = process->next;
 	}
 	wrefresh(v->win_processes);
+	wrefresh(v->win_arena);
+	process = v->vm->process_lst;
+	while (process)
+	{
+		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2));
+		mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x", v->vm->a.arena[PC]);
+		process = process->next;
+	}
 }
 
 void	*th_render_routine(void *p_data)
@@ -92,6 +100,7 @@ void	*th_render_routine(void *p_data)
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
 	init_arena(v);
+	maj_process(v);
 	while(1)
 	{
 		// printf("RENDER");
@@ -111,11 +120,8 @@ void	*th_render_routine(void *p_data)
 			/* mise à jour des joueurs */
 			maj_process(v);
 
-			// TODO faire une boucle pour supprimer les process et les octets en gras
-
 			/* mise à jour des infos générales */
-			wmove(v->win_infos, 0, 70);
-			wprintw(v->win_infos, "%7d", v->vm->ncycle);
+			mvwprintw(v->win_infos, 0, 70, "%7d", v->vm->ncycle);
 			wrefresh(v->win_infos);
 
 			v->event_flags ^= (FLAG_EVENT_CORE | FLAG_EVENT_TIMER);

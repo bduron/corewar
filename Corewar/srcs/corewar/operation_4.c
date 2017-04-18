@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/13 17:34:45 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/18 08:13:13 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	op_sti(t_vm *v, t_list *process)
 		if (v->display_mode == 1)
 			printf("[0] = %x\t[1] = %x\treg[%x]\n", val[0], val[1], val[2]); //DEBUG
 		ret = val[0] + val[1];
+		// pboutelo : manque l'écriture de la valeur sur ARENA
 		if (v->display_mode == 1)
 		{
 			printf("addr = %x\n", ret);
