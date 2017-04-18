@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/18 08:13:13 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/18 16:45:33 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,16 @@ void	op_lldi(t_vm *v, t_list *process)
 
 void	op_sti(t_vm *v, t_list *process)
 {
-	u_char arg_nb;
+	u_char	arg_nb;
 	u_char	type;
 	u_char	shift;
 	int		val[3];
 	int		ret;
+	u_char	save;
 
 	arg_nb = 3;
 	shift = 0;
+	save = B_OCT; //in case of writing on B_OCT
 	if (check_arg(10, B_OCT, arg_nb))
 	{
 		while (arg_nb)
@@ -116,17 +118,16 @@ void	op_sti(t_vm *v, t_list *process)
 				val[arg_nb] = get_ar(v, process, &shift, type + 4); //+ 4 -> direct code sur 2 oct
 		}
 		if (v->display_mode == 1)
-			printf("[0] = %x\t[1] = %x\treg[%x]\n", val[0], val[1], val[2]); //DEBUG
+			printf("[0] = %x\t[1] = %x\treg[%x]= %x\n", val[0], val[1], val[2] + 1, REG[val[2]]); //DEBUG
 		ret = val[0] + val[1];
-		// pboutelo : manque l'écriture de la valeur sur ARENA
+		print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
 		if (v->display_mode == 1)
 		{
 			printf("addr = %x\n", ret);
-			print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
-	//		printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+			printf("REG[%d] = %x\n", val[2] + 1, REG[val[2]]); //DEBUG
 		}
 	}
 	if (v->display_mode == 1)
 		print_arena(v); //DEBUG
-	octal_shift(process, B_OCT, 2, 3);
+	octal_shift(process, save, 2, 3);
 }

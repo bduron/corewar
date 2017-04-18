@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/15 14:24:55 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/18 16:44:28 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	init_next_op(t_vm *v, t_list *process)
 {
 	if (ARENA(PC) > 16 || !ARENA(PC))
 	{
-		NEXT_OP = 0;
+		NEXT_OP = -1;
 		PC++;
 		if (v->display_mode == 1)
 			printf("FAIL !\n");
