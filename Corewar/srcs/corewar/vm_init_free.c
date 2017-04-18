@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/15 15:30:23 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/18 15:09:50 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void vm_init(t_vm *v)
 	ft_memset(v->a.type, -1, sizeof(char) * MEM_SIZE);
 	v->process_lst = NULL;
 	v->nprocess = 0;
+	v->ncycle = 0;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
