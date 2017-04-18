@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:33:45 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/15 14:09:07 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:56:06 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ void	op_zjmp(t_vm *v, t_list *process)
 		PC = (unsigned int)(PC + shift) % MEM_SIZE;
 		if (v->display_mode == 1)
 			printf("PC after : %d\n", PC);
-		// ARENA(PC) = 0xFF; //DEBUG
-		if (v->display_mode == 1)
-			print_arena(v); //DEBUG
 	}
 	else
 		PC += 3;
@@ -48,10 +45,7 @@ void	op_fork(t_vm *v, t_list *process)
 	PC += 3;
 	PC %= MEM_SIZE;
 	if (v->display_mode == 1)
-	{
 		printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
-		print_arena(v); //DEBUG
-	}
 }
 
 void	op_lfork(t_vm *v, t_list *process)
@@ -65,8 +59,5 @@ void	op_lfork(t_vm *v, t_list *process)
 	PC += 3;
 	PC %= MEM_SIZE;
 	if (v->display_mode == 1)
-	{
 		printf("PC ENFANT : %d\n", (unsigned int)(PC + shift) % MEM_SIZE);
-		print_arena(v); //DEBUG
-	}
 }
