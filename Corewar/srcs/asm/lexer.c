@@ -6,11 +6,11 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/17 13:24:05 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 17:01:29 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "asm.h"
 
 static t_token			ft_tokenupdate(t_token token, t_types type, char chr)
 {
@@ -21,47 +21,6 @@ static t_token			ft_tokenupdate(t_token token, t_types type, char chr)
 	if (index < COMMENT_LENGTH)
 		token.str[ft_strlen(token.str)] = chr;
 	return (token);
-}
-
-static int				ft_iskeyword(char *word)
-{
-	int					i;
-
-	i = 0;
-	while (op_tab[i].name)
-	{
-		if (!(ft_strcmp(op_tab[i].name, word)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int						ft_strisdigit(char *str)
-{
-	if (!*str)
-		return (0);
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (0);
-		str++;
-	}
-	return (1);
-}
-
-static int				ft_isregister(char *word)
-{
-	int		value;
-
-	if (*word != 'r')
-		return (0);
-	if (!ft_strisdigit(word + 1))
-		return (0);
-	value = ft_atoi(word + 1);
-	if (value > 16 || value <= 0)
-		return (0);
-	return (1);
 }
 
 static char				lexer_manage_white(t_token *token, char chr, int fd)

@@ -6,7 +6,7 @@
 #*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#             *#
-#*   Updated: 2017/04/17 11:33:27 by kcosta           ###   ########.fr       *#
+#*   Updated: 2017/04/18 17:08:14 by kcosta           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -35,17 +35,24 @@ FLAGS			:= -g #-fsanitize=address #-g -Wall -Wextra -Werror #-fsanitize=address
 # ============================== #
 
 # =========== Files ============ #
-ASM_SRCS_FILES		:=	op.c		\
-						lexer.c		\
-						label.c		\
-						parser.c	\
+ASM_SRCS_FILES		:=	op.c			\
+						asm.c			\
+						asm_utils.c		\
+						lexer.c			\
+						label.c			\
+						label_init.c	\
+						label_utils.c	\
+						parser.c		\
+						parser_init.c	\
+						parser_header.c	\
 						scanner.c
 CORE_SRCS_FILES		:=	op.c		\
 						corewar.c
 ASM_HEADER_FILES	:=	op.h		\
 						parser.h	\
 						scanner.h	\
-						lexer.h
+						lexer.h		\
+						label.h
 CORE_HEADERS_FILES	:=	op.h		\
 			 			corewar.h
 # ============================== #

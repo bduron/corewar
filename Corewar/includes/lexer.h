@@ -6,19 +6,12 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/17 11:20:24 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 17:01:03 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-# include <stdio.h>
-# include <fcntl.h>
-
-# include "libft.h"
-# include "op.h"
-# include "scanner.h"
 
 # define WHITESPACE_CHARS		"\t\n\v\f\r "
 # define SYMBOL_CHARS			"#:%,.-+"
