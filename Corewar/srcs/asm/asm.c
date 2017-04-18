@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:18 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 18:33:17 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ int				main(int argc, char **argv)
 	if (!(output = ft_check_file(argv[1])))
 		return (ft_error("Invalid file\nusage: ./asm champion.s", 1));
 	if ((ret = ft_compile(argv[1], output)))
-		return (ft_error("Error during compilation", ret));
+		return (ret);
+	ft_putstr("Writing output program to ");
+	ft_putendl(output);
+	return (0);
 }

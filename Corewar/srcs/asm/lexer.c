@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:29 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 18:51:49 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,28 @@ static t_token			ft_tokenupdate(t_token token, t_types type, char chr)
 	return (token);
 }
 
-static char				lexer_manage_white(t_token *token, char chr, int fd)
+static t_char			lexer_manage_white(t_token *token, t_char chr, int fd)
 {
-	while (ft_strchr(WHITESPACE_CHARS, chr) || chr == COMMENT_CHAR)
+	while (ft_strchr(WHITESPACE_CHARS, chr.c)
+		|| chr.c == COMMENT_CHAR || chr.c == COMMENT_CHAR_2)
 	{
-		while (ft_strchr(WHITESPACE_CHARS, chr))
+		while (ft_strchr(WHITESPACE_CHARS, chr.c))
 		{
 			token->type = (t_types){Whitespace};
-			while (ft_strchr(WHITESPACE_CHARS, chr))
+			while (ft_strchr(WHITESPACE_CHARS, chr.c))
 			{
-				if (chr == '\n')
+				if (chr.c == '\n')
 					token->type = (t_types){Newline};
 				chr = scanner(fd);
 			}
 		}
-		while (chr == COMMENT_CHAR)
+		while (chr.c == COMMENT_CHAR || chr.c == COMMENT_CHAR_2)
 		{
 			token->type = (t_types){Comment};
-			while (chr != '\n')
+			while (chr.c != '\n')
 			{
-				if (chr == 0)
-					return (0);
+				if (chr.c == 0)
+					return ((t_char){0, 0 ,0});
 				chr = scanner(fd);
 			}
 		}
@@ -51,16 +52,16 @@ static char				lexer_manage_white(t_token *token, char chr, int fd)
 	return (chr);
 }
 
-static char				lexer_manage_label(t_token *token, char chr, int fd)
+static t_char			lexer_manage_label(t_token *token, t_char chr, int fd)
 {
-	*token = ft_tokenupdate(*token, (t_types){Label}, chr);
+	*token = ft_tokenupdate(*token, (t_types){Label}, chr.c);
 	chr = scanner(fd);
-	while (ft_strchr(LABEL_CHARS, chr))
+	while (ft_strchr(LABEL_CHARS, chr.c))
 	{
-		*token = ft_tokenupdate(*token, token->type, chr);
+		*token = ft_tokenupdate(*token, token->type, chr.c);
 		chr = scanner(fd);
 	}
-	if (chr == LABEL_CHAR)
+	if (chr.c == LABEL_CHAR)
 		;
 	else if (ft_iskeyword(token->str))
 		token->type = (t_types){Keyword};
@@ -71,15 +72,15 @@ static char				lexer_manage_label(t_token *token, char chr, int fd)
 	return (chr);
 }
 
-static char				lexer_manage_string(t_token *token, char chr, int fd)
+static t_char			lexer_manage_string(t_token *token, t_char chr, int fd)
 {
 	token->type = (t_types){String};
 	chr = scanner(fd);
-	while (chr != '"')
+	while (chr.c != '"')
 	{
-		if (chr == 0)
-			return (0);
-		*token = ft_tokenupdate(*token, token->type, chr);
+		if (chr.c == 0)
+			return ((t_char){0, 0 ,0});
+		*token = ft_tokenupdate(*token, token->type, chr.c);
 		chr = scanner(fd);
 	}
 	chr = scanner(fd);
@@ -89,21 +90,24 @@ static char				lexer_manage_string(t_token *token, char chr, int fd)
 t_token					lexer(int fd)
 {
 	t_token				token;
-	static char			chr = -1;
+	static t_char		chr = {-1, -1, -1};
 
-	chr = (chr != -1) ? chr : scanner(fd);
-	token = (t_token){0, 0};
+	chr = (chr.c != -1) ? chr : scanner(fd);
+	token = (t_token){0, 0, 0, 0};
+	token.col = chr.col;
+	token.line = chr.line;
 	ft_memset(token.str, 0, COMMENT_LENGTH + 1);
-	if (ft_strchr(WHITESPACE_CHARS, chr) || chr == COMMENT_CHAR)
+	if (ft_strchr(WHITESPACE_CHARS, chr.c) ||
+		chr.c == COMMENT_CHAR || chr.c == COMMENT_CHAR_2 )
 		chr = lexer_manage_white(&token, chr, fd);
-	else if (ft_strchr(SYMBOL_CHARS, chr))
+	else if (ft_strchr(SYMBOL_CHARS, chr.c))
 	{
-		token = ft_tokenupdate(token, (t_types){Symbol}, chr);
+		token = ft_tokenupdate(token, (t_types){Symbol}, chr.c);
 		chr = scanner(fd);
 	}
-	else if (chr == '"')
+	else if (chr.c == '"')
 		chr = lexer_manage_string(&token, chr, fd);
-	else if (ft_strchr(LABEL_CHARS, chr))
+	else if (ft_strchr(LABEL_CHARS, chr.c))
 		chr = lexer_manage_label(&token, chr, fd);
 	return (token);
 }

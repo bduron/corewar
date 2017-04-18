@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 16:53:23 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:25 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 19:20:36 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,24 @@ int				init_label(int input, int *value)
 
 	*value = 0;
 	if (skip_header(input, &token))
-		return (1);
+		return (lexical_error(token, 1));
 	while (token.type != (t_types){None})
 	{
 		init_skip_whitespace(input, &token);
 		if (token.type == (t_types){Label})
 		{
 			if (init_manage_label(input, &token, value))
-				return (2);
+				return (lexical_error(token, 2));
 		}
 		else if (token.type == (t_types){Keyword})
 		{
 			if (init_manage_opcode(input, &token, value))
-				return (3);
+				return (lexical_error(token, 3));
 		}
 		else if (token.type == (t_types){None})
 			break ;
 		else
-			return (1);
+			return (lexical_error(token, 4));
 	}
 	lseek(input, 0, SEEK_SET);
 	return (0);

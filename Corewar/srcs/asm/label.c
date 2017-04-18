@@ -6,11 +6,30 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 19:43:11 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:23 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/18 20:13:11 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+static t_arg	peek_arg_indirect(int in, t_token *token, int code, t_arg arg)
+{
+	int			sign;
+	
+	if (*(token->str) == '+' || *(token->str) == '-')
+	{
+		sign = (*(token->str) == '+') ? 1 : -1;
+		*token = lexer(in);
+		if (token->type == (t_types){Number})
+			arg = (t_arg){T_IND, sign * ft_atoi(token->str), IND_SIZE};
+	}
+	else if (*(token->str) == LABEL_CHAR)
+	{
+		*token = lexer(in);
+		arg = (t_arg){T_IND, 0, IND_SIZE};
+	}
+	return (arg);
+}
 
 static t_arg	peek_arg_direct(int input, t_token *token, int code, t_arg arg)
 {
@@ -52,13 +71,8 @@ static t_arg	peek_arg(int input, t_token *token, int opcode)
 	{
 		if (*(token->str) == DIRECT_CHAR)
 			arg = peek_arg_direct(input, token, opcode, arg);
-		else if (*(token->str) == '+' || *(token->str) == '-')
-		{
-			sign = (*(token->str) == '+') ? 1 : -1;
-			*token = lexer(input);
-			if (token->type == (t_types){Number})
-				arg = (t_arg){T_IND, sign * ft_atoi(token->str), IND_SIZE};
-		}
+		else
+			arg = peek_arg_indirect(input, token, opcode, arg);
 	}
 	else if (token->type == (t_types){Number})
 		arg = (t_arg){T_IND, ft_atoi(token->str), IND_SIZE};
