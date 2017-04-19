@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/15 15:26:14 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:09:21 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	op_add(t_vm *v, t_list *process)
 		{
 			val = REG[ARENA(PC + 2) - 1] + REG[ARENA(PC + 3) - 1];
 			if (v->display_mode == 1)
-				printf("val = %d\n", val); //DEBUG
+			{
+				//printf("val = %d\n", val); //DEBUG
+				printf("add r%d r%d r%d\n", ARENA(PC + 2), ARENA(PC + 3), ARENA(PC + 4)); //DEBUG
+			}
 			CARRY = val ? 0 : 1;
 			REG[ARENA(PC + 4) - 1] = val;
 		}
@@ -78,7 +81,7 @@ void	op_and(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] & val[2];
 				if (v->display_mode == 1)
-					printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+					printf("and %d %d r%d\n", val[2], val[1], val[0] + 1); //DEBUG
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}
@@ -108,7 +111,7 @@ void	op_or(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] | val[2];
 				if (v->display_mode == 1)
-					printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+					printf("or %d %d r%d\n", val[2], val[1], val[0] + 1); //DEBUG
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}
@@ -138,7 +141,7 @@ void	op_xor(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] ^ val[2];
 				if (v->display_mode == 1)
-					printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+					printf("xor %d %d r%d\n", val[2], val[1], val[0] + 1); //DEBUG
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}

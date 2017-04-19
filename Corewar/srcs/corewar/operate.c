@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/18 16:44:28 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/19 18:57:17 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int reverse_bytes(unsigned char *addr, int nbytes)
 void	execute_op(t_vm *v, t_list *process)
 {
 	if (v->display_mode == 1)
-		printf("EXECUTION : %s\n", op_tab[NEXT_OP].name);
+		printf("P%5d | ", NPRO);
 	op_tab[NEXT_OP].f(v, process);
 }
 
@@ -79,8 +79,8 @@ void	init_next_op(t_vm *v, t_list *process)
 		OP_CAST = op_tab[NEXT_OP].cycle - 1; // arbitraire pour le moment
 		if (v->display_mode == 1)
 		{
-			printf("numero d'op : %2x\t", ARENA(PC));
-			printf("cast moi ce spell noob : %2d\n", OP_CAST);
+//			printf("numero d'op : %2x\t", ARENA(PC));
+//			printf("cast moi ce spell noob : %2d\n", OP_CAST);
 		}
 	}
 }

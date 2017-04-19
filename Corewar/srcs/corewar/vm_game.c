@@ -83,7 +83,7 @@ void run_game(t_vm *v)
 
 	while (v->process_lst != NULL) 
 	{
-		printf("\ncycle = %d :\n", v->ncycle); // DEBUG
+		printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->cycle_to_die < 0)
 			break;
 		update_vm(v);
