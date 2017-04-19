@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/18 15:09:50 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/19 16:41:16 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void vm_init(t_vm *v)
 	v->process_lst = NULL;
 	v->nprocess = 0;
 	v->ncycle = 0;
+	v->ncycle_mod = 0;
+	v->ncheck = 0;
+	v->nlive_bctd = 0;
 	v->cycle_to_die = CYCLE_TO_DIE;
 	v->is_ctd_modified = 0;
 	i = 0;

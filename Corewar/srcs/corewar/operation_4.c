@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/18 17:54:49 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/19 16:40:53 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	op_ldi(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = reverse_bytes(&ARENA(PC + (val[1] + val[2]) % IDX_MOD), 4);
 				CARRY = REG[val[0]] ? 0 : 1;
+//		if (v->display_mode == 1)
+//			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 			}
 		}
-		if (v->display_mode == 1)
-			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 	}
 	octal_shift(process, B_OCT, 2, 3);
 }

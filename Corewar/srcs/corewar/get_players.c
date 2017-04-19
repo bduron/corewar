@@ -9,7 +9,7 @@ void is_player(t_vm *v, int live)
 	while (++i < v->nplayer)
 		if (live == v->p[i].nplayer)
 		{
-			printf("LIVE PLAYER : %d\n", i + 1);//DEBUG
+//			printf("LIVE PLAYER : %d\n", i + 1);//DEBUG
 			v->p[i].nblive++;
 			v->last_live_id = i;
 		}

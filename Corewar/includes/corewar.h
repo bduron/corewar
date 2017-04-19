@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/15 15:45:16 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/19 16:43:09 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
-# define BCTD		v->ncycle % v->cycle_to_die == 0 && v->ncycle != 0
+# define BCTD		v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0
 # define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
@@ -74,6 +74,7 @@ typedef struct		s_player
 	int				prog_len;
 	int				exec_magic;
 	int				pc_address;
+	int 			nblive;
 }					t_player;
 
 typedef struct		s_vm
@@ -85,6 +86,7 @@ typedef struct		s_vm
 	int				nprocess;
 	int				last_live_id;
 	int				ncycle;
+	int				ncycle_mod;
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
 	int				ncheck; // nb ctd in a row w/o decrementing ctd
@@ -92,6 +94,7 @@ typedef struct		s_vm
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
 }					t_vm;
 
+void is_player(t_vm *v, int live);
 void save_player(char *file, t_vm *v, int i);
 void get_players(int argc, char **argv, t_vm *v);
 int is_corewar_execmagic(char *file);
