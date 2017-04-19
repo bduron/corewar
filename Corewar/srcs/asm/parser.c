@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 20:13:02 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/19 11:55:30 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_arg	parse_arg_indirect(int in, t_token *token, int code, t_arg arg)
 {
 	int		sign;
-	
+
 	if (*(token->str) == '+' || *(token->str) == '-')
 	{
 		sign = (*(token->str) == '+') ? 1 : -1;

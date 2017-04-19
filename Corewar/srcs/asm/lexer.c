@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 18:51:49 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/19 11:55:17 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_char			lexer_manage_white(t_token *token, t_char chr, int fd)
 			while (chr.c != '\n')
 			{
 				if (chr.c == 0)
-					return ((t_char){0, 0 ,0});
+					return ((t_char){0, 0, 0});
 				chr = scanner(fd);
 			}
 		}
@@ -79,7 +79,7 @@ static t_char			lexer_manage_string(t_token *token, t_char chr, int fd)
 	while (chr.c != '"')
 	{
 		if (chr.c == 0)
-			return ((t_char){0, 0 ,0});
+			return ((t_char){0, 0, 0});
 		*token = ft_tokenupdate(*token, token->type, chr.c);
 		chr = scanner(fd);
 	}
@@ -98,7 +98,7 @@ t_token					lexer(int fd)
 	token.line = chr.line;
 	ft_memset(token.str, 0, COMMENT_LENGTH + 1);
 	if (ft_strchr(WHITESPACE_CHARS, chr.c) ||
-		chr.c == COMMENT_CHAR || chr.c == COMMENT_CHAR_2 )
+		chr.c == COMMENT_CHAR || chr.c == COMMENT_CHAR_2)
 		chr = lexer_manage_white(&token, chr, fd);
 	else if (ft_strchr(SYMBOL_CHARS, chr.c))
 	{
