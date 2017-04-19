@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/17 19:29:53 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/19 08:07:37 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@
 # define FLAG_KEY_EVENT_PAUSE 64
 # define FLAG_KEY_EVENT_PROCESS 256
 
+
 // " _ _"
 // "| ' |"
 // " \ /"
+# define MSG_LIFE "LIFE"
 
 // # define L1 "     "
 // # define L2 "  -  "
