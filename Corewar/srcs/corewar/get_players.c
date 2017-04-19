@@ -29,7 +29,7 @@ void save_player(char *file, t_vm *v, int i)
 		read(fd, &(v->p[i].comment), COMMENT_LENGTH);
 		lseek(fd, 4, SEEK_CUR); // ZAZ tweak skip
 		len = read(fd, &(v->p[i].code), CHAMP_MAX_SIZE);
-		v->p[i].nplayer = i + 1;
+		v->p[i].nplayer = (i + 1) * -1;
 		v->p[i].prog_len = len;
 		v->p[i].nblive = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/19 15:37:29 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/19 20:28:59 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int			main(int argc, char **argv)
 	}
 	else if (vm.display_mode == 1)
 	{
-		print_processes(&vm);		// test print
-		test_print_v(&vm, argc);		// test print
+//		print_processes(&vm);		// test print
+//		test_print_v(&vm, argc);		// test print
 		run_game(&vm);
 	}
 //	get_winner();

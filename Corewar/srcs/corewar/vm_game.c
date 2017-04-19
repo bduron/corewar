@@ -35,6 +35,7 @@ void browse_processes_lst(t_vm *v) //pboutelo TODO : utilier ft_lstiter
 			{
 				v->process_lst = process->next;
 			//	KILL(process);
+				printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
 				process = v->process_lst;
 			}
 			else
@@ -58,20 +59,25 @@ void update_vm(t_vm *v)
 	if (BCTD)
 	{ 
 		v->is_ctd_modified = 0;
-		printf("================\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
+		//printf("================\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		if (v->nlive_bctd >= NBR_LIVE)
-		{	printf("nblive emis total\n");
+		{	
+			//printf("nblive emis total\n");
 			v->cycle_to_die -= CYCLE_DELTA;
 			v->is_ctd_modified = 1;
+			printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 		}
 		v->ncheck = v->is_ctd_modified ? 0 : v->ncheck + 1;
 		if (v->ncheck % MAX_CHECKS == 0)
 		{
 			if (!v->is_ctd_modified && v->ncheck != 0)
+			{
 				v->cycle_to_die -= CYCLE_DELTA;
+				printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+			}
 		}
 		v->nlive_bctd = 0;
-		printf("A===============\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
+	//	printf("A===============\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		v->ncycle_mod = 0;
 	}
 	v->ncycle++;
@@ -84,10 +90,10 @@ void run_game(t_vm *v)
 	while (v->process_lst != NULL) 
 	{
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
-		if (v->cycle_to_die < 0)
-			break;
 		update_vm(v);
 		browse_processes_lst(v);
+		if (v->cycle_to_die < 0)
+			break;
 	}
 	printf("player %s win\n", v->p[v->last_live_id].name);
 }
