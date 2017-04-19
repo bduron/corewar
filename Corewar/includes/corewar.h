@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/19 16:43:09 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/19 18:54:29 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 ** cast du t_list dans les appels de fonction, pour éviter de caster n fois...
 */
 # define PC			(((t_process *)process->content)->pc)
+# define NPRO		(((t_process *)process->content)->nprocess)
 # define CARRY		(((t_process *)process->content)->carry)
 # define REG		(((t_process *)process->content)->reg)
 # define NEXT_OP	(((t_process *)process->content)->next_op)
@@ -57,6 +58,7 @@ typedef struct		s_arena
 
 typedef struct		s_process
 {
+	int				nprocess;
 	int				carry;
 	int				reg[REG_NUMBER];
 	int				pc;

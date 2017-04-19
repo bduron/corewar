@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/19 16:40:53 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/19 18:46:25 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,15 +126,10 @@ void	op_sti(t_vm *v, t_list *process)
 			{
 				ret = val[0] + val[1];
 				print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
+				if (v->display_mode == 1)
+					printf(" | sti r%d %d %d\n", val[2] + 1, val[1], val[0]); //DEBUG
 			}
 		}
-//		if (v->display_mode == 1)
-//			printf("[0] = %x\t[1] = %x\treg[%x]= %x\n", val[0], val[1], val[2] + 1, REG[val[2]]); //DEBUG
-//		if (v->display_mode == 1)
-//		{
-//			printf("addr = %x\n", ret);
-//			printf("REG[%d] = %x\n", val[2] + 1, REG[val[2]]); //DEBUG
-//		}
 	}
 	octal_shift(process, save, 2, 3);
 }

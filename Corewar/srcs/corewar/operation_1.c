@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/19 15:56:28 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/19 19:20:41 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	op_live(t_vm *v, t_list *process)
 	LIVE++;
 	v->nlive_bctd++;
 	live = reverse_bytes(&ARENA(PC + 1), 4);
-	is_player(v, live);
 	if (v->display_mode == 1)
-		printf("LIVE : %x\n", live);
+		printf("live %d\n", live);
+	is_player(v, live);
 	PC += 5;
+	PC %= MEM_SIZE;
 }
 
 void	op_ld(t_vm *v, t_list *process)
@@ -44,7 +45,7 @@ void	op_ld(t_vm *v, t_list *process)
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("val_saved = %x\n", shift);
+				printf("ld %d r%d\n", shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
 	}
@@ -67,6 +68,8 @@ void	op_st(t_vm *v, t_list *process)
 			shift = reverse_bytes(&ARENA(PC + 3), 2);
 			shift %= IDX_MOD;
 			val = REG[ARENA(PC + 2) - 1];
+			if (v->display_mode == 1)
+				printf("st r%d %d\n", ARENA(PC + 2), shift);
 			print_reg(v, process, val, PC + shift + 3);
 		}
 	}
