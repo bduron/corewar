@@ -22,6 +22,8 @@ void vm_init(t_vm *v)
 	v->process_lst = NULL;
 	v->nprocess = 0;
 	v->ncycle = 0;
+	v->cycle_to_die = CYCLE_TO_DIE;
+	v->is_ctd_modified = 0;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{

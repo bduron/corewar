@@ -40,6 +40,7 @@
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
+# define BCTD		v->ncycle % v->cycle_to_die == 0 && v->ncycle != 0
 # define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
@@ -86,7 +87,8 @@ typedef struct		s_vm
 	int				ncycle;
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
-	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd
+	int				ncheck; // nb ctd in a row w/o decrementing ctd
+	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
 }					t_vm;
 
