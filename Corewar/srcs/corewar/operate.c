@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/19 18:57:17 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 13:26:55 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ void	execute_op(t_vm *v, t_list *process)
 
 void	init_next_op(t_vm *v, t_list *process)
 {
-	if (ARENA(PC) > 16 || !ARENA(PC))
+	if (ARENA(PC) > 16 || ARENA(PC) <= 0)
 	{
 		NEXT_OP = -1;
 		PC++;
-		if (v->display_mode == 1)
-			printf("FAIL !\n");
 	}
 	else
 	{
 		NEXT_OP = ARENA(PC) - 1;
-		OP_CAST = op_tab[NEXT_OP].cycle - 1; // arbitraire pour le moment
+		OP_CAST = op_tab[NEXT_OP].cycle - 1;
 		if (v->display_mode == 1)
 		{
 //			printf("numero d'op : %2x\t", ARENA(PC));

@@ -87,13 +87,13 @@ void update_vm(t_vm *v)
 void run_game(t_vm *v)
 {
 
-	while (v->process_lst != NULL) 
+	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		update_vm(v);
-		browse_processes_lst(v);
-		if (v->cycle_to_die < 0)
+		if (v->cycle_to_die < 0) //cpoulet modif to be confirmed
 			break;
+		browse_processes_lst(v);
 	}
 	printf("player %s win\n", v->p[v->last_live_id].name);
 }

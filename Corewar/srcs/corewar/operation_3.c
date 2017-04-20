@@ -6,7 +6,7 @@
 /*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 19:54:01 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/19 19:54:05 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/20 12:36:43 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	op_fork(t_vm *v, t_list *process)
 	shift = reverse_bytes(&ARENA(PC + 1), 2);
 	shift %= IDX_MOD;
 	if (v->display_mode == 1)
-		printf("fork %d\n", shift);
+		printf("fork %d (%d)\n", shift, (unsigned int)(PC + shift) % MEM_SIZE);
 	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
 	PC += 3;
 	PC %= MEM_SIZE;
@@ -48,7 +48,7 @@ void	op_lfork(t_vm *v, t_list *process)
 
 	shift = reverse_bytes(&ARENA(PC + 1), 2);
 	if (v->display_mode == 1)
-		printf("fork %d\n", shift);
+		printf("lfork %d (%d)\n", shift, (unsigned int)(PC + shift) % MEM_SIZE);
 	add_process(v, process, (unsigned int)(PC + shift) % MEM_SIZE);
 	PC += 3;
 	PC %= MEM_SIZE;
