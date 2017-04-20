@@ -9,8 +9,10 @@ void is_player(t_vm *v, int live)
 	while (++i < v->nplayer)
 		if (live == v->p[i].nplayer)
 		{
-			if (v->display_mode ==1)
+			if (v->display_mode == 1)
 				printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
+			else if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
+				new_anim(v->v, i, "test");
 			v->p[i].nblive++;
 			v->last_live_id = i;
 		}

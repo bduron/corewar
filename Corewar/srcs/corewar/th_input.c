@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 08:02:43 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 16:27:04 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	init_win_infos(t_viewer *v)
 	mvwprintw(v->win_infos, 1, 0, "LPF:   %-10d CONTROLS: [ << '%c' ] [ '%c' >> ]", v->lpf, KEY_LPF_LL, KEY_LPF_PP);
 	mvwprintw(v->win_infos, 2, 0, "PAUSE: %-10s CONTROLS: [ '%c' ]", ONOFF(v->event_flags & FLAG_EVENT_PAUSE), KEY_PAUSE);
 	mvwprintw(v->win_infos, 3, 0, "QUIT:             CONTROLS: [ '%c' ]", KEY_QUIT);
+	mvwprintw(v->win_infos, 0, 55, "CYCLE:        %-10d", v->vm->ncycle);
+	mvwprintw(v->win_infos, 1, 55, "CYCLE_TO_DIE: %-10d", v->vm->cycle_to_die);
 	wrefresh(v->win_infos);
 }
 
@@ -89,6 +91,7 @@ void	*th_input_routine(void *p_data)
 			}
 			else if ('0' < input && input < '5' && !(v->anim_flags & (1 << (input - '1'))))
 				new_anim(v, input - '1', "test");
+
 			maj_win_infos(v);
 
 			maj_process(v); // que si on a appuyé sur les touches "i" ou "j" !!!

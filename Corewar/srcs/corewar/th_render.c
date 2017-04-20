@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 07:45:29 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 17:01:05 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_arena(t_viewer *v)
 		mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x ", v->vm->a.arena[i]);
 		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 		v->arena[i] = v->vm->a.arena[i];
+		v->owner[i] = v->vm->a.owner[i];
 	}
 	wrefresh(v->win_arena);
 }
@@ -34,17 +35,18 @@ void	maj_arena(t_viewer *v)
 	i = -1;
 	while (++i < MEM_SIZE)
 	{
-		if (v->arena[i] != v->vm->a.arena[i])
+		if (v->arena[i] != v->vm->a.arena[i] || v->owner[i] != v->vm->a.owner[i])
 		{
 			wattron(v->win_arena, A_BOLD);
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
 			v->arena[i] = v->vm->a.arena[i];
-			v->arena_flag[i] = 1;
+			v->owner[i] = v->vm->a.owner[i];
+			v->arena_flag[i] = v->vm->ncycle;
 			wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 			wattroff(v->win_arena, A_BOLD);
 		}
-		else if (v->arena_flag[i])
+		else if (v->arena_flag[i] + 50 < v->vm->ncycle)
 		{
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
@@ -68,15 +70,25 @@ void	maj_process(t_viewer *v)
 		++i;
 		if (v->process_offset <= i && i - v->process_offset < getmaxy(v->win_processes))
 		{
-			wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
-			mvwprintw(v->win_processes, i - v->process_offset, 0, "carry: %#.2x, pc: %#.2x, "
-				"live count: %#.2x, op cast: %#.2x, reg: [", CARRY, PC, LIVE, OP_CAST);
+			if (NPRO == 7)
+				wattron(v->win_processes, COLOR_PAIR(4));
+			else
+				wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
+			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%d %dx%d [%c][%c]: ", NPRO, PC / 64, PC % 64, PRINT_LIVE, PRINT_CARRY);
+			if (NEXT_OP >= 0 && NEXT_OP < 16)
+				wprintw(v->win_processes, "will cast a \"%s\" in %d laps. ", PRINT_NEXT_OP, OP_CAST);
+			else
+				wprintw(v->win_processes, "looking for instruction. ");
 			for (int j = 0; j < REG_NUMBER; j++)
-				wprintw(v->win_processes, "%.2x ", REG[j]);
-			wprintw(v->win_processes, "]");
+				if(REG[j])
+					wprintw(v->win_processes, "%d:%x ", j, REG[j]);
 			wattroff(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
 		}
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
+		if (NPRO == 7)
+			wattron(v->win_arena, COLOR_PAIR(10));
+		else
+			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6));
+		// wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
 		mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x", v->vm->a.arena[PC]);
 		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
 		process = process->next;
@@ -121,7 +133,9 @@ void	*th_render_routine(void *p_data)
 			maj_process(v);
 
 			/* mise à jour des infos générales */
-			mvwprintw(v->win_infos, 0, 70, "%7d", v->vm->ncycle);
+			mvwprintw(v->win_infos, 0, 69, "%-10d", v->vm->ncycle);
+			mvwprintw(v->win_infos, 1, 69, "%-10d", v->vm->cycle_to_die);
+			// mvwprintw(v->win_infos, 0, 70, "%7d", v->vm->ncycle);
 			wrefresh(v->win_infos);
 
 			v->event_flags ^= (FLAG_EVENT_CORE | FLAG_EVENT_TIMER);

@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/20 16:21:12 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:32:10 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct		s_player
 	int 			nblive;
 }					t_player;
 
+typedef struct s_viewer	t_viewer;
+
 typedef struct		s_vm
 {
 	t_list			*process_lst;
@@ -94,6 +96,7 @@ typedef struct		s_vm
 	int				ncheck; // nb ctd in a row w/o decrementing ctd
 	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
+	t_viewer		*v;
 }					t_vm;
 
 void	is_player(t_vm *v, int live);
@@ -109,6 +112,7 @@ void	load_processes(t_vm *v);
 void	vm_init(t_vm *v);
 void	vm_free(t_vm *v);
 
+void	update_vm(t_vm *v);
 void	run_game(t_vm *v);
 void 	browse_processes_lst(t_vm *v);
 void	operate_process(t_vm *v, t_list *process);
