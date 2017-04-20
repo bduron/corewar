@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 12:54:35 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:20:24 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	op_ldi(t_vm *v, t_list *process)
 				get_ar(v, process, &shift, type + 4); //+ 4 -> direct code sur 2 oct
 			if (!arg_nb)
 			{
-				REG[val[0]] = reverse_bytes(&ARENA(PC + (val[1] + val[2]) % IDX_MOD), 4);
+				REG[val[0]] = reverse_bytes(v, PC + (val[1] + val[2]) % IDX_MOD, 4);
 				CARRY = REG[val[0]] ? 0 : 1;
-//		if (v->display_mode == 1)
-//			printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
 			}
 		}
 	}
@@ -54,15 +52,15 @@ void	op_lld(t_vm *v, t_list *process)
 				(ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) <= 16))
 		{
 			if (B_OCT == 0x90)
-				shift = reverse_bytes(&ARENA((PC + 2)), 4);
+				shift = reverse_bytes(v, PC + 2, 4);
 			else
 			{
-				shift = reverse_bytes(&ARENA(PC + 2), 2);
-				shift = reverse_bytes(&ARENA((PC + shift)), 4);
+				shift = reverse_bytes(v, PC + 2, 2);
+				shift = reverse_bytes(v, PC + shift, 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("val_saved = %x\n", shift); //DEBUG
+				printf("val_saved = %x\n", shift);
 			CARRY = shift ? 0 : 1;
 		}
 	}
@@ -89,10 +87,10 @@ void	op_lldi(t_vm *v, t_list *process)
 				get_ar(v, process, &shift, type + 4); //+ 4 -> direct code sur 2 oct
 			if (!arg_nb)
 			{
-				REG[val[0]] = reverse_bytes(&ARENA(PC + val[1] + val[2]), 4);
+				REG[val[0]] = reverse_bytes(v, PC + val[1] + val[2], 4);
 				CARRY = REG[val[0]] ? 0 : 1;
 				if (v->display_mode == 1)
-					printf("REG[%d] = %x\n", val[0], REG[val[0]]); //DEBUG
+					printf("REG[%d] = %x\n", val[0], REG[val[0]]);
 			}
 		}
 	}
@@ -127,7 +125,8 @@ void	op_sti(t_vm *v, t_list *process)
 				ret = val[0] + val[1];
 				print_reg(v, process, REG[val[2]], PC + (ret % IDX_MOD) + 3);
 				if (v->display_mode == 1)
-					printf("sti r%d %d %d\n       | -> store to %d + %d = %d (with pc and mod %d)\n", val[2] + 1, val[1], val[0], val[1], val[0], ret % IDX_MOD, PC + (ret % IDX_MOD)); //DEBUG
+					printf("sti r%d %d %d\n       | -> store to %d + %d = %d (with pc and mod %d)\n",
+					val[2] + 1, val[1], val[0], val[1], val[0], ret % IDX_MOD, PC + (ret % IDX_MOD));
 			}
 		}
 	}
