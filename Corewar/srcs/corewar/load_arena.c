@@ -38,6 +38,7 @@ void load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->next_op = -1; //cpoulet : 0 used by LIVE
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;
+		printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n", i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);
 		i++;
 	}
 
@@ -52,6 +53,7 @@ void load_champions(t_vm *v)
 	space = MEM_SIZE / v->nplayer;
 	i = 0;
 	n = 0;
+	printf("Introducing contestants...\n");
 	while (n < v->nplayer)
 	{
 		ft_memcpy(&(v->a.arena[i]), v->p[n].code, v->p[n].prog_len);

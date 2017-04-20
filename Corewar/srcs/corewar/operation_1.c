@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 16:32:24 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 17:21:57 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	op_live(t_vm *v, t_list *process)
 	v->nlive_bctd++;
 	live = reverse_bytes(v, PC + 1, 4);
 	if (v->display_mode == 1)
-		printf("live %d\n", live);
+		printf("P%5d | live %d\n", NPRO, live);
 	is_player(v, live);
 	PC += 5;
 	PC %= MEM_SIZE;
@@ -45,7 +45,7 @@ void	op_ld(t_vm *v, t_list *process)
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("ld %d r%d\n", shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
+				printf("P%5d | ld %d r%d\n", NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
 	}
@@ -69,7 +69,7 @@ void	op_st(t_vm *v, t_list *process)
 			shift %= IDX_MOD;
 			val = REG[ARENA(PC + 2) - 1];
 			if (v->display_mode == 1)
-				printf("st r%d %d\n", ARENA(PC + 2), shift);
+				printf("P%5d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
 			print_reg(v, process, val, PC + shift + 3);
 		}
 	}
@@ -80,6 +80,6 @@ void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 		if (v->display_mode == 1)
-			printf("aff = |%d|\n", (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
+			printf("P%5d | aff = |%d|\n", NPRO, (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
 	octal_shift(process, B_OCT, 4, 1);
 }
