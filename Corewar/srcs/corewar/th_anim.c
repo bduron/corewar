@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:25:09 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 08:10:26 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 08:24:53 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*th_anim_routine(void *p_data)
 
 		mvwprintw(a->v->win_champions[a->i], 3, 0, MSG_LIFE);
 		wattron(a->v->win_champions[a->i], A_BOLD);
-		mvwprintw(a->v->win_champions[a->i], 3, (8 - i) / 2, "%c", MSG_LIFE[(8 - qi) / 2]);
+		mvwprintw(a->v->win_champions[a->i], 3, (8 - i) / 2, "%c", MSG_LIFE[(8 - i) / 2]);
 		wattroff(a->v->win_champions[a->i], A_BOLD);
 
 
