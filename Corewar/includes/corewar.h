@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/19 18:54:29 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:06:27 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,18 @@ typedef struct		s_vm
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
 }					t_vm;
 
-void is_player(t_vm *v, int live);
-void save_player(char *file, t_vm *v, int i);
-void get_players(int argc, char **argv, t_vm *v);
-int is_corewar_execmagic(char *file);
-int get_prog_size(char *file);
-int is_valid_player(char *file);
-int is_cor_file(char *file);
-void load_arena(t_vm *v);
-void load_champions(t_vm *v);
-void load_processes(t_vm *v);
-void vm_init(t_vm *v);
-void vm_free(t_vm *v);
+void	is_player(t_vm *v, int live);
+void	save_player(char *file, t_vm *v, int i);
+void	get_players(int argc, char **argv, t_vm *v);
+int		is_corewar_execmagic(char *file);
+int		get_prog_size(char *file);
+int		is_valid_player(char *file);
+int		is_cor_file(char *file);
+void	load_arena(t_vm *v);
+void	load_champions(t_vm *v);
+void	load_processes(t_vm *v);
+void	vm_init(t_vm *v);
+void	vm_free(t_vm *v);
 
 void	run_game(t_vm *v);
 void 	browse_processes_lst(t_vm *v);
@@ -116,10 +116,11 @@ void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
 void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
 int		reverse_bytes(unsigned char *addr, int nbytes);
+int		reverse_bytes_(t_vm *v, unsigned int pc, int nbytes);
 int		check_arg(u_char arg, u_char n, u_char arg_nb);
 void	add_process(t_vm *v, t_list *process, unsigned int son_pc);
 
-void xerror(char *error_msg, int error_id); // move to libft
+void	xerror(char *error_msg, int error_id); // move to libft
 
 /*** debug ***/
 void dump(t_player p);
