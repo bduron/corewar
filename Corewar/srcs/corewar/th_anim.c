@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:25:09 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 09:30:00 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 19:20:25 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,19 @@ void	*th_anim_routine(void *p_data)
 		if (i % 2)
 			wattron(a->v->win_champions[a->i], A_BOLD);
 		// mvwprintw(a->v->win_champions[a->i], 0, 0, a->type, i);
-		mvwprintw(a->v->win_champions[a->i], 0, 0, " _ _");
-		mvwprintw(a->v->win_champions[a->i], 1, 0, "| ' |");
-		mvwprintw(a->v->win_champions[a->i], 2, 0, " \\ /");
+		// mvwprintw(a->v->win_champions[a->i], 0, 0, " _ _");
+		// mvwprintw(a->v->win_champions[a->i], 1, 0, "| ' |");
+		// mvwprintw(a->v->win_champions[a->i], 2, 0, " \\ /");
+
+
+		mvwprintw(a->v->win_champions[a->i], 0, 0, "%ls", LIFE_1);
+		mvwprintw(a->v->win_champions[a->i], 1, 0, "%ls", LIFE_2);
+		mvwprintw(a->v->win_champions[a->i], 2, 0, "%ls", LIFE_3);
+		mvwprintw(a->v->win_champions[a->i], 3, 0, "%ls", LIFE_4);
+		mvwprintw(a->v->win_champions[a->i], 4, 0, "%ls", LIFE_5);
+		mvwprintw(a->v->win_champions[a->i], 5, 0, "%ls", LIFE_6);
+
+
 		if (i % 2)
 			wattroff(a->v->win_champions[a->i], A_BOLD);
 

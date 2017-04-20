@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/20 16:52:26 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 19:08:31 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	viewer_init_colors()
 static void	viewer_init_ncurses(t_viewer *v)
 {
 	int i;
-	int win_arena_height;
 
 	initscr();
 	viewer_init_colors();
@@ -48,17 +47,33 @@ static void	viewer_init_ncurses(t_viewer *v)
 	curs_set(0);
 	refresh();
 
-	win_arena_height = LINES - (v->vm->nplayer * 3 + 6);
-	v->win_arena = create_newwin(win_arena_height, COLS, 0, 0, "Arena");
+	v->win_arena = create_newwin(LINES - 6, COLS - 66, 0, 0, "Arena");
+	v->win_title = create_newwin(12, 66, 0, COLS - 66, "Title");
+	v->win_processes = create_newwin(LINES - 15, 100, 15, COLS - 100, "Processes list");
+
 	i = -1;
 	while (++i < v->vm->nplayer)
-		v->win_champions[i] = create_newwin(6, 20, LINES - 6, COLS - 80 + 20 * i, (char *)v->vm->p[i].name);
-	v->win_processes = create_newwin(LINES - 6 - win_arena_height, COLS, win_arena_height, 0, "Processes list");
-	v->win_infos = create_newwin(6, COLS - 80, LINES - 6, 0, "Informations");
+		v->win_champions[i] = create_newwin((LINES - 6 - 15) / 4, 50, 15 + i * (LINES - 6 - 15) / 4, COLS - 150, (char *)v->vm->p[i].name);
+
+	v->win_infos = create_newwin(6, COLS - 100, LINES - 6, 0, "Informations");
+
+	mvwprintw(v->win_title, 0, 0, "%ls", LOGO_1);
+	mvwprintw(v->win_title, 1, 0, "%ls", LOGO_2);
+	mvwprintw(v->win_title, 2, 0, "%ls", LOGO_3);
+	mvwprintw(v->win_title, 3, 0, "%ls", LOGO_4);
+	mvwprintw(v->win_title, 4, 0, "%ls", LOGO_5);
+	mvwprintw(v->win_title, 5, 0, "%ls", LOGO_6);
+	mvwprintw(v->win_title, 6, 0, "%ls", LOGO_7);
+	mvwprintw(v->win_title, 7, 0, "%ls", LOGO_8);
+	mvwprintw(v->win_title, 8, 0, "%ls", LOGO_9);
+	mvwprintw(v->win_title, 9, 0, "%ls", LOGO_10);
+
+	wrefresh(v->win_title);
 }
 
 void	viewer_init(t_viewer *v, t_vm *vm)
 {
+	setlocale (LC_ALL,"");
 	v->vm = vm;
 	vm->v = v;
 	v->lpf = 1;
@@ -66,7 +81,7 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->event_flags |= FLAG_EVENT_PAUSE;
 	v->process_offset = 0;
 	v->anim_flags = 0;
-	ft_memset(v->arena_flag, 0, sizeof(char) * MEM_SIZE);
+	ft_memset(v->arena_flag, 0, sizeof(int) * MEM_SIZE);
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);
 	viewer_init_ncurses(v);
@@ -103,14 +118,16 @@ WINDOW *create_newwin(int height, int width, int starty, int startx, char *title
 {
 	WINDOW *win_box;
 	WINDOW *win_content;
-	size_t	len;
+	// size_t	len;
+	(void)title;
 
 	win_box = newwin(height, width, starty, startx);
-	box(win_box, 0 , 0);
+	// box(win_box, 0 , 0);
+	wborder(win_box, ACS_RTEE, ACS_LTEE, ACS_BTEE, ACS_TTEE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 	win_content = derwin(win_box, height - 2, width - 4, 1, 2);
-	len = strlen(title);
-	wmove(win_box, 0, (width - len) / 2 - 3);
-	wprintw(win_box, " - %s - ", title);
+	// len = strlen(title);
+	// wmove(win_box, 0, (width - len) / 2 - 3);
+	// wprintw(win_box, " - %s - ", title);
 	wrefresh(win_box);
 	wrefresh(win_content);
 	return (win_content);

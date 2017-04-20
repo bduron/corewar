@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 17:01:05 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 18:24:03 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	maj_arena(t_viewer *v)
 			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
 			v->arena[i] = v->vm->a.arena[i];
 			v->owner[i] = v->vm->a.owner[i];
-			v->arena_flag[i] = v->vm->ncycle;
+			v->arena_flag[i] = v->vm->ncycle + 50;
 			wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 			wattroff(v->win_arena, A_BOLD);
 		}
-		else if (v->arena_flag[i] + 50 < v->vm->ncycle)
+		else if (v->arena_flag[i] && v->arena_flag[i] < v->vm->ncycle)
 		{
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
 			mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x", v->vm->a.arena[i]);
@@ -79,9 +79,9 @@ void	maj_process(t_viewer *v)
 				wprintw(v->win_processes, "will cast a \"%s\" in %d laps. ", PRINT_NEXT_OP, OP_CAST);
 			else
 				wprintw(v->win_processes, "looking for instruction. ");
-			for (int j = 0; j < REG_NUMBER; j++)
-				if(REG[j])
-					wprintw(v->win_processes, "%d:%x ", j, REG[j]);
+			// for (int j = 0; j < REG_NUMBER; j++)
+			// 	if(REG[j])
+			// 		wprintw(v->win_processes, "%d:%x ", j, REG[j]);
 			wattroff(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
 		}
 		if (NPRO == 7)
