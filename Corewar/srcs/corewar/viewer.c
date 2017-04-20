@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/20 12:31:03 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 16:52:26 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->event_flags |= FLAG_EVENT_PAUSE;
 	v->process_offset = 0;
 	v->anim_flags = 0;
-	// ft_memset(v->arena, 0, sizeof(unsigned char) * MEM_SIZE);
-	ft_memset(v->arena_flag, 0, sizeof(unsigned char) * MEM_SIZE);
+	ft_memset(v->arena_flag, 0, sizeof(char) * MEM_SIZE);
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);
 	viewer_init_ncurses(v);

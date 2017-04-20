@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 11:29:53 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 16:32:24 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	op_live(t_vm *v, t_list *process)
 
 	LIVE++;
 	v->nlive_bctd++;
-	live = reverse_bytes(&ARENA(PC + 1), 4);
+	live = reverse_bytes(v, PC + 1, 4);
 	if (v->display_mode == 1)
 		printf("live %d\n", live);
 	is_player(v, live);
@@ -36,12 +36,12 @@ void	op_ld(t_vm *v, t_list *process)
 			(ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) <= 16))
 		{
 			if (B_OCT == 0x90)
-				shift = reverse_bytes(&ARENA((PC + 2)), 4);
+				shift = reverse_bytes(v, PC + 2, 4);
 			else
 			{
-				shift = reverse_bytes(&ARENA(PC + 2), 2);
+				shift = reverse_bytes(v, PC + 2, 2);
 				shift %= IDX_MOD;
-				shift = reverse_bytes(&ARENA((PC + shift)), 4);
+				shift = reverse_bytes(v, PC + shift, 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
@@ -65,7 +65,7 @@ void	op_st(t_vm *v, t_list *process)
 			REG[ARENA(PC + 3) - 1] = REG[ARENA(PC + 2) - 1];
 		else if (B_OCT == 0x70)
 		{
-			shift = reverse_bytes(&ARENA(PC + 3), 2);
+			shift = reverse_bytes(v, PC + 3, 2);
 			shift %= IDX_MOD;
 			val = REG[ARENA(PC + 2) - 1];
 			if (v->display_mode == 1)

@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 16:11:40 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 16:52:16 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,7 @@
 # define FLAG_KEY_EVENT_PAUSE 64
 # define FLAG_KEY_EVENT_PROCESS 256
 
-
-// " _ _"
-// "| ' |"
-// " \ /"
 # define MSG_LIFE "LIFE"
-
-// # define L1 "     "
-// # define L2 "  -  "
-// # define L3 "     "
-//
-// # define L1 "  _  "
-// # define L2 " | | "
-// # define L3 "  -  "
-//
-// # define L1 " ___ "
-// # define L2 "|   |"
-// # define L3 " --- "
-//
-// # define L1 " _ _ "
-// # define L2 "|   |"
-// # define L3 " -   "
-//
-// # define L1 "   _ "
-// # define L2 "    |"
-// # define L3 " -   "
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 # define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "nothing")
@@ -73,8 +49,8 @@ typedef struct s_vm	t_vm;
 typedef struct		s_viewer
 {
 	unsigned char	arena[MEM_SIZE];
-	unsigned char	arena_flag[MEM_SIZE]; // faire un cooldown pour que les modifs restents affichees plusieurs tours
-	// char			events[4][100]; // useless
+	char			owner[MEM_SIZE];
+	char			arena_flag[MEM_SIZE]; // faire un cooldown pour que les modifs restents affichees plusieurs tours
 	WINDOW			*win_arena;
 	WINDOW			*win_champions[4];
 	WINDOW			*win_processes;
