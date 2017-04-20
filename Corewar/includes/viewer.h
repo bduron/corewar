@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 08:07:37 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 12:36:34 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ typedef struct s_vm	t_vm;
 typedef struct		s_viewer
 {
 	unsigned char	arena[MEM_SIZE];
-	unsigned char	arena_flag[MEM_SIZE];
-	char			events[4][100]; // useless
+	unsigned char	arena_flag[MEM_SIZE]; // faire un cooldown pour que les modifs restents affichees plusieurs tours
+	// char			events[4][100]; // useless
 	WINDOW			*win_arena;
 	WINDOW			*win_champions[4];
 	WINDOW			*win_processes;
@@ -114,6 +114,8 @@ void				*th_timer_routine(void *p_data);
 void				*th_input_routine(void *p_data);
 void				*th_render_routine(void *p_data);
 void				*th_anim_routine(void *p_data);
+
+void				new_anim(t_viewer *v, int i, const char *str);
 
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);

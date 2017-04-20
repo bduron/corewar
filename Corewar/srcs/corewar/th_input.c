@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 08:02:43 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 09:33:48 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	*th_input_routine(void *p_data)
 			}
 			else if ('0' < input && input < '5' && !(v->anim_flags & (1 << (input - '1'))))
 				new_anim(v, input - '1', "test");
+
 			maj_win_infos(v);
 
 			maj_process(v); // que si on a appuyé sur les touches "i" ou "j" !!!

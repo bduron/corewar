@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/14 11:37:12 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 12:37:09 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	*th_core_routine(void *p_data)
 {
 	t_viewer	*v;
-	int			i;
 	int			laps;
 	int			cooldown;
+	// int			offset = 4365;
 
 	v = (t_viewer *)p_data;
 	laps = 0;
@@ -37,22 +37,30 @@ void	*th_core_routine(void *p_data)
 			cooldown = v->lpf;
 			pthread_mutex_unlock(&v->mutex);
 			/* next code will be executed in parallel with other threads */
-			while (cooldown)
+			// while (v->process_lst != NULL)
+			// {
+			// 	printf("It is now cycle %d\n", v->ncycle); // DEBUG
+			// 	update_vm(v);
+			// 	browse_processes_lst(v);
+			// 	if (v->cycle_to_die < 0)
+			// 		break;
+			// }
+
+			// while ((cooldown || offset) && v->vm->process_lst)
+			while (cooldown && v->vm->process_lst)
 			{
 				/* ... */
-				v->vm->ncycle++;
+				// v->vm->ncycle++;
+				update_vm(v->vm);
 				browse_processes_lst(v->vm);
+				if (v->vm->cycle_to_die < 0)
+					break ;
 				++laps;
 				--cooldown;
+				// --offset;
 			}
 			/* ... */
 			pthread_mutex_lock(&v->mutex);
-			i = -1;
-			while (++i < v->vm->nplayer)
-			{
-				bzero(v->events + i, 100);
-				sprintf(v->events[i], "%d %s", laps, v->vm->p[i].name);
-			}
 			v->event_flags |= FLAG_EVENT_CORE;
 			pthread_cond_broadcast(&v->cond);
 		}

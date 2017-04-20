@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/19 07:45:29 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/20 13:26:50 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	maj_process(t_viewer *v)
 		if (v->process_offset <= i && i - v->process_offset < getmaxy(v->win_processes))
 		{
 			wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
-			mvwprintw(v->win_processes, i - v->process_offset, 0, "carry: %#.2x, pc: %#.2x, "
-				"live count: %#.2x, op cast: %#.2x, reg: [", CARRY, PC, LIVE, OP_CAST);
+			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%d - carry: %#.2x, pc: %#.2x, "
+				"live count: %#.2x, op cast: %#.2x, next_op: %.2x, reg: [", NPRO, CARRY, PC, LIVE, OP_CAST, NEXT_OP);
 			for (int j = 0; j < REG_NUMBER; j++)
 				wprintw(v->win_processes, "%.2x ", REG[j]);
 			wprintw(v->win_processes, "]");
