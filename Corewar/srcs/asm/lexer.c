@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:41 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/19 11:55:17 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/19 12:48:58 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_token					lexer(int fd)
 	static t_char		chr = {-1, -1, -1};
 
 	chr = (chr.c != -1) ? chr : scanner(fd);
-	token = (t_token){0, 0, 0, 0};
+	token = (t_token){{0}, 0, 0, 0};
 	token.col = chr.col;
 	token.line = chr.line;
 	ft_memset(token.str, 0, COMMENT_LENGTH + 1);

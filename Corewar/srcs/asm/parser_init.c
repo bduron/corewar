@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 17:04:17 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 19:18:37 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/19 12:38:13 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_compile(char *input_name, char *output_name)
 	int				value;
 
 	if ((input = open(input_name, O_RDONLY)) < 0)
-		return (2);
+		return (ft_error("Can't read source file", 1));
 	if ((output = open(output_name, O_CREAT | O_RDWR, 0644)) < 0)
 		return (3);
 	if (init_label(input, &value))

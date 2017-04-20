@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ "$#" -ne 2 ]; then
-	echo "usage: ./check_asm.sh [-clean] [-check]"
+if [ $# -ne 1 ]; then
+	echo "usage: ./check_asm.sh [-del] [-exec] [-diff]"
 fi
 
 if [ "$1" == "-del" ]; then

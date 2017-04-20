@@ -6,26 +6,26 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:22 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/19 11:55:30 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/19 12:50:32 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static t_arg	parse_arg_indirect(int in, t_token *token, int code, t_arg arg)
+static t_arg	parse_arg_indirect(int input, t_token *token, t_arg arg)
 {
 	int		sign;
 
 	if (*(token->str) == '+' || *(token->str) == '-')
 	{
 		sign = (*(token->str) == '+') ? 1 : -1;
-		*token = lexer(in);
+		*token = lexer(input);
 		if (token->type == (t_types){Number})
 			arg = (t_arg){T_IND, sign * ft_atoi(token->str), IND_SIZE};
 	}
 	else if (*(token->str) == LABEL_CHAR)
 	{
-		*token = lexer(in);
+		*token = lexer(input);
 		if (label_index(token->str) != -1)
 			arg = (t_arg){T_IND, label_value(token->str,
 						getlabels()->index), IND_SIZE};
@@ -65,7 +65,6 @@ static t_arg	parse_arg_direct(int in, t_token *token, int opcode, t_arg arg)
 static t_arg	parse_arg(int input, t_token *token, int opcode)
 {
 	t_arg			arg;
-	int				sign;
 
 	arg = (t_arg){-1, -1, -1};
 	while (token->type == (t_types){Whitespace})
@@ -75,7 +74,7 @@ static t_arg	parse_arg(int input, t_token *token, int opcode)
 		if (*(token->str) == DIRECT_CHAR)
 			arg = parse_arg_direct(input, token, opcode, arg);
 		else
-			arg = parse_arg_indirect(input, token, opcode, arg);
+			arg = parse_arg_indirect(input, token, arg);
 	}
 	else if (token->type == (t_types){Number})
 		arg = (t_arg){T_IND, ft_atoi(token->str), IND_SIZE};
