@@ -43,7 +43,7 @@ void browse_processes_lst(t_vm *v)
 			{
 				process = process->next;
 			//	KILL(prev->next);
-				if (v->display_mode == 1)
+				if (v->display_mode == 1 && process)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
 				previous->next = process;
 			}
@@ -93,10 +93,10 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
-		printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->process_lst)
 			browse_processes_lst(v);
 		update_vm(v);
+		printf("It is now cycle %d\n", v->ncycle); // DEBUG
 //		if (v->cycle_to_die < 0) //cpoulet modif to be confirmed
 //			break;
 	}

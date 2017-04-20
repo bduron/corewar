@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/19 18:41:55 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 18:23:21 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int		check_arg(u_char arg, u_char n, u_char arg_nb)
 	return (1);
 }
 
-void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb)
+int		octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb)
 {
 	int shift;
 
+	(void)process; //SADNESS
 	shift = 2;
 	while (++arg_nb <= 4)
 		n >>= 2;
@@ -63,6 +64,5 @@ void	octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb)
 		shift += ((n & 0b11) == 0b10) ? label_size : 0;
 		n >>= 2;
 	}
-	PC += shift;
-	PC %= MEM_SIZE;
+	return (shift);
 }
