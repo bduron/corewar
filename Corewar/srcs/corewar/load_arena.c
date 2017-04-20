@@ -17,6 +17,7 @@ void add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	k = 16;
 	while (k--)
 		((t_process *)v->process_lst->content)->reg[k] = REG[k];
+	operate_process(v, v->process_lst);
 }
 
 void load_processes(t_vm *v)

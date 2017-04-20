@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 12:36:34 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 16:11:40 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@
 // # define L3 " -   "
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
+# define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "nothing")
+# define PRINT_CARRY (CARRY ? 'C' : ' ')
+# define PRINT_LIVE (LIVE ? 'L' : ' ')
 
 typedef struct s_vm	t_vm;
 
