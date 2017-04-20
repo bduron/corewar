@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 19:19:08 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/20 23:19:25 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@
 // # define ARENA_NAME_8 L" ░   ▒     ░░   ░    ░      ░   ░ ░   ░   ▒"
 // # define ARENA_NAME_9 L"     ░  ░   ░        ░  ░         ░       ░  ░"
 
-# define LOGO_1  L" ▄████▄   ▒█████   ██▀███  ▓█████  █     █░ ▄▄▄       ██▀███  "
-# define LOGO_2  L"▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀ ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒"
-# define LOGO_3  L"▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███   ▒█░ █ ░█ ▒██  ▀█▄  ▓██ ░▄█ ▒"
-# define LOGO_4  L"▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄ ░█░ █ ░█ ░██▄▄▄▄██ ▒██▀▀█▄  "
-# define LOGO_5  L"▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒░░██▒██▓  ▓█   ▓██▒░██▓ ▒██▒"
-# define LOGO_6  L"░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░░ ▓░▒ ▒   ▒▒   ▓▒█░░ ▒▓ ░▒▓░"
-# define LOGO_7  L"  ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░  ▒ ░ ░    ▒   ▒▒ ░  ░▒ ░ ▒░"
-# define LOGO_8  L"░        ░ ░ ░ ▒    ░░   ░    ░     ░   ░    ░   ▒     ░░   ░ "
-# define LOGO_9  L"░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     "
-# define LOGO_10 L"░                          2016 pboutelo kcosta bduron cpoulet"
+# define LOGO_1  L"  ▄████▄   ▒█████   ██▀███  ▓█████  █     █░ ▄▄▄       ██▀███  "
+# define LOGO_2  L" ▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀ ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒"
+# define LOGO_3  L" ▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███   ▒█░ █ ░█ ▒██  ▀█▄  ▓██ ░▄█ ▒"
+# define LOGO_4  L" ▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄ ░█░ █ ░█ ░██▄▄▄▄██ ▒██▀▀█▄  "
+# define LOGO_5  L" ▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒░░██▒██▓  ▓█   ▓██▒░██▓ ▒██▒"
+# define LOGO_6  L" ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░░ ▓░▒ ▒   ▒▒   ▓▒█░░ ▒▓ ░▒▓░"
+# define LOGO_7  L"   ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░  ▒ ░ ░    ▒   ▒▒ ░  ░▒ ░ ▒░"
+# define LOGO_8  L" ░        ░ ░ ░ ▒    ░░   ░    ░     ░   ░    ░   ▒     ░░   ░ "
+# define LOGO_9  L" ░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     "
+# define LOGO_10 L" ░                          2016 pboutelo kcosta bduron cpoulet"
 
 
 /***
@@ -109,12 +109,12 @@
      ░   ░
 */
 
-# define LIFE_1 L"   ▓██▄ ▄██░"
-# define LIFE_2 L"  ▓██░   ░██░"
-# define LIFE_3 L"   ▓█    ██▒"
-# define LIFE_4 L"   ░▒█ ██▒░"
-# define LIFE_5 L"     ░▐░  ░"
-# define LIFE_6 L"     ░   ░"
+# define LIFE_1 L"  ▓██▄ ▄██░"
+# define LIFE_2 L" ▓██░   ░██░"
+# define LIFE_3 L"  ▓█    ██▒"
+# define LIFE_4 L"  ░▒█ ██▒░"
+# define LIFE_5 L"    ░▐░  ░"
+# define LIFE_6 L"    ░   ░"
 
 typedef struct s_vm	t_vm;
 

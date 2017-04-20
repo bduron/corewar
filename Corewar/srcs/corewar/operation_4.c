@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 18:39:07 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 23:15:32 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	print_adv(t_vm *v, t_list *process, int shift)
 {
 	int	i;
-	
+
 	i = -1;
-	printf("ADV %d (0x%04x -> 0x%04x) ", shift, PC, (PC + shift) % MEM_SIZE);
+	if (v->display_mode == 1)
+		printf("ADV %d (0x%04x -> 0x%04x) ", shift, PC, (PC + shift) % MEM_SIZE);
 	while (++i < shift)
 		printf("%02x ", ARENA(PC + i));
 	printf("\n");
