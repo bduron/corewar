@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:55:28 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:09:48 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 14:28:00 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_label
 }					t_label;
 
 t_label				*getlabels(void);
+t_label				*getlabels_use(void);
 
 int					label_index(char *name);
 int					label_value(char *name, int index);

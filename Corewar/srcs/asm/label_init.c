@@ -6,11 +6,26 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 16:53:23 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 19:20:36 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 14:43:15 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+static int		init_label_check(void)
+{
+	t_list				*labels;
+
+	labels = getlabels_use()->label;
+	while (labels)
+	{
+		if (labels->content)
+			if (label_index(labels->content) == -1)
+				return (label_error(labels->content, 1));
+		labels = labels->next;
+	}
+	return (0);
+}
 
 static int		init_skip_whitespace(int input, t_token *token)
 {
@@ -64,11 +79,11 @@ int				init_label(int input, int *value)
 			if (init_manage_opcode(input, &token, value))
 				return (lexical_error(token, 3));
 		}
-		else if (token.type == (t_types){None})
-			break ;
-		else
+		else if (token.type != (t_types){None})
 			return (lexical_error(token, 4));
 	}
+	if (init_label_check())
+		return (5);
 	lseek(input, 0, SEEK_SET);
 	return (0);
 }

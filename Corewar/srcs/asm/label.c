@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/16 19:43:11 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/19 12:49:58 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 15:30:29 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static t_arg	peek_arg_indirect(int input, t_token *token, t_arg arg)
 	{
 		*token = lexer(input);
 		arg = (t_arg){T_IND, 0, IND_SIZE};
+		ft_lstaddback(&(getlabels_use()->label),
+					ft_lstnew(token->str, ft_strlen(token->str) + 1));
 	}
 	return (arg);
 }
@@ -49,8 +51,9 @@ static t_arg	peek_arg_direct(int input, t_token *token, int code, t_arg arg)
 		else if (*(token->str) == LABEL_CHAR)
 		{
 			*token = lexer(input);
-			arg = (t_arg){T_DIR, 0, (g_op_tab[code].label) ?
-			DIR_SIZE / 2 : DIR_SIZE};
+			arg = (t_arg){T_DIR, 0, OP(code).label ? DIR_SIZE / 2 : DIR_SIZE};
+			ft_lstaddback(&(getlabels_use()->label),
+						ft_lstnew(token->str, ft_strlen(token->str) + 1));
 		}
 	}
 	else if (token->type == (t_types){Number})

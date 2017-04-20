@@ -6,13 +6,22 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 16:45:58 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:01:27 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 14:27:40 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
 t_label			*getlabels(void)
+{
+	static t_label		labels = (t_label){0, NULL};
+
+	if (labels.label == NULL)
+		labels.label = ft_lstnew(NULL, 0);
+	return (&labels);
+}
+
+t_label			*getlabels_use(void)
 {
 	static t_label		labels = (t_label){0, NULL};
 

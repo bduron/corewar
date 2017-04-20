@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 17:55:21 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 13:54:51 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 typedef enum		e_types
 {
-	None,
+	Unknown = -1,
+	None = 0,
 	Comment,
 	Whitespace,
 	Newline,

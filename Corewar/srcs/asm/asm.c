@@ -6,11 +6,21 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 18:33:17 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 14:57:30 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+int				label_error(char *str, int ft_errnum)
+{
+	ft_putstr("No such label ");
+	ft_putstr(str);
+	ft_putstr(" while attempting to dereference token \":");
+	ft_putstr(str);
+	ft_putendl("\"");
+	return (ft_errnum);
+}
 
 static char		*ft_check_file(char *filename)
 {
@@ -37,7 +47,7 @@ int				main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_error("usage: ./asm champion.s", 1));
 	if (!(output = ft_check_file(argv[1])))
-		return (ft_error("Invalid file\nusage: ./asm champion.s", 1));
+		return (ft_error("Can't read source file\n", 1));
 	if ((ret = ft_compile(argv[1], output)))
 		return (ret);
 	ft_putstr("Writing output program to ");

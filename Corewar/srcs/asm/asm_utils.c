@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/18 16:00:46 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 16:20:02 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 15:32:25 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,11 @@ int		ft_strisdigit(char *str)
 
 int		ft_isregister(char *word)
 {
-	int		value;
-
 	if (*word != 'r')
 		return (0);
 	if (!ft_strisdigit(word + 1))
 		return (0);
-	value = ft_atoi(word + 1);
-	if (value > 16 || value <= 0)
+	if (*(word + 3))
 		return (0);
 	return (1);
 }
