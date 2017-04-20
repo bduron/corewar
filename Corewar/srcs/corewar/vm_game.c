@@ -28,20 +28,23 @@ void browse_processes_lst(t_vm *v) //pboutelo TODO : utilier ft_lstiter
 	previous = NULL;
 	while (process)
 	{
-		if (BCTD && !LIVE)
+		if ((BCTD && !LIVE) || v->cycle_to_die < 0)
 		{
 	//		kill_process(&process, &previous);		
 			if (process == v->process_lst) 
 			{
 				v->process_lst = process->next;
 			//	KILL(process);
-				printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
+				if (process) 
+					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
 				process = v->process_lst;
 			}
 			else
 			{
 				process = process->next;
 			//	KILL(prev->next);
+				if (process) 
+					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
 				previous->next = process;
 			}
 		}
@@ -90,12 +93,13 @@ void run_game(t_vm *v)
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
+		if (v->process_lst)
+			browse_processes_lst(v);
 		update_vm(v);
-		if (v->cycle_to_die < 0) //cpoulet modif to be confirmed
-			break;
-		browse_processes_lst(v);
+//		if (v->cycle_to_die < 0) //cpoulet modif to be confirmed
+//			break;
 	}
-	printf("player %s win\n", v->p[v->last_live_id].name);
+	printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
 }
 		// each CYCLE_TO_DIE 
 			// if nlives_btcd >= NBR_LIVES => CYCLE_TO_DIE -= CYCLE_DELTA;
