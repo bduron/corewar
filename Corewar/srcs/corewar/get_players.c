@@ -1,6 +1,21 @@
 
 #include "corewar.h"
 
+void is_player(t_vm *v, int live)
+{
+	int i;
+
+	i = -1;
+	while (++i < v->nplayer)
+		if (live == v->p[i].nplayer)
+		{
+
+			printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);//DEBUG
+			v->p[i].nblive++;
+			v->last_live_id = i;
+		}
+}
+
 void save_player(char *file, t_vm *v, int i)
 {
 	int	fd;
@@ -14,8 +29,9 @@ void save_player(char *file, t_vm *v, int i)
 		read(fd, &(v->p[i].comment), COMMENT_LENGTH);
 		lseek(fd, 4, SEEK_CUR); // ZAZ tweak skip
 		len = read(fd, &(v->p[i].code), CHAMP_MAX_SIZE);
-		v->p[i].nplayer = i + 1;
+		v->p[i].nplayer = (i + 1) * -1;
 		v->p[i].prog_len = len;
+		v->p[i].nblive = 0;
 	}
 	else
 		xerror("Error: cannot open file", -1);

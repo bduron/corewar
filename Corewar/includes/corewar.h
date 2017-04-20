@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/15 15:45:16 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:54:29 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@
 ** cast du t_list dans les appels de fonction, pour éviter de caster n fois...
 */
 # define PC			(((t_process *)process->content)->pc)
+# define NPRO		(((t_process *)process->content)->nprocess)
 # define CARRY		(((t_process *)process->content)->carry)
 # define REG		(((t_process *)process->content)->reg)
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
+# define BCTD		v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0
 # define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
@@ -56,6 +58,7 @@ typedef struct		s_arena
 
 typedef struct		s_process
 {
+	int				nprocess;
 	int				carry;
 	int				reg[REG_NUMBER];
 	int				pc;
@@ -73,6 +76,7 @@ typedef struct		s_player
 	int				prog_len;
 	int				exec_magic;
 	int				pc_address;
+	int 			nblive;
 }					t_player;
 
 typedef struct		s_vm
@@ -84,12 +88,15 @@ typedef struct		s_vm
 	int				nprocess;
 	int				last_live_id;
 	int				ncycle;
+	int				ncycle_mod;
 	int				nlive_bctd; // lives emitted bctd
 	int				cycle_to_die; // Decrement under certain conditions
-	int				ncheck_bctd; // nb ctd in a row w/o decrementing ctd
+	int				ncheck; // nb ctd in a row w/o decrementing ctd
+	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
 }					t_vm;
 
+void is_player(t_vm *v, int live);
 void save_player(char *file, t_vm *v, int i);
 void get_players(int argc, char **argv, t_vm *v);
 int is_corewar_execmagic(char *file);
