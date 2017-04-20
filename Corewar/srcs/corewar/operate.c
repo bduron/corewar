@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 16:08:07 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/20 16:10:34 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
 		ret = REG[ARENA(PC + 2 + (*shift)++) - 1];
 	else if ((type & 0b11) == 2)
 	{
-		ret = reverse_bytes_(PC + 2 + *shift, label);
+		ret = reverse_bytes_(v, PC + 2 + *shift, label);
 		*shift += label;
 	}
 	else
 	{
-		ret = reverse_bytes_(PC + 2 + *shift, 2) % IDX_MOD;
-		ret = reverse_bytes_(PC + ret, 4);
+		ret = reverse_bytes_(v, PC + 2 + *shift, 2) % IDX_MOD;
+		ret = reverse_bytes_(v, PC + ret, 4);
 		ret = type >> 2 ? ret % IDX_MOD : ret;
 		*shift += 2;
 	}
