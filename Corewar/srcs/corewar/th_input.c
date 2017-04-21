@@ -6,26 +6,11 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 14:16:43 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:10:31 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "viewer.h"
-
-void	new_anim(t_viewer *v, int i)
-{
-	t_anim *a;
-
-	if (!(a = (t_anim *)ft_memalloc(sizeof(t_anim))))
-		return ;
-	a->v = v;
-	a->i = i;
-	v->anim_flags |= 1 << i;
-	if (pthread_create(&v->th_anim[i], NULL, &th_anim_routine, a) < 0) {
-		fprintf(stderr, "pthread_create error for th_anim[%d]\n", i);
-		exit(1);
-	}
-}
 
 void	init_win_infos(t_viewer *v)
 {
@@ -99,8 +84,6 @@ void	*th_input_routine(void *p_data)
 				v->event_flags ^= FLAG_EVENT_PAUSE;
 				pthread_cond_broadcast(&v->cond);
 			}
-			else if ('0' < input && input < '5' && !(v->anim_flags & (1 << (input - '1'))))
-				new_anim(v, input - '1');
 
 			maj_win_infos(v);
 

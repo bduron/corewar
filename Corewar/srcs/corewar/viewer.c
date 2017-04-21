@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/21 14:51:24 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:56:08 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,36 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	setlocale (LC_ALL,"");
 	v->vm = vm;
 	vm->v = v;
+
 	v->lpf = 1;
 	v->fps = 1048576;
+
 	v->event_flags |= FLAG_EVENT_PAUSE;
+	ft_memset(v->anim_flags, 1 + 2 + 4 + 8 + 16 + 32, sizeof(char) * MAX_PLAYERS);
+
 	v->process_selected = 0;
 	v->process_offset = 0;
-	v->anim_flags = 0;
-	ft_memset(v->last_live_cycles, 0, sizeof(char) * MAX_PLAYERS);
+
 	ft_memset(v->arena_flag, 0, sizeof(int) * MEM_SIZE);
+
 	pthread_mutex_init(&v->mutex, NULL);
+	pthread_mutex_init(&v->mutex_anim[0], NULL);
+	pthread_mutex_init(&v->mutex_anim[1], NULL);
+	pthread_mutex_init(&v->mutex_anim[2], NULL);
+	pthread_mutex_init(&v->mutex_anim[3], NULL);
 	pthread_cond_init(&v->cond, NULL);
+	// pthread_cond_init(&v->cond_anim[0], NULL);
+	// pthread_cond_init(&v->cond_anim[1], NULL);
+	// pthread_cond_init(&v->cond_anim[2], NULL);
+	// pthread_cond_init(&v->cond_anim[3], NULL);
 	viewer_init_ncurses(v);
 }
 
 void	viewer_run(t_viewer *v)
 {
-	void *ret;
+	void	*ret;
+	int		i;
+	t_anim	anim[MAX_PLAYERS];
 
 	if (pthread_create(&v->th_render, NULL, &th_render_routine, v) < 0) {
 		fprintf(stderr, "pthread_create error for th_render\n");
@@ -113,10 +127,23 @@ void	viewer_run(t_viewer *v)
 		fprintf(stderr, "pthread_create error for th_timer\n");
 		exit(1);
 	}
+	i = -1;
+	while (++i < v->vm->nplayer)
+	{
+		anim[i].v = v;
+		anim[i].i = i;
+		if (pthread_create(&v->th_anim[i], NULL, &th_anim_routine, &anim[i]) < 0) {
+			fprintf(stderr, "pthread_create error for th_anim[%d]\n", i);
+			exit(1);
+		}
+	}
 	(void)pthread_join(v->th_core, &ret);
 	(void)pthread_join(v->th_input, &ret);
 	(void)pthread_join(v->th_render, &ret);
 	(void)pthread_join(v->th_timer, &ret);
+	i = -1;
+	while (++i < v->vm->nplayer)
+		(void)pthread_join(v->th_anim[i], &ret);
 	endwin();
 }
 

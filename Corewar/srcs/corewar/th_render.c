@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 14:55:10 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 17:51:24 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,17 +144,6 @@ void	maj_process(t_viewer *v)
 	}
 }
 
-void	maj_lifes(t_viewer *v)
-{
-	int i;
-
-	i = -1;
-	while (++i < v->vm->nplayer)
-	{
-		//TODO
-	}
-}
-
 void	*th_render_routine(void *p_data)
 {
 	t_viewer	*v;
@@ -166,7 +155,6 @@ void	*th_render_routine(void *p_data)
 	maj_process(v);
 	while(1)
 	{
-		// printf("RENDER");
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{
 			pthread_mutex_unlock(&v->mutex);
@@ -176,16 +164,11 @@ void	*th_render_routine(void *p_data)
 			&& (v->event_flags & FLAG_EVENT_TIMER)
 			&& !(v->event_flags & FLAG_EVENT_PAUSE))
 		{
-			maj_lifes(v);
-			/* mise à jour de l'arène */
 			maj_arena(v);
-			/* mise à jour des joueurs */
 			maj_process(v);
-			/* mise à jour des infos générales */
 			mvwprintw(v->win_infos, 0, 69, "%-10d", v->vm->ncycle);
 			mvwprintw(v->win_infos, 1, 69, "%-10d", v->vm->ncycle_mod);
 			mvwprintw(v->win_infos, 2, 69, "%-10d", v->vm->cycle_to_die);
-			// mvwprintw(v->win_infos, 0, 70, "%7d", v->vm->ncycle);
 			wrefresh(v->win_infos);
 
 			v->event_flags ^= (FLAG_EVENT_CORE | FLAG_EVENT_TIMER);
