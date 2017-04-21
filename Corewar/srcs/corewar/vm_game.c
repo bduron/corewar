@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 14:45:27 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 15:13:45 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void update_process(t_vm *v, t_list *process)
 	}
 	else
 		OP_CAST -= 1;
+	LIVE_SINCE++;
 }
 
 
@@ -68,7 +69,7 @@ void browse_processes_lst(t_vm *v)
 				v->process_lst = process->next;
 			//	KILL(process);
 				if (v->display_mode == 1)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
+					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				process = v->process_lst;
 			}
 			else
@@ -76,7 +77,7 @@ void browse_processes_lst(t_vm *v)
 				process = process->next;
 			//	KILL(prev->next);
 				if (v->display_mode == 1 && process)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, v->ncycle, v->cycle_to_die);
+					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				previous->next = process;
 			}
 		}
