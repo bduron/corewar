@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/20 18:41:06 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 13:08:17 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);
 void	run_game(t_vm *v);
 void 	browse_processes_lst(t_vm *v);
-void	operate_process(t_vm *v, t_list *process);
+void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
 int		octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
