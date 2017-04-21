@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 13:39:20 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 14:45:27 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ void update_process(t_vm *v, t_list *process)
 	if (OP_CAST == 0)
 	{
 		if (NEXT_OP >= 0 && NEXT_OP < 16)
+		{
 			op_tab[NEXT_OP].f(v, process);
-		init_next_op(v, process);
+			NEXT_OP = -1;
+		}
+//		init_next_op(v, process);
 	}
 	else
 		OP_CAST -= 1;
 }
 
-/*
+
 void init_processes_lst(t_vm *v)
 {
 	t_list *process;
@@ -41,12 +44,12 @@ void init_processes_lst(t_vm *v)
 	process = v->process_lst;
 	while (process)
 	{
-		if (NEXT_OP < 0)
+		if (!(NEXT_OP >= 0 && NEXT_OP <= 15))
 			init_next_op(v, process);
 		process = process->next;
 	}
 }
-*/
+
 
 void browse_processes_lst(t_vm *v)
 {
@@ -122,13 +125,13 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
-		if (v->process_lst)
-		{
-		//	init_processes_lst(v);
-			browse_processes_lst(v);
-		}
 		update_vm(v);
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
+		if (v->process_lst)
+		{
+			init_processes_lst(v);
+			browse_processes_lst(v);
+		}
 	}
 	printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
 }
