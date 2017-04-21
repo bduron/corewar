@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/20 23:29:40 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/21 14:51:24 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	viewer_init_colors()
 
 static void	viewer_init_ncurses(t_viewer *v)
 {
+	int register_height;
 	initscr();
 	viewer_init_colors();
 	keypad(stdscr, TRUE);
@@ -45,9 +46,15 @@ static void	viewer_init_ncurses(t_viewer *v)
 	curs_set(0);
 	refresh();
 
+	if (REG_NUMBER % 2)
+		register_height = REG_NUMBER + 2;
+	else
+		register_height = REG_NUMBER + 1;
+
 	v->win_arena = create_newwin(LINES - 6, COLS - 68, 0, 0, "Arena");
 	v->win_title = create_newwin(12, 68, 0, COLS - 68, "Title");
-	v->win_processes = create_newwin(LINES - 12 - 6 - 8, 68, 12, COLS - 68, "Processes list");
+	v->win_processes = create_newwin(LINES - (12 + register_height + 8 + 6), 68, 12, COLS - 68, "Processes list");
+	v->win_register = create_newwin(register_height, 68, LINES - 8 - 6 - (register_height), COLS - 68, "Register");
 	v->win_champions[0] = create_newwin(8, 17, LINES - 8 - 6, COLS - 68, (char *)v->vm->p[0].name);
 	v->win_champions[1] = create_newwin(8, 17, LINES - 8 - 6, COLS - 51, (char *)v->vm->p[1].name);
 	v->win_champions[2] = create_newwin(8, 17, LINES - 8 - 6, COLS - 34, (char *)v->vm->p[2].name);
@@ -76,8 +83,10 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->lpf = 1;
 	v->fps = 1048576;
 	v->event_flags |= FLAG_EVENT_PAUSE;
+	v->process_selected = 0;
 	v->process_offset = 0;
 	v->anim_flags = 0;
+	ft_memset(v->last_live_cycles, 0, sizeof(char) * MAX_PLAYERS);
 	ft_memset(v->arena_flag, 0, sizeof(int) * MEM_SIZE);
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);
@@ -120,18 +129,7 @@ WINDOW *create_newwin(int height, int width, int starty, int startx, char *title
 
 	win_box = newwin(height, width, starty, startx);
 	// box(win_box, 0 , 0);
-	// wborder(win_box, ACS_RTEE, ACS_LTEE, ACS_BTEE, ACS_TTEE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
-	// wborder(win_box, '.', '.', '.', '.', '.', '.', '.', '.');
-	/***
-	   ▓███▄ ▄██░
-	  ▓██░    ░██░
-	   ▓██    ██▒
-	    ▒██  ██▒
-	     ▒▀██▀▒
-	     ░ ▐░
-	     ░     ░
-	       ░
-	*/
+	wborder(win_box, ACS_RTEE, ACS_LTEE, ACS_BTEE, ACS_TTEE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
 	win_content = derwin(win_box, height - 2, width - 4, 1, 2);
 	// len = strlen(title);
 	// wmove(win_box, 0, (width - len) / 2 - 3);

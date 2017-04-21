@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 18:24:03 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:55:10 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,37 @@ void	init_arena(t_viewer *v)
 		v->owner[i] = v->vm->a.owner[i];
 	}
 	wrefresh(v->win_arena);
+}
+
+void	init_register(t_viewer *v)
+{
+	int i;
+
+	werase(v->win_register);
+	i = -1;
+	while (++i < REG_NUMBER)
+	{
+		if (i < REG_NUMBER / 2)
+			mvwprintw(v->win_register, 2 * i, 0, "Register[%3d] = %13d", i, 0);
+		else
+			mvwprintw(v->win_register, 2 * (i - (REG_NUMBER / 2)), 31, "Register[%3d] = %13d", i, 0);
+	}
+	wrefresh(v->win_register);
+}
+
+void	maj_register(t_viewer *v, t_process *process)
+{
+	int i;
+
+	i = -1;
+	while (++i < REG_NUMBER)
+	{
+		if (i < REG_NUMBER / 2)
+			mvwprintw(v->win_register, 2 * i, 16, "%13d", process->reg[i]);
+		else
+			mvwprintw(v->win_register, 2 * (i - (REG_NUMBER / 2)), 46, "%13d", process->reg[i]);
+	}
+	wrefresh(v->win_register);
 }
 
 void	maj_arena(t_viewer *v)
@@ -59,8 +90,9 @@ void	maj_arena(t_viewer *v)
 
 void	maj_process(t_viewer *v)
 {
-	int		i;
-	t_list	*process;
+	int			i;
+	t_list		*process;
+	t_process	*selected;
 
 	werase(v->win_processes);
 	i = -1;
@@ -70,29 +102,36 @@ void	maj_process(t_viewer *v)
 		++i;
 		if (v->process_offset <= i && i - v->process_offset < getmaxy(v->win_processes))
 		{
-			if (NPRO == 7)
-				wattron(v->win_processes, COLOR_PAIR(4));
+			if (i == v->process_selected)
+			{
+				wattron(v->win_processes, COLOR_PAIR(7));
+				selected = (t_process *)process->content;
+			}
 			else
 				wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
-			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%d %dx%d [%c][%c]: ", NPRO, PC / 64, PC % 64, PRINT_LIVE, PRINT_CARRY);
+			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64, PC % 64, PRINT_LIVE, PRINT_CARRY);
 			if (NEXT_OP >= 0 && NEXT_OP < 16)
-				wprintw(v->win_processes, "will cast a \"%s\" in %d laps. ", PRINT_NEXT_OP, OP_CAST);
+				mvwprintw(v->win_processes, i - v->process_offset, 20, "          will cast a \"%5s\" in %4d laps.", PRINT_NEXT_OP, OP_CAST);
 			else
-				wprintw(v->win_processes, "looking for instruction. ");
-			// for (int j = 0; j < REG_NUMBER; j++)
-			// 	if(REG[j])
-			// 		wprintw(v->win_processes, "%d:%x ", j, REG[j]);
-			wattroff(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
+				mvwprintw(v->win_processes, i - v->process_offset, 20, "                 is looking for instruction.");
+			if (i == v->process_selected)
+				wattroff(v->win_processes, COLOR_PAIR(7));
+			else
+				wattroff(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
 		}
-		if (NPRO == 7)
-			wattron(v->win_arena, COLOR_PAIR(10));
-		else
+		if (i != v->process_selected)
+		{
 			wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6));
-		// wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
-		mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x", v->vm->a.arena[PC]);
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
+			mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x", v->vm->a.arena[PC]);
+			wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6 ));
+		}
 		process = process->next;
 	}
+	wattron(v->win_arena, COLOR_PAIR(7));
+	mvwprintw(v->win_arena, selected->pc / 64, (selected->pc % 64 * 3), "%.2x", v->vm->a.arena[selected->pc]);
+	wattroff(v->win_arena, COLOR_PAIR(7));
+	maj_register(v, selected);
+
 	wrefresh(v->win_processes);
 	wrefresh(v->win_arena);
 	process = v->vm->process_lst;
@@ -105,6 +144,17 @@ void	maj_process(t_viewer *v)
 	}
 }
 
+void	maj_lifes(t_viewer *v)
+{
+	int i;
+
+	i = -1;
+	while (++i < v->vm->nplayer)
+	{
+		//TODO
+	}
+}
+
 void	*th_render_routine(void *p_data)
 {
 	t_viewer	*v;
@@ -112,6 +162,7 @@ void	*th_render_routine(void *p_data)
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
 	init_arena(v);
+	init_register(v);
 	maj_process(v);
 	while(1)
 	{
@@ -125,16 +176,15 @@ void	*th_render_routine(void *p_data)
 			&& (v->event_flags & FLAG_EVENT_TIMER)
 			&& !(v->event_flags & FLAG_EVENT_PAUSE))
 		{
-
+			maj_lifes(v);
 			/* mise à jour de l'arène */
 			maj_arena(v);
-
 			/* mise à jour des joueurs */
 			maj_process(v);
-
 			/* mise à jour des infos générales */
 			mvwprintw(v->win_infos, 0, 69, "%-10d", v->vm->ncycle);
-			mvwprintw(v->win_infos, 1, 69, "%-10d", v->vm->cycle_to_die);
+			mvwprintw(v->win_infos, 1, 69, "%-10d", v->vm->ncycle_mod);
+			mvwprintw(v->win_infos, 2, 69, "%-10d", v->vm->cycle_to_die);
 			// mvwprintw(v->win_infos, 0, 70, "%7d", v->vm->ncycle);
 			wrefresh(v->win_infos);
 

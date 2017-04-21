@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 23:19:25 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/21 14:50:53 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,9 @@
 # define MSG_LIFE "LIFE"
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
-# define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "nothing")
+# define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "")
 # define PRINT_CARRY (CARRY ? 'C' : ' ')
 # define PRINT_LIVE (LIVE ? 'L' : ' ')
-
-// # define ARENA_NAME_1 L"██   █▄▄▄▄ ▄███▄      ▄   ██"
-// # define ARENA_NAME_2 L"█ █  █  ▄▀ █▀   ▀      █  █ █"
-// # define ARENA_NAME_3 L"█▄▄█ █▀▀▌  ██▄▄    ██   █ █▄▄█"
-// # define ARENA_NAME_4 L"█  █ █  █  █▄   ▄▀ █ █  █ █  █"
-// # define ARENA_NAME_5 L"   █   █   ▀███▀   █  █ █    █"
-// # define ARENA_NAME_6 L"  █   ▀            █   ██   █"
-// # define ARENA_NAME_7 L" ▀                         ▀"
-
-
-// # define ARENA_NAME_1 L"▄▄▄       ██▀███  ▓█████  ███▄    █  ▄▄▄"
-// # define ARENA_NAME_2 L"▒████▄    ▓██ ▒ ██▒▓█   ▀  ██ ▀█   █ ▒████▄"
-// # define ARENA_NAME_3 L"▒██  ▀█▄  ▓██ ░▄█ ▒▒███   ▓██  ▀█ ██▒▒██  ▀█▄"
-// # define ARENA_NAME_4 L"░██▄▄▄▄██ ▒██▀▀█▄  ▒▓█  ▄ ▓██▒  ▐▌██▒░██▄▄▄▄██"
-// # define ARENA_NAME_5 L"▓█   ▓██▒░██▓ ▒██▒░▒████▒▒██░   ▓██░ ▓█   ▓██▒"
-// # define ARENA_NAME_6 L"▒▒   ▓▒█░░ ▒▓ ░▒▓░░░ ▒░ ░░ ▒░   ▒ ▒  ▒▒   ▓▒█░"
-// # define ARENA_NAME_7 L" ▒   ▒▒ ░  ░▒ ░ ▒░ ░ ░  ░░ ░░   ░ ▒░  ▒   ▒▒ ░"
-// # define ARENA_NAME_8 L" ░   ▒     ░░   ░    ░      ░   ░ ░   ░   ▒"
-// # define ARENA_NAME_9 L"     ░  ░   ░        ░  ░         ░       ░  ░"
 
 # define LOGO_1  L"  ▄████▄   ▒█████   ██▀███  ▓█████  █     █░ ▄▄▄       ██▀███  "
 # define LOGO_2  L" ▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀ ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒"
@@ -75,46 +56,40 @@
 # define LOGO_9  L" ░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     "
 # define LOGO_10 L" ░                          2016 pboutelo kcosta bduron cpoulet"
 
+# define LIFE_1_100 L"  ▓██▄ ▄██░"
+# define LIFE_2_100 L" ▓█████████░"
+# define LIFE_3_100 L"  ▓███████▒"
+# define LIFE_4_100 L"  ░▒████▒░"
+# define LIFE_5_100 L"    ░▐█░ "
+# define LIFE_6_100 L""
 
-/***
- *     ▄▄▄       ▄▄▄▄    ▄████▄  ▓█████▄ ▓█████   █████▒ ▄████  ██░ ██  ██▓ ▄▄▄██▀▀▀██ ▄█▀ ██▓     ███▄ ▄███▓ ███▄    █  ▒█████   ██▓███    █████   ██▀███    ██████ ▄▄▄█████▓ █    ██  ██▒   █▓ █     █░▒██   ██▒▓██   ██▓▒███████▒
- *    ▒████▄    ▓█████▄ ▒██▀ ▀█  ▒██▀ ██▌▓█   ▀ ▓██   ▒ ██▒ ▀█▒▓██░ ██▒▓██▒   ▒██   ██▄█▒ ▓██▒    ▓██▒▀█▀ ██▒ ██ ▀█   █ ▒██▒  ██▒▓██░  ██▒▒██▓  ██▒▓██ ▒ ██▒▒██    ▒ ▓  ██▒ ▓▒ ██  ▓██▒▓██░   █▒▓█░ █ ░█░▒▒ █ █ ▒░ ▒██  ██▒▒ ▒ ▒ ▄▀░
- *    ▒██  ▀█▄  ▒██▒ ▄██▒▓█    ▄ ░██   █▌▒███   ▒████ ░▒██░▄▄▄░▒██▀▀██░▒██▒   ░██  ▓███▄░ ▒██░    ▓██    ▓██░▓██  ▀█ ██▒▒██░  ██▒▓██░ ██▓▒▒██▒  ██░▓██ ░▄█ ▒░ ▓██▄   ▒ ▓██░ ▒░▓██  ▒██░ ▓██  █▒░▒█░ █ ░█ ░░  █   ░  ▒██ ██░░ ▒ ▄▀▒░
- *    ░██▄▄▄▄██ ▒██░█▀  ▒▓▓▄ ▄██▒░▓█▄   ▌▒▓█  ▄ ░▓█▒  ░░▓█  ██▓░▓█ ░██ ░██░▓██▄██▓ ▓██ █▄ ▒██░    ▒██    ▒██ ▓██▒  ▐▌██▒▒██   ██░▒██▄█▓▒ ▒░██  █▀ ░▒██▀▀█▄    ▒   ██▒░ ▓██▓ ░ ▓▓█  ░██░  ▒██ █░░░█░ █ ░█  ░ █ █ ▒   ░ ▐██▓░  ▄▀▒   ░
- *     ▓█   ▓██▒░▓█  ▀█▓▒ ▓███▀ ░░▒████▓ ░▒████▒░▒█░   ░▒▓███▀▒░▓█▒░██▓░██░ ▓███▒  ▒██▒ █▄░██████▒▒██▒   ░██▒▒██░   ▓██░░ ████▓▒░▒██▒ ░  ░░▒███▒█▄ ░██▓ ▒██▒▒██████▒▒  ▒██▒ ░ ▒▒█████▓    ▒▀█░  ░░██▒██▓ ▒██▒ ▒██▒  ░ ██▒▓░▒███████▒
- *     ▒▒   ▓▒█░░▒▓███▀▒░ ░▒ ▒  ░ ▒▒▓  ▒ ░░ ▒░ ░ ▒ ░    ░▒   ▒  ▒ ░░▒░▒░▓   ▒▓▒▒░  ▒ ▒▒ ▓▒░ ▒░▓  ░░ ▒░   ░  ░░ ▒░   ▒ ▒ ░ ▒░▒░▒░ ▒▓▒░ ░  ░░░ ▒▒░ ▒ ░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░  ▒ ░░   ░▒▓▒ ▒ ▒    ░ ▐░  ░ ▓░▒ ▒  ▒▒ ░ ░▓ ░   ██▒▒▒ ░▒▒ ▓░▒░▒
- *      ▒   ▒▒ ░▒░▒   ░   ░  ▒    ░ ▒  ▒  ░ ░  ░ ░       ░   ░  ▒ ░▒░ ░ ▒ ░ ▒ ░▒░  ░ ░▒ ▒░░ ░ ▒  ░░  ░      ░░ ░░   ░ ▒░  ░ ▒ ▒░ ░▒ ░      ░ ▒░  ░   ░▒ ░ ▒░░ ░▒  ░ ░    ░    ░░▒░ ░ ░    ░ ░░    ▒ ░ ░  ░░   ░▒ ░ ▓██ ░▒░ ░░▒ ▒ ░ ▒
- *      ░   ▒    ░    ░ ░         ░ ░  ░    ░    ░ ░   ░ ░   ░  ░  ░░ ░ ▒ ░ ░ ░ ░  ░ ░░ ░   ░ ░   ░      ░      ░   ░ ░ ░ ░ ░ ▒  ░░          ░   ░   ░░   ░ ░  ░  ░    ░       ░░░ ░ ░      ░░    ░   ░   ░    ░   ▒ ▒ ░░  ░ ░ ░ ░ ░
- *          ░  ░ ░      ░ ░         ░       ░  ░             ░  ░  ░  ░ ░   ░   ░  ░  ░       ░  ░       ░            ░     ░ ░               ░       ░           ░              ░           ░      ░     ░    ░   ░ ░       ░ ░
- *                    ░ ░         ░                                                                                                                                                         ░                      ░ ░     ░
- */
+# define LIFE_1_75 L"  ▓██▄ ▄██░"
+# define LIFE_2_75 L" ▓█████ ▐██░"
+# define LIFE_3_75 L"  ▓████▐██▒"
+# define LIFE_4_75 L"  ░▒████▒░"
+# define LIFE_5_75 L"    ░▐░░"
+# define LIFE_6_75 L"      ░"
 
-/***
-   ▓███▄ ▄██░
-  ▓██░    ░██░
-   ▓██    ██▒
-    ▒██  ██▒
-     ▒▀██▀▒
-     ░ ▐░
-     ░     ░
-       ░
-*/
+# define LIFE_1_50 L"  ▓██  ▄██░"
+# define LIFE_2_50 L" ▓███▒   ██░"
+# define LIFE_3_50 L"  ▓██░  ▐█▒"
+# define LIFE_4_50 L"  ░▒███▐▒░"
+# define LIFE_5_50 L"    ░▐░░░"
+# define LIFE_6_50 L"     ░ ░"
 
-/***
-   ▓██▄ ▄██░
-  ▓██░   ░██░
-   ▓█    ██▒
-   ░▒█ ██▒░
-     ░▐░  ░
-     ░   ░
-*/
+# define LIFE_1_25 L"  ▓██░  ▄▄"
+# define LIFE_2_25 L" ▓█▒░    ██░"
+# define LIFE_3_25 L"  ░     ▐█▒"
+# define LIFE_4_25 L"   ▒▐█ ▐▒░"
+# define LIFE_5_25 L"    ░▐░ ░░"
+# define LIFE_6_25 L"     ░  ░"
 
-# define LIFE_1 L"  ▓██▄ ▄██░"
-# define LIFE_2 L" ▓██░   ░██░"
-# define LIFE_3 L"  ▓█    ██▒"
-# define LIFE_4 L"  ░▒█ ██▒░"
-# define LIFE_5 L"    ░▐░  ░"
-# define LIFE_6 L"    ░   ░"
+# define SKULL_1 L"  ▄▄▄▄▄▄"
+# define SKULL_2 L"▄▀██▀▀███"
+# define SKULL_3 L"▐ ▐█░ ▐██░"
+# define SKULL_4 L"░█▄▄███▒░"
+# define SKULL_5 L" ░███ ░░"
+# define SKULL_6 L"░ ░    ░"
 
 typedef struct s_vm	t_vm;
 
@@ -125,13 +100,15 @@ typedef struct		s_viewer
 	int				arena_flag[MEM_SIZE]; // faire un cooldown pour que les modifs restents affichees plusieurs tours
 	WINDOW			*win_arena;
 	WINDOW			*win_title;
-	WINDOW			*win_champions[4];
+	WINDOW			*win_champions[MAX_PLAYERS];
 	WINDOW			*win_processes;
+	WINDOW			*win_register;
 	WINDOW			*win_infos;
 
-
-
+	int				process_selected;
 	int				process_offset;
+
+	char			last_live_cycles[MAX_PLAYERS];
 
 	int				fps;
 	int				lpf;
@@ -157,7 +134,6 @@ typedef struct		s_anim
 {
 	t_viewer		*v;
 	int				i;
-	char			*type;
 }					t_anim;
 
 WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
@@ -169,7 +145,7 @@ void				*th_input_routine(void *p_data);
 void				*th_render_routine(void *p_data);
 void				*th_anim_routine(void *p_data);
 
-void				new_anim(t_viewer *v, int i, const char *str);
+void				new_anim(t_viewer *v, int i);
 
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
