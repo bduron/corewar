@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/20 18:51:16 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 10:49:02 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	op_live(t_vm *v, t_list *process)
 	if (v->display_mode == 1)
 		printf("P%5d | live %d\n", NPRO, live);
 	is_player(v, live);
-	print_adv(v, process, 5);
+	if (v->display_mode == 1)
+		print_adv(v, process, 5);
 	PC += 5;
 	PC %= MEM_SIZE;
 }
