@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/21 14:51:24 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:32:49 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->process_selected = 0;
 	v->process_offset = 0;
 	v->anim_flags = 0;
-	ft_memset(v->last_live_cycles, 0, sizeof(char) * MAX_PLAYERS);
+	ft_memset(v->anim_state, 101, sizeof(char) * MAX_PLAYERS);
 	ft_memset(v->arena_flag, 0, sizeof(int) * MEM_SIZE);
 	pthread_mutex_init(&v->mutex, NULL);
 	pthread_cond_init(&v->cond, NULL);

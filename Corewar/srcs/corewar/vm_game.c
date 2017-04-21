@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 14:56:32 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:08:07 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void update_vm(t_vm *v)
 					printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 			}
 		}
+
 		v->nlive_bctd = 0;
 	//	printf("A===============\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		v->ncycle_mod = 0;

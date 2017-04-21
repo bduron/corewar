@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 14:50:53 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 18:59:57 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,22 @@
 # define KEY_PROCESS_PP 'j'
 # define KEY_PAUSE ' '
 # define KEY_QUIT 'q'
+
 # define FLAG_EVENT_CORE 1
 # define FLAG_EVENT_TIMER 2
 # define FLAG_EVENT_PAUSE 4
 # define FLAG_EVENT_QUIT 8
-// TODO mise a jour de win_infos en fonction des events
+
 # define FLAG_KEY_EVENT_FPS 16
 # define FLAG_KEY_EVENT_LPF 32
 # define FLAG_KEY_EVENT_PAUSE 64
 # define FLAG_KEY_EVENT_PROCESS 256
 
-# define MSG_LIFE "LIFE"
+# define LIFE_DEAD 0
+# define LIFE_LOW 25
+# define LIFE_MEDIUM 50
+# define LIFE_HIGH 75
+# define LIFE_FULL 100
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 # define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "")
@@ -56,40 +61,40 @@
 # define LOGO_9  L" ░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     "
 # define LOGO_10 L" ░                          2016 pboutelo kcosta bduron cpoulet"
 
-# define LIFE_1_100 L"  ▓██▄ ▄██░"
-# define LIFE_2_100 L" ▓█████████░"
-# define LIFE_3_100 L"  ▓███████▒"
-# define LIFE_4_100 L"  ░▒████▒░"
-# define LIFE_5_100 L"    ░▐█░ "
-# define LIFE_6_100 L""
+# define LIFE_FULL_1 L"  ▓██▄ ▄██░"
+# define LIFE_FULL_2 L" ▓█████████░"
+# define LIFE_FULL_3 L"  ▓███████▒"
+# define LIFE_FULL_4 L"  ░▒████▒░"
+# define LIFE_FULL_5 L"    ░▐█░ "
+# define LIFE_FULL_6 L""
 
-# define LIFE_1_75 L"  ▓██▄ ▄██░"
-# define LIFE_2_75 L" ▓█████ ▐██░"
-# define LIFE_3_75 L"  ▓████▐██▒"
-# define LIFE_4_75 L"  ░▒████▒░"
-# define LIFE_5_75 L"    ░▐░░"
-# define LIFE_6_75 L"      ░"
+# define LIFE_HIGH_1 L"  ▓██▄ ▄██░"
+# define LIFE_HIGH_2 L" ▓█████ ▐██░"
+# define LIFE_HIGH_3 L"  ▓████▐██▒"
+# define LIFE_HIGH_4 L"  ░▒████▒░"
+# define LIFE_HIGH_5 L"    ░▐░░"
+# define LIFE_HIGH_6 L"      ░"
 
-# define LIFE_1_50 L"  ▓██  ▄██░"
-# define LIFE_2_50 L" ▓███▒   ██░"
-# define LIFE_3_50 L"  ▓██░  ▐█▒"
-# define LIFE_4_50 L"  ░▒███▐▒░"
-# define LIFE_5_50 L"    ░▐░░░"
-# define LIFE_6_50 L"     ░ ░"
+# define LIFE_MEDIUM_1 L"  ▓██  ▄██░"
+# define LIFE_MEDIUM_2 L" ▓███▒   ██░"
+# define LIFE_MEDIUM_3 L"  ▓██░  ▐█▒"
+# define LIFE_MEDIUM_4 L"  ░▒███▐▒░"
+# define LIFE_MEDIUM_5 L"    ░▐░░░"
+# define LIFE_MEDIUM_6 L"     ░ ░"
 
-# define LIFE_1_25 L"  ▓██░  ▄▄"
-# define LIFE_2_25 L" ▓█▒░    ██░"
-# define LIFE_3_25 L"  ░     ▐█▒"
-# define LIFE_4_25 L"   ▒▐█ ▐▒░"
-# define LIFE_5_25 L"    ░▐░ ░░"
-# define LIFE_6_25 L"     ░  ░"
+# define LIFE_LOW_1 L"  ▓██░  ▄▄"
+# define LIFE_LOW_2 L" ▓█▒░    ██░"
+# define LIFE_LOW_3 L"  ░     ▐█▒"
+# define LIFE_LOW_4 L"   ▒▐█ ▐▒░"
+# define LIFE_LOW_5 L"    ░▐░ ░░"
+# define LIFE_LOW_6 L"     ░  ░"
 
-# define SKULL_1 L"  ▄▄▄▄▄▄"
-# define SKULL_2 L"▄▀██▀▀███"
-# define SKULL_3 L"▐ ▐█░ ▐██░"
-# define SKULL_4 L"░█▄▄███▒░"
-# define SKULL_5 L" ░███ ░░"
-# define SKULL_6 L"░ ░    ░"
+# define SKULL_1 L"   ▄▄▄▄▄▄"
+# define SKULL_2 L" ▄▀██▀▀███"
+# define SKULL_3 L" ▐ ▐█░ ▐██░"
+# define SKULL_4 L" ░█▄▄███▒░"
+# define SKULL_5 L"  ░███ ░░"
+# define SKULL_6 L" ░ ░    ░"
 
 typedef struct s_vm	t_vm;
 
@@ -108,7 +113,7 @@ typedef struct		s_viewer
 	int				process_selected;
 	int				process_offset;
 
-	char			last_live_cycles[MAX_PLAYERS];
+	char			anim_state[MAX_PLAYERS];
 
 	int				fps;
 	int				lpf;
@@ -120,14 +125,12 @@ typedef struct		s_viewer
 	pthread_t		th_render;
 	pthread_t		th_input;
 	pthread_t		th_timer;
-	pthread_t		th_anim[4];
+	pthread_t		th_anim[MAX_PLAYERS];
 
 	int				event_flags;
 	int				anim_flags;
 
 	t_vm			*vm;
-
-	t_list			*event_list;
 }					t_viewer;
 
 typedef struct		s_anim
