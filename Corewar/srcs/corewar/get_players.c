@@ -11,9 +11,10 @@ void is_player(t_vm *v, int live)
 		{
 			if (v->display_mode == 1)
 				printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
-			else if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
-				new_anim(v->v, i, "test");
+			// else if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
+				// new_anim(v->v, i);
 			v->p[i].nblive++;
+			v->p[i].last_live_cycle = v->ncycle;
 			v->last_live_id = i;
 		}
 }
@@ -34,6 +35,7 @@ void save_player(char *file, t_vm *v, int i)
 		v->p[i].nplayer = (i + 1) * -1;
 		v->p[i].prog_len = len;
 		v->p[i].nblive = 0;
+		v->p[i].last_live_cycle = 0;
 	}
 	else
 		xerror("Error: cannot open file", -1);

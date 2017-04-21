@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/20 18:41:06 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 14:46:37 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_player
 	int				exec_magic;
 	int				pc_address;
 	int 			nblive;
+	int				last_live_cycle;
 }					t_player;
 
 typedef struct s_viewer	t_viewer;

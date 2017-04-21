@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:25:09 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/20 23:22:17 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/21 14:18:05 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,25 @@ void	*th_anim_routine(void *p_data)
 	{
 		pthread_mutex_lock(&a->v->mutex);
 		werase(a->v->win_champions[a->i]);
-		// mvwprintw(a->v->win_champions[a->i], 0, 0, "frame %d", i);
 		if (i % 2)
 			wattron(a->v->win_champions[a->i], A_BOLD);
-		// mvwprintw(a->v->win_champions[a->i], 0, 0, a->type, i);
-		// mvwprintw(a->v->win_champions[a->i], 0, 0, " _ _");
-		// mvwprintw(a->v->win_champions[a->i], 1, 0, "| ' |");
-		// mvwprintw(a->v->win_champions[a->i], 2, 0, " \\ /");
-
-
-		mvwprintw(a->v->win_champions[a->i], 0, 0, "%ls", LIFE_1);
-		mvwprintw(a->v->win_champions[a->i], 1, 0, "%ls", LIFE_2);
-		mvwprintw(a->v->win_champions[a->i], 2, 0, "%ls", LIFE_3);
-		mvwprintw(a->v->win_champions[a->i], 3, 0, "%ls", LIFE_4);
-		mvwprintw(a->v->win_champions[a->i], 4, 0, "%ls", LIFE_5);
-		mvwprintw(a->v->win_champions[a->i], 5, 0, "%ls", LIFE_6);
-
-
+		mvwprintw(a->v->win_champions[a->i], 0, 0, "%ls", LIFE_1_100);
+		mvwprintw(a->v->win_champions[a->i], 1, 0, "%ls", LIFE_2_100);
+		mvwprintw(a->v->win_champions[a->i], 2, 0, "%ls", LIFE_3_100);
+		mvwprintw(a->v->win_champions[a->i], 3, 0, "%ls", LIFE_4_100);
+		mvwprintw(a->v->win_champions[a->i], 4, 0, "%ls", LIFE_5_100);
+		mvwprintw(a->v->win_champions[a->i], 5, 0, "%ls", LIFE_6_100);
 		if (i % 2)
 			wattroff(a->v->win_champions[a->i], A_BOLD);
-		//
-		// mvwprintw(a->v->win_champions[a->i], 3, 0, MSG_LIFE);
-		// wattron(a->v->win_champions[a->i], A_BOLD);
-		// mvwprintw(a->v->win_champions[a->i], 3, (8 - i) / 2, "%c", MSG_LIFE[(8 - i) / 2]);
-		// wattroff(a->v->win_champions[a->i], A_BOLD);
-
-
 		wrefresh(a->v->win_champions[a->i]);
 		pthread_mutex_unlock(&a->v->mutex);
 		usleep(70000);
-		// usleep(100000 * i);
 	}
 	pthread_mutex_lock(&a->v->mutex);
 	werase(a->v->win_champions[a->i]);
 	wrefresh(a->v->win_champions[a->i]);
 	a->v->anim_flags ^= 1 << a->i;
 	pthread_mutex_unlock(&a->v->mutex);
-	free(a->type);
 	free(a);
 	pthread_exit(0);
 }
