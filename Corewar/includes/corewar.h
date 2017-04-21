@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 15:57:39 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 20:25:30 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct		s_vm
 	int				ncheck; // nb ctd in a row w/o decrementing ctd
 	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
+	int				dump;
+	int				dump_cycle;
 	t_viewer		*v;
 }					t_vm;
 
