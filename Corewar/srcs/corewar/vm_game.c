@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 14:45:27 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 14:56:22 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void update_process(t_vm *v, t_list *process)
 			op_tab[NEXT_OP].f(v, process);
 			NEXT_OP = -1;
 		}
-//		init_next_op(v, process);
 	}
 	else
 		OP_CAST -= 1;
