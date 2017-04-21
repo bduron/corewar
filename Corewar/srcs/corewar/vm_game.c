@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_game.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 15:13:45 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 15:18:12 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void update_process(t_vm *v, t_list *process)
 			op_tab[NEXT_OP].f(v, process);
 			NEXT_OP = -1;
 		}
-//		init_next_op(v, process);
 	}
 	else
 		OP_CAST -= 1;

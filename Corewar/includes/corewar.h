@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 15:16:10 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 15:18:53 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct		s_player
 	int				exec_magic;
 	int				pc_address;
 	int 			nblive;
+	int				last_live_cycle;
 }					t_player;
 
 typedef struct s_viewer	t_viewer;
@@ -117,7 +118,8 @@ void	vm_free(t_vm *v);
 void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);
 void	run_game(t_vm *v);
-void 	browse_processes_lst(t_vm *v);
+void	browse_processes_lst(t_vm *v);
+void	init_processes_lst(t_vm *v);
 void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
