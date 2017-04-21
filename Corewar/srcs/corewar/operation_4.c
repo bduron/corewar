@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 11:28:44 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 18:18:22 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ void	op_ldi(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = reverse_bytes(v, PC + (val[1] + val[2]) % IDX_MOD, 4);
 				CARRY = REG[val[0]] ? 0 : 1;
+				if (v->display_mode == 1)
+					printf("P%5d | ldi %d %d r%d\n       | -> load from %d + %d = %d (with pc and mod %d)\n",
+					NPRO, val[2], val[1], val[0] + 1, val[2], val[1], (val[2] + val[1]) % IDX_MOD, PC +
+					((val[1] + val[2]) % IDX_MOD));
 			}
 		}
 	}
+	if (v->display_mode == 1)
+		print_adv(v, process, octal_shift(process, B_OCT, 2, 3));
 	PC = (PC + octal_shift(process, B_OCT, 2, 3)) % MEM_SIZE;
 }
 
@@ -68,14 +74,16 @@ void	op_lld(t_vm *v, t_list *process)
 			else
 			{
 				shift = reverse_bytes(v, PC + 2, 2);
-				shift = reverse_bytes(v, PC + shift, 4);
+				shift = reverse_bytes(v, PC + shift, 2);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("val_saved = %x\n", shift);
+				printf("P%5d | lld %d r%d\n", NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
 	}
+	if (v->display_mode == 1)
+		print_adv(v, process, octal_shift(process, B_OCT, 4, arg_nb));
 	PC = (PC + octal_shift(process, B_OCT, 4, arg_nb)) % MEM_SIZE;
 }
 
@@ -102,10 +110,13 @@ void	op_lldi(t_vm *v, t_list *process)
 				REG[val[0]] = reverse_bytes(v, PC + val[1] + val[2], 4);
 				CARRY = REG[val[0]] ? 0 : 1;
 				if (v->display_mode == 1)
-					printf("P%5d | REG[%d] = %x\n", NPRO, val[0], REG[val[0]]);
+					printf("P%5d | lldi %d %d r%d\n       | -> load from %d + %d = %d (with pc %d)\n",
+					NPRO, val[2], val[1], val[0] + 1, val[2], val[1], val[2] + val[1], PC + val[2] + val[1]);
 			}
 		}
 	}
+	if (v->display_mode == 1)
+		print_adv(v, process, octal_shift(process, B_OCT, 2, 3));
 	PC = (PC + octal_shift(process, B_OCT, 2, 3)) % MEM_SIZE;
 }
 

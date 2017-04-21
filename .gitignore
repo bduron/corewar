@@ -34,3 +34,8 @@
 *.DS_Store
 *.swp
 *.swo
+
+#corewar
+*.log
+*.log42
+*.diff

@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 19:32:41 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:48:52 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	maj_process(t_viewer *v)
 			}
 			else
 				wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
-			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64, PC % 64, PRINT_LIVE, PRINT_CARRY);
+			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64 + 1, PC % 64 + 1, PRINT_LIVE, PRINT_CARRY);
 			if (NEXT_OP >= 0 && NEXT_OP < 16)
 				mvwprintw(v->win_processes, i - v->process_offset, 20, "          will cast a \"%5s\" in %4d laps.", PRINT_NEXT_OP, OP_CAST);
 			else

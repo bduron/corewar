@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 19:02:48 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:50:16 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@
 # define NEXT_OP	(((t_process *)process->content)->next_op)
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
-# define BCTD		v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0
+# define LIVE_SINCE	(((t_process *)process->content)->live_since)
+# define BCTD		(v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0)
 # define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
@@ -64,6 +65,7 @@ typedef struct		s_process
 	int				pc;
 	int				op_cast; // launch op when cast == 0
 	int				live_count;	// count emitted lives between CYCLE_TO_DIE
+	int				live_since;	// number of cycles between last live and death
 	unsigned char	next_op;
 }					t_process;
 
@@ -118,6 +120,7 @@ void	update_vm(t_vm *v);
 void	run_game(t_vm *v);
 void	browse_processes_lst(t_vm *v);
 void	init_processes_lst(t_vm *v);
+void	kill_processes_lst(t_vm *v);
 void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);

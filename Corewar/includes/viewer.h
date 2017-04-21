@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 18:59:57 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 20:02:59 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,22 @@
 # define SKULL_4 L" ░█▄▄███▒░"
 # define SKULL_5 L"  ░███ ░░"
 # define SKULL_6 L" ░ ░    ░"
+
+
+# define SKULL_1 L"   ▄    ▄"
+# define SKULL_2 L" ▐█      ██"
+# define SKULL_3 L"░██       ▐██░"
+# define SKULL_4 L"  ██▄     █▀▒░"
+# define SKULL_5 L"   ▀█▐█▄ █░"
+# define SKULL_6 L"  ░   ▄▀▐▄   ░"
+
+
+# define SKULL_1 L" ░  ▄░  ░"
+# define SKULL_2 L"   ░██░░"
+# define SKULL_3 L"▄▄▄▐███▄▄▄"
+# define SKULL_4 L" ░░▄███▄░"
+# define SKULL_5 L"  ░█▀░░▀▄"
+# define SKULL_6 L""
 
 typedef struct s_vm	t_vm;
 
