@@ -7,8 +7,10 @@ void add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	int			k;
 
 	++v->nprocess;
+//	printf("PROCESS_%d_BORN\n",v->nprocess); /* DEBUG **************************************************************************************/
 	ft_lstadd(&(v->process_lst), ft_lstnew(&son, sizeof(t_process)));
 	((t_process *)v->process_lst->content)->carry = CARRY;
+	((t_process *)v->process_lst->content)->live_since = LIVE_SINCE + 1;
 	((t_process *)v->process_lst->content)->nprocess = v->nprocess;
 	((t_process *)v->process_lst->content)->pc = son_pc;
 	((t_process *)v->process_lst->content)->live_count = LIVE; //TO BE CONFIRMED

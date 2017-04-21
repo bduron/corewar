@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 16:16:42 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 19:07:52 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void kill_processes_lst(t_vm *v)
 
 	process = v->process_lst;
 	previous = NULL;
+//	printf("LIST_LEN_BEFORE = %d\n", ft_lstlen(v->process_lst)); /* DEBUG *****************************************************************/
 	while (process)
 	{
 		if (!LIVE)
@@ -48,28 +49,34 @@ void kill_processes_lst(t_vm *v)
 			//		kill_process(&process, &previous);
 			if (process == v->process_lst)
 			{
+				//printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
 				v->process_lst = process->next;
 				//	KILL(process);
 				if (v->display_mode == 1)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+				//free(process); 
 				process = v->process_lst;
+				previous = NULL;
 			}
 			else
 			{
-				process = process->next;
-				//	KILL(prev->next);
+			//	printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+				process = process->next;
+				//	KILL(prev->next);
+				//free(previous->next); 
 				previous->next = process;
 			}
 		}
 		else 
 		{
 			LIVE = 0;
-			process = process->next;
 			previous = process;
+			process = process->next;
 		}
 	}
+	//printf("LIST_LEN_AFTER = %d\n", ft_lstlen(v->process_lst)); /* DEBUG *****************************************************************/
 }
 
 void init_processes_lst(t_vm *v)
