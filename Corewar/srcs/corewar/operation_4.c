@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 11:28:44 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/21 16:42:10 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ void	op_ldi(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = reverse_bytes(v, PC + (val[1] + val[2]) % IDX_MOD, 4);
 				CARRY = REG[val[0]] ? 0 : 1;
+				if (v->display_mode == 1)
+					printf("P%5d | ldi %d %d r%d\n       | -> load from %d + %d = %d (with pc and mod %d)\n",
+					NPRO, val[2], val[1], val[0] + 1, val[2], val[1], (val[2] + val[1]) % IDX_MOD, PC +
+					((val[1] + val[2]) % IDX_MOD));
 			}
 		}
 	}
+	if (v->display_mode == 1)
+		print_adv(v, process, octal_shift(process, B_OCT, 2, 3));
 	PC = (PC + octal_shift(process, B_OCT, 2, 3)) % MEM_SIZE;
 }
 
