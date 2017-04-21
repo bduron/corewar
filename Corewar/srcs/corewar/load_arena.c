@@ -37,7 +37,7 @@ void load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->next_op = -1;
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;
-		printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n", i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);
+		printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);
 		i++;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 15:18:53 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 15:57:39 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
 # define LIVE_SINCE	(((t_process *)process->content)->live_since)
-# define BCTD		v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0
+# define BCTD		(v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0)
 # define B_OCT		(ARENA(PC + 1))
 
 # define OCT_03(x)	(x & 0b11)
