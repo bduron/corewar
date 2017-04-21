@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:42:03 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 14:55:10 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:48:52 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	maj_process(t_viewer *v)
 			}
 			else
 				wattron(v->win_processes, COLOR_PAIR(v->vm->a.owner[PC] + 2));
-			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64, PC % 64, PRINT_LIVE, PRINT_CARRY);
+			mvwprintw(v->win_processes, i - v->process_offset, 0, "#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64 + 1, PC % 64 + 1, PRINT_LIVE, PRINT_CARRY);
 			if (NEXT_OP >= 0 && NEXT_OP < 16)
 				mvwprintw(v->win_processes, i - v->process_offset, 20, "          will cast a \"%5s\" in %4d laps.", PRINT_NEXT_OP, OP_CAST);
 			else
@@ -144,14 +144,82 @@ void	maj_process(t_viewer *v)
 	}
 }
 
+void	update_anim(t_viewer *v, int i, char state)
+{
+	if (state != v->anim_state[i] && state < v->anim_state[i])
+	{
+		v->anim_state[i] = state;
+		werase(v->win_champions[i]);
+		if (state == LIFE_DEAD)
+		{
+			mvwprintw(v->win_champions[i], 0, 0, "%ls", SKULL_1);
+			mvwprintw(v->win_champions[i], 1, 0, "%ls", SKULL_2);
+			mvwprintw(v->win_champions[i], 2, 0, "%ls", SKULL_3);
+			mvwprintw(v->win_champions[i], 3, 0, "%ls", SKULL_4);
+			mvwprintw(v->win_champions[i], 4, 0, "%ls", SKULL_5);
+			mvwprintw(v->win_champions[i], 5, 0, "%ls", SKULL_6);
+		}
+		else if (state == LIFE_LOW)
+		{
+			mvwprintw(v->win_champions[i], 0, 0, "%ls", LIFE_LOW_1);
+			mvwprintw(v->win_champions[i], 1, 0, "%ls", LIFE_LOW_2);
+			mvwprintw(v->win_champions[i], 2, 0, "%ls", LIFE_LOW_3);
+			mvwprintw(v->win_champions[i], 3, 0, "%ls", LIFE_LOW_4);
+			mvwprintw(v->win_champions[i], 4, 0, "%ls", LIFE_LOW_5);
+			mvwprintw(v->win_champions[i], 5, 0, "%ls", LIFE_LOW_6);
+		}
+		else if (state == LIFE_MEDIUM)
+		{
+			mvwprintw(v->win_champions[i], 0, 0, "%ls", LIFE_MEDIUM_1);
+			mvwprintw(v->win_champions[i], 1, 0, "%ls", LIFE_MEDIUM_2);
+			mvwprintw(v->win_champions[i], 2, 0, "%ls", LIFE_MEDIUM_3);
+			mvwprintw(v->win_champions[i], 3, 0, "%ls", LIFE_MEDIUM_4);
+			mvwprintw(v->win_champions[i], 4, 0, "%ls", LIFE_MEDIUM_5);
+			mvwprintw(v->win_champions[i], 5, 0, "%ls", LIFE_MEDIUM_6);
+		}
+		else if (state == LIFE_HIGH)
+		{
+			mvwprintw(v->win_champions[i], 0, 0, "%ls", LIFE_HIGH_1);
+			mvwprintw(v->win_champions[i], 1, 0, "%ls", LIFE_HIGH_2);
+			mvwprintw(v->win_champions[i], 2, 0, "%ls", LIFE_HIGH_3);
+			mvwprintw(v->win_champions[i], 3, 0, "%ls", LIFE_HIGH_4);
+			mvwprintw(v->win_champions[i], 4, 0, "%ls", LIFE_HIGH_5);
+			mvwprintw(v->win_champions[i], 5, 0, "%ls", LIFE_HIGH_6);
+		}
+		else if (state == LIFE_FULL)
+		{
+			mvwprintw(v->win_champions[i], 0, 0, "%ls", LIFE_FULL_1);
+			mvwprintw(v->win_champions[i], 1, 0, "%ls", LIFE_FULL_2);
+			mvwprintw(v->win_champions[i], 2, 0, "%ls", LIFE_FULL_3);
+			mvwprintw(v->win_champions[i], 3, 0, "%ls", LIFE_FULL_4);
+			mvwprintw(v->win_champions[i], 4, 0, "%ls", LIFE_FULL_5);
+			mvwprintw(v->win_champions[i], 5, 0, "%ls", LIFE_FULL_6);
+		}
+		wrefresh(v->win_champions[i]);
+	}
+}
+
 void	maj_lifes(t_viewer *v)
 {
 	int i;
+	int state;
 
 	i = -1;
 	while (++i < v->vm->nplayer)
 	{
-		//TODO
+		if (!(v->anim_flags & (1 << i))
+			&& v->vm->p[i].last_live_cycle <= (v->vm->ncycle - v->vm->ncycle_mod))
+		{
+			state = 100 * (v->vm->cycle_to_die - v->vm->ncycle_mod) / v->vm->cycle_to_die;
+			if (state < LIFE_LOW)
+				update_anim(v, i, LIFE_LOW);
+			else if (state < LIFE_MEDIUM)
+				update_anim(v, i, LIFE_MEDIUM);
+			else if (state < LIFE_HIGH)
+				update_anim(v, i, LIFE_HIGH);
+			else
+				update_anim(v, i, LIFE_FULL);
+		}
 	}
 }
 
@@ -164,6 +232,7 @@ void	*th_render_routine(void *p_data)
 	init_arena(v);
 	init_register(v);
 	maj_process(v);
+	maj_lifes(v);
 	while(1)
 	{
 		// printf("RENDER");

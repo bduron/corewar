@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 14:59:57 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:36:30 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	*th_core_routine(void *p_data)
 				{
 					init_processes_lst(v->vm);
 					browse_processes_lst(v->vm);
+					if ((v->vm->ncycle_mod % v->vm->cycle_to_die == 0 && v->vm->ncycle_mod != 0) 
+						|| v->vm->cycle_to_die < 0)
+						kill_processes_lst(v->vm);
 				}
 				--cooldown;
 			}

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 20:34:15 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/21 20:35:12 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void kill_processes_lst(t_vm *v)
 				//	KILL(process);
 				if (v->display_mode == 1)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
-				//free(process); 
+				//free(process);
 				process = v->process_lst;
 				previous = NULL;
 			}
@@ -65,11 +65,11 @@ void kill_processes_lst(t_vm *v)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = process->next;
 				//	KILL(prev->next);
-				//free(previous->next); 
+				//free(previous->next);
 				previous->next = process;
 			}
 		}
-		else 
+		else
 		{
 			LIVE = 0;
 			previous = process;
@@ -129,6 +129,7 @@ void update_vm(t_vm *v)
 					printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 			}
 		}
+
 		v->nlive_bctd = 0;
 		//	printf("A===============\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		v->ncycle_mod = 0;
