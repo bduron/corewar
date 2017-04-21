@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vm_game.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
+/*   Updated: 2017/04/21 14:56:32 by pboutelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "corewar.h"
 
@@ -12,12 +23,33 @@ void update_process(t_vm *v, t_list *process)
 {
 	if (BCTD)
 		LIVE = 0;
-
 	if (OP_CAST == 0)
-		operate_process(v, process);
+	{
+		if (NEXT_OP >= 0 && NEXT_OP < 16)
+		{
+			op_tab[NEXT_OP].f(v, process);
+			NEXT_OP = -1;
+		}
+//		init_next_op(v, process);
+	}
 	else
-		OP_CAST -= 1; // to optimize
+		OP_CAST -= 1;
 }
+
+
+void init_processes_lst(t_vm *v)
+{
+	t_list *process;
+
+	process = v->process_lst;
+	while (process)
+	{
+		if (!(NEXT_OP >= 0 && NEXT_OP <= 15))
+			init_next_op(v, process);
+		process = process->next;
+	}
+}
+
 
 void browse_processes_lst(t_vm *v)
 {
@@ -93,20 +125,24 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
-		if (v->process_lst)
-			browse_processes_lst(v);
 		update_vm(v);
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
-//		if (v->cycle_to_die < 0) //cpoulet modif to be confirmed
-//			break;
+		if (v->process_lst)
+		{
+			init_processes_lst(v);
+			browse_processes_lst(v);
+		}
 	}
 	printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
 }
-		// each CYCLE_TO_DIE
-			// if nlives_btcd >= NBR_LIVES => CYCLE_TO_DIE -= CYCLE_DELTA;
 
-		// count checks
-			// if nchecks CTD t(0) == nchecks CTD t(MAX_CHECK) => CYCLE_TO_DIE--;
-
-		// for each process
-			// if each CYCLE_TO_DIE live_count < 1 => kill the process
+/*
+** each CYCLE_TO_DIE
+** if nlives_btcd >= NBR_LIVES => CYCLE_TO_DIE -= CYCLE_DELTA;
+**
+** count checks
+** if nchecks CTD t(0) == nchecks CTD t(MAX_CHECK) => CYCLE_TO_DIE--;
+**
+** for each process
+** if each CYCLE_TO_DIE live_count < 1 => kill the process
+*/

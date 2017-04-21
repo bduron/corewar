@@ -17,7 +17,6 @@ void add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	k = 16;
 	while (k--)
 		((t_process *)v->process_lst->content)->reg[k] = REG[k];
-	operate_process(v, v->process_lst);
 }
 
 void load_processes(t_vm *v)
@@ -35,7 +34,7 @@ void load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->pc = v->p[i].pc_address; // addresse relative
 		((t_process *)v->process_lst->content)->live_count = 0;
 		((t_process *)v->process_lst->content)->op_cast = 0; // pboutelo : la 1ère action lu par les processus est déclenché au tour 0, initialisation à modifier
-		((t_process *)v->process_lst->content)->next_op = -1; //cpoulet : 0 used by LIVE
+		((t_process *)v->process_lst->content)->next_op = -1;
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;
 		printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n", i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);

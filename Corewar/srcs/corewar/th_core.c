@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 12:52:01 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:59:57 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 void	*th_core_routine(void *p_data)
 {
 	t_viewer	*v;
-	int			laps;
 	int			cooldown;
 
 	v = (t_viewer *)p_data;
-	laps = 0;
 	pthread_mutex_lock(&v->mutex);
 	while (1)
 	{
@@ -38,10 +36,11 @@ void	*th_core_routine(void *p_data)
 			while (cooldown && v->vm->process_lst)
 			{
 				update_vm(v->vm);
-				browse_processes_lst(v->vm);
-				if (v->vm->cycle_to_die < 0)
-					break ;
-				++laps;
+				if (v->vm->process_lst)
+				{
+					init_processes_lst(v->vm);
+					browse_processes_lst(v->vm);
+				}
 				--cooldown;
 			}
 			pthread_mutex_lock(&v->mutex);
