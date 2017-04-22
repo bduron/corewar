@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 20:16:43 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 12:07:58 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ void	op_ld(t_vm *v, t_list *process)
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("P%5d | ld %d r%d\n", NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
+				printf("P%5d | ld %d r%d\n",
+				NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, 2));
-	PC = (PC + octal_shift(process, B_OCT, 4, 2)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, 2));
+	PC = (PC + octal_shift(B_OCT, 4, 2)) % MEM_SIZE;
 }
 
 void	op_st(t_vm *v, t_list *process)
@@ -64,7 +65,8 @@ void	op_st(t_vm *v, t_list *process)
 	u_char			tmp;
 
 	tmp = B_OCT;
-	if ((B_OCT == 0x50 || B_OCT == 0x70) && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
+	if ((B_OCT == 0x50 || B_OCT == 0x70) &&
+		ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 	{
 		if (B_OCT == 0x50 && ARENA(PC + 3) >= 1 && ARENA(PC + 3) <= 16)
 			REG[ARENA(PC + 3) - 1] = REG[ARENA(PC + 2) - 1];
@@ -78,8 +80,8 @@ void	op_st(t_vm *v, t_list *process)
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, tmp, 4, 2));
-	PC = (PC + octal_shift(process, tmp, 4, 2)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(tmp, 4, 2));
+	PC = (PC + octal_shift(tmp, 4, 2)) % MEM_SIZE;
 }
 
 void	op_aff(t_vm *v, t_list *process)
@@ -88,6 +90,6 @@ void	op_aff(t_vm *v, t_list *process)
 		if (v->display_mode == 1)
 			printf("P%5d | aff = |%d|\n", NPRO, (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, 1));
-	PC = (PC + octal_shift(process, B_OCT, 4, 1)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, 1));
+	PC = (PC + octal_shift(B_OCT, 4, 1)) % MEM_SIZE;
 }

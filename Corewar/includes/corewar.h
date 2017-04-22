@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 20:35:38 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 12:05:33 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	kill_processes_lst(t_vm *v);
 void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
-int		octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
+int		octal_shift(u_char n, u_char label_size, u_char arg_nb);
 int		reverse_bytes(t_vm *v, unsigned int pc, int nbytes);
 int		check_arg(u_char arg, u_char n, u_char arg_nb);
 void	add_process(t_vm *v, t_list *process, unsigned int son_pc);

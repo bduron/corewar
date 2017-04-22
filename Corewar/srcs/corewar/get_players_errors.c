@@ -1,13 +1,13 @@
 
 #include "corewar.h"
 
-void xerror(char *error_msg, int error_id) // move to libft
-{	
+void	xerror(char *error_msg, int error_id) // move to libft
+{
 	ft_putendl_fd(error_msg, 2);
-	exit(error_id);				
+	exit(error_id);
 }
 
-int is_corewar_execmagic(char *file)
+int		is_corewar_execmagic(char *file)
 {
 	unsigned char	exec_magic[4];
 	int				fd;
@@ -21,13 +21,13 @@ int is_corewar_execmagic(char *file)
 		if (*(unsigned int *)exec_magic != COREWAR_EXEC_MAGIC)
 			xerror("Error: wrong exec_magic", -1);
 	}
-	else 
+	else
 		xerror("Error: cannot open file", -1);
 	close(fd);
 	return (1);
 }
 
-int get_prog_size(char *file)
+int		get_prog_size(char *file)
 {
 	int fd;
 	int size;
@@ -35,13 +35,13 @@ int get_prog_size(char *file)
 	size = -1;
 	if ((fd = open(file, O_RDONLY)) != -1)
 		size = lseek(fd, 0, SEEK_END);
-	else 
+	else
 		xerror("Error: cannot open file", -1);
 	close(fd);
-	return (size - PROG_NAME_LENGTH - COMMENT_LENGTH); // substract something else (magic exec code ?)? 
+	return (size - PROG_NAME_LENGTH - COMMENT_LENGTH); // substract something else (magic exec code ?)?
 }
 
-int is_cor_file(char *file)
+int		is_cor_file(char *file)
 {
 	if (!file)
 		return (1);
@@ -50,13 +50,13 @@ int is_cor_file(char *file)
 	return (ft_strcmp(file - 4, ".cor"));
 }
 
-int is_valid_player(char *file)
+int		is_valid_player(char *file)
 {
 	if (is_cor_file(file) != 0)
 		return (0);
 	if (get_prog_size(file) > CHAMP_MAX_SIZE)
-		return (0);	
-	if (!is_corewar_execmagic(file)) // necessaire ?
-		return (0);	
+		return (0);
+	if (!is_corewar_execmagic(file))
+		return (0);
 	return (1);
 }
