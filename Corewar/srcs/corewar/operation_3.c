@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 19:54:01 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 12:10:19 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/22 15:59:07 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	op_zjmp(t_vm *v, t_list *process)
 	shift = reverse_bytes(v, PC + 1, 2);
 	if (v->display_mode == 1)
 	{
-		printf("P%5d | zjmp %d ", NPRO, shift);
+	ft_printf("P%5d | zjmp %d ", NPRO, shift);
 		if (CARRY)
-			printf("OK\n");
+		ft_printf("OK\n");
 		else
 		{
-			printf("FAILED\n");
+		ft_printf("FAILED\n");
 			print_adv(v, process, 3);
 		}
 	}
@@ -41,7 +41,7 @@ void	op_fork(t_vm *v, t_list *process)
 	shift %= IDX_MOD;
 	if (v->display_mode == 1)
 	{
-		printf("P%5d | fork %d (%d)\n",
+	ft_printf("P%5d | fork %d (%d)\n",
 			NPRO, shift, (unsigned int)(PC + shift) % MEM_SIZE);
 		print_adv(v, process, 3);
 	}
@@ -57,7 +57,7 @@ void	op_lfork(t_vm *v, t_list *process)
 	shift = reverse_bytes(v, PC + 1, 2);
 	if (v->display_mode == 1)
 	{
-		printf("P%5d | lfork %d (%d)\n",
+	ft_printf("P%5d | lfork %d (%d)\n",
 			NPRO, shift, (unsigned int)(PC + shift) % MEM_SIZE);
 		print_adv(v, process, 3);
 	}

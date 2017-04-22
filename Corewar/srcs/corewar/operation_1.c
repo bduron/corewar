@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 12:07:58 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/22 16:00:00 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	op_live(t_vm *v, t_list *process)
 	v->nlive_bctd++;
 	live = reverse_bytes(v, PC + 1, 4);
 	if (v->display_mode == 1)
-		printf("P%5d | live %d\n", NPRO, live);
+	ft_printf("P%5d | live %d\n", NPRO, live);
 	is_player(v, live);
 	if (v->display_mode == 1)
 		print_adv(v, process, 5);
@@ -48,7 +48,7 @@ void	op_ld(t_vm *v, t_list *process)
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
 			if (v->display_mode == 1)
-				printf("P%5d | ld %d r%d\n",
+			ft_printf("P%5d | ld %d r%d\n",
 				NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
@@ -75,7 +75,7 @@ void	op_st(t_vm *v, t_list *process)
 			shift = reverse_bytes(v, PC + 3, 2);
 			val = REG[ARENA(PC + 2) - 1];
 			if (v->display_mode == 1)
-				printf("P%5d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
+			ft_printf("P%5d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
 			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3);
 		}
 	}
@@ -88,7 +88,7 @@ void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 		if (v->display_mode == 1)
-			printf("P%5d | aff = |%d|\n", NPRO, (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
+		ft_printf("P%5d | aff = |%d|\n", NPRO, (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
 	if (v->display_mode == 1)
 		print_adv(v, process, octal_shift(B_OCT, 4, 1));
 	PC = (PC + octal_shift(B_OCT, 4, 1)) % MEM_SIZE;

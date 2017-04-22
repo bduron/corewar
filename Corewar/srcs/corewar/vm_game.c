@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 15:32:53 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:50:32 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void kill_processes_lst(t_vm *v)
 		//		printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
 				v->process_lst = process->next;
 				//	KILL(process);
+				if (v->display_mode == 1)
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				free(process->content);
 				free(process);
-				if (v->display_mode == 1)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = v->process_lst;
 				previous = NULL;
 			}
@@ -63,7 +63,7 @@ void kill_processes_lst(t_vm *v)
 			{
 		//		printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = process->next;
 				//	KILL(prev->next);
 				free(previous->next->content);
