@@ -6,38 +6,43 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:25:09 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 11:03:06 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 15:54:46 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "viewer.h"
 
-void	*th_anim_routine(void *p_data)
+static void	th_anim_run(t_viewer *v, int i, int step)
+{
+	if (step % 2)
+		wattron(v->win_champions[i], A_BOLD);
+	else
+		wattroff(v->win_champions[i], A_BOLD);
+	draw_life_full(v, i);
+	wrefresh(v->win_champions[i]);
+}
+
+void		*th_anim_routine(void *p_data)
 {
 	t_anim		*a;
-	int			i;
+	int			step;
 
 	a = (t_anim *)p_data;
-	i = 8;
+	step = 8;
 	pthread_mutex_lock(&a->v->mutex);
 	werase(a->v->win_champions[a->i]);
 	wattron(a->v->win_champions[a->i], COLOR_PAIR(a->i + 2));
 	pthread_mutex_unlock(&a->v->mutex);
-	while (i--)
+	while (step--)
 	{
 		pthread_mutex_lock(&a->v->mutex);
-		if (i % 2)
-			wattron(a->v->win_champions[a->i], A_BOLD);
-		else
-			wattroff(a->v->win_champions[a->i], A_BOLD);
-		draw_life_full(a->v, a->i);
-		wrefresh(a->v->win_champions[a->i]);
+		th_anim_run(a->v, a->i, step);
 		pthread_mutex_unlock(&a->v->mutex);
 		usleep(70000);
 	}
 	pthread_mutex_lock(&a->v->mutex);
-	wattroff(a->v->win_champions[a->i], A_BOLD); // Verifier si necessaire
-	wattroff(a->v->win_champions[i], COLOR_PAIR(a->i + 2));
+	wattroff(a->v->win_champions[a->i], A_BOLD);
+	wattroff(a->v->win_champions[a->i], COLOR_PAIR(a->i + 2));
 	a->v->anim_flags ^= 1 << a->i;
 	pthread_mutex_unlock(&a->v->mutex);
 	free(a);

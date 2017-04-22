@@ -6,7 +6,7 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/22 11:06:12 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/22 17:35:15 by pboutelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,12 @@ operation_3.c \
 operation_4.c \
 op_shift.c \
 op.c \
+vw_draw_img.c \
 vw_draw_life.c \
-vw_draw_others.c \
+vw_draw_tools.c \
 vw_init_win.c \
 vw_init.c \
+vw_maj_process.c \
 vw_maj_win.c \
 vw_th_anim.c \
 vw_th_core.c \

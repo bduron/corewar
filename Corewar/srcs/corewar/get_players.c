@@ -11,8 +11,13 @@ void is_player(t_vm *v, int live)
 		{
 			if (v->display_mode == 1)
 				printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
-			else if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
-				heal(v->v, i);
+			else
+			{
+				pthread_mutex_lock(&v->v->mutex);
+				if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
+					heal(v->v, i);
+				pthread_mutex_unlock(&v->v->mutex);
+			}
 			v->p[i].nblive++;
 			v->p[i].last_live_cycle = v->ncycle;
 			v->last_live_id = i;

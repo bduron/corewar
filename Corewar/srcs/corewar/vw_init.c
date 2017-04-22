@@ -6,18 +6,18 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/22 11:03:56 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 15:48:38 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "viewer.h"
 
-void	viewer_init_colors()
+void	viewer_init_colors(void)
 {
 	if (has_colors() == FALSE)
 	{
 		endwin();
-		printf("Your terminal does not support color\n");
+		ft_printf("Your terminal does not support color\n");
 		exit(1);
 	}
 	start_color();
@@ -37,7 +37,7 @@ void	viewer_init_colors()
 
 void	viewer_init_ncurses(t_viewer *v)
 {
-	int register_height;
+	int i;
 
 	initscr();
 	viewer_init_colors();
@@ -46,27 +46,27 @@ void	viewer_init_ncurses(t_viewer *v)
 	noecho();
 	curs_set(0);
 	refresh();
-
-	if (REG_NUMBER % 2)
-		register_height = REG_NUMBER + 2;
-	else
-		register_height = REG_NUMBER + 1;
-	v->win_arena = create_newwin(LINES - 6, COLS - 68, 0, 0, "Arena");
-	v->win_title = create_newwin(12, 68, 0, COLS - 68, "Title");
-	v->win_processes = create_newwin(LINES - (12 + register_height + 8 + 6), 68, 12, COLS - 68, "Processes list");
-	v->win_register = create_newwin(register_height, 68, LINES - 8 - 6 - (register_height), COLS - 68, "Register");
-	v->win_champions[0] = create_newwin(8, 17, LINES - 8 - 6, COLS - 68, (char *)v->vm->p[0].name);
-	v->win_champions[1] = create_newwin(8, 17, LINES - 8 - 6, COLS - 51, (char *)v->vm->p[1].name);
-	v->win_champions[2] = create_newwin(8, 17, LINES - 8 - 6, COLS - 34, (char *)v->vm->p[2].name);
-	v->win_champions[3] = create_newwin(8, 17, LINES - 8 - 6, COLS - 17, (char *)v->vm->p[3].name);
-	v->win_infos = create_newwin(6, COLS, LINES - 6, 0, "Informations");
+	v->win_arena = create_newwin((int[4]){ARENA_L, ARENA_C, 0, 0}, ARENA_NAME);
+	v->win_title = create_newwin((int[4]){TITLE_L, TITLE_C, 0, ARENA_C},
+		TITLE_NAME);
+	v->win_processes = create_newwin((int[4]){PROCS_L, PROCS_C, TITLE_L,
+		ARENA_C}, PROCS_NAME);
+	v->win_register = create_newwin((int[4]){REGIS_L, REGIS_C, TITLE_L
+		+ PROCS_L, ARENA_C}, REGIS_NAME);
+	v->win_infos = create_newwin((int[4]){INFOS_L, INFOS_C, ARENA_L, 0},
+		INFOS_NAME);
+	i = -1;
+	while (++i < v->vm->nplayer)
+		v->win_champions[i] = create_newwin((int[4]){CHAMP_L, CHAMP_C,
+			LINES - (CHAMP_L), ARENA_C + i * CHAMP_C},
+			(char *)v->vm->p[i].name);
 	draw_logo(v);
 	wrefresh(v->win_title);
 }
 
 void	viewer_init(t_viewer *v, t_vm *vm)
 {
-	setlocale (LC_ALL,"");
+	setlocale(LC_ALL, "");
 	v->vm = vm;
 	vm->v = v;
 	v->lpf = 1;
@@ -86,22 +86,14 @@ void	viewer_run(t_viewer *v)
 {
 	void *ret;
 
-	if (pthread_create(&v->th_render, NULL, &th_render_routine, v) < 0) {
-		fprintf(stderr, "pthread_create error for th_render\n");
-		exit(1);
-	}
-	if (pthread_create(&v->th_core, NULL, &th_core_routine, v) < 0) {
-		fprintf(stderr, "pthread_create error for th_core\n");
-		exit(1);
-	}
-	if (pthread_create(&v->th_input, NULL, &th_input_routine, v) < 0) {
-		fprintf(stderr, "pthread_create error for th_input\n");
-		exit(1);
-	}
-	if (pthread_create(&v->th_timer, NULL, &th_timer_routine, v) < 0) {
-		fprintf(stderr, "pthread_create error for th_timer\n");
-		exit(1);
-	}
+	if (pthread_create(&v->th_render, NULL, &th_render_routine, v) < 0)
+		xerror("pthread_create error for th_render\n", -33);
+	if (pthread_create(&v->th_core, NULL, &th_core_routine, v) < 0)
+		xerror("pthread_create error for th_core\n", -33);
+	if (pthread_create(&v->th_input, NULL, &th_input_routine, v) < 0)
+		xerror("pthread_create error for th_input\n", -33);
+	if (pthread_create(&v->th_timer, NULL, &th_timer_routine, v) < 0)
+		xerror("pthread_create error for th_timer\n", -33);
 	(void)pthread_join(v->th_core, &ret);
 	(void)pthread_join(v->th_input, &ret);
 	(void)pthread_join(v->th_render, &ret);

@@ -6,13 +6,37 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 11:03:09 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 16:08:36 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "viewer.h"
 
-void	*th_core_routine(void *p_data)
+static int	th_core_run(t_vm *v, int cooldown)
+{
+	if (!v->process_lst)
+	{
+		show_credits(v->v);
+		pthread_mutex_unlock(&v->v->mutex);
+		return (0);
+	}
+	pthread_mutex_unlock(&v->v->mutex);
+	while (cooldown && v->process_lst)
+	{
+		update_vm(v);
+		if (v->process_lst)
+		{
+			init_processes_lst(v);
+			browse_processes_lst(v);
+			if ((BCTD) || v->cycle_to_die < 0)
+				kill_processes_lst(v);
+		}
+		--cooldown;
+	}
+	return (1);
+}
+
+void		*th_core_routine(void *p_data)
 {
 	t_viewer	*v;
 	int			cooldown;
@@ -20,38 +44,23 @@ void	*th_core_routine(void *p_data)
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
 	while (1)
-	{
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{
 			pthread_mutex_unlock(&v->mutex);
 			pthread_exit(0);
 		}
-		if (v->event_flags & FLAG_EVENT_CORE
+		else if (v->event_flags & FLAG_EVENT_CORE
 			|| v->event_flags & FLAG_EVENT_PAUSE)
 			pthread_cond_wait(&v->cond, &v->mutex);
 		else
 		{
 			cooldown = v->lpf;
-			pthread_mutex_unlock(&v->mutex);
-			while (cooldown && v->vm->process_lst)
-			{
-				update_vm(v->vm);
-				if (v->vm->process_lst)
-				{
-					init_processes_lst(v->vm);
-					browse_processes_lst(v->vm);
-					if ((v->vm->ncycle_mod % v->vm->cycle_to_die == 0
-							&& v->vm->ncycle_mod != 0)
-						|| v->vm->cycle_to_die < 0)
-						kill_processes_lst(v->vm);
-				}
-				--cooldown;
-			}
+			if (!th_core_run(v->vm, cooldown))
+				pthread_exit(0);
 			pthread_mutex_lock(&v->mutex);
 			v->event_flags |= FLAG_EVENT_CORE;
 			pthread_cond_broadcast(&v->cond);
 		}
-	}
 	pthread_mutex_unlock(&v->mutex);
 	pthread_exit(0);
 }

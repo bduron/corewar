@@ -6,21 +6,19 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:39:05 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 11:03:19 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 12:03:39 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "viewer.h"
 
 void	*th_timer_routine(void *p_data)
 {
 	t_viewer	*v;
-	int			i;
 
 	v = (t_viewer *)p_data;
-	i = 0;
 	pthread_mutex_lock(&v->mutex);
-	while(1)
+	while (1)
 	{
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{

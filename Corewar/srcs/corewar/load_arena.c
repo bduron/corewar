@@ -7,6 +7,7 @@ void add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	int			k;
 
 	++v->nprocess;
+	++v->nprocess_alive;
 //	printf("PROCESS_%d_BORN\n",v->nprocess); /* DEBUG **************************************************************************************/
 	ft_lstadd(&(v->process_lst), ft_lstnew(&son, sizeof(t_process)));
 	((t_process *)v->process_lst->content)->carry = CARRY;
@@ -30,6 +31,7 @@ void load_processes(t_vm *v)
 	while (i < v->nplayer)
 	{
 		++v->nprocess;
+		++v->nprocess_alive;
 		ft_lstadd(&(v->process_lst), ft_lstnew(&p, sizeof(t_process))); // le dernier joueur aura le 1er processus dans l'ordre d'execution
 		((t_process *)v->process_lst->content)->carry = 0; //  1 ou 0 telle est la question ? -> cpoulet : 0 !
 		((t_process *)v->process_lst->content)->nprocess = v->nprocess;

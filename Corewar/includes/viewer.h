@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 11:13:30 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 17:50:41 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 # define VIEWER_H
 # include <libc.h>
 # include <locale.h>
+# include <ncurses.h>
+# include <pthread.h>
 # include "libft.h"
 # include "corewar.h"
-# include <ncurses.h>
-# include <menu.h>
-# include <pthread.h>
 # include "ressources.h"
 
 # define KEY_FPS_LL 'p'
@@ -50,7 +49,31 @@
 # define PRINT_CARRY (CARRY ? 'C' : ' ')
 # define PRINT_LIVE (LIVE ? 'L' : ' ')
 
-typedef struct s_vm	t_vm;
+# define CHAMP_L 8
+# define CHAMP_C (68 / MAX_PLAYERS)
+# define TITLE_L 12
+# define TITLE_C 68
+# define ARENA_L (LINES - CHAMP_L)
+# define ARENA_C (COLS - TITLE_C)
+# if REG_NUMBER % 2
+#  define REGIS_L (REG_NUMBER + 2)
+# else
+#  define REGIS_L (REG_NUMBER + 1)
+# endif
+# define REGIS_C 68
+# define PROCS_L (LINES - (REGIS_L + CHAMP_L + TITLE_L))
+# define PROCS_C 68
+# define INFOS_L (CHAMP_L)
+# define INFOS_C (COLS - TITLE_C)
+
+# define ARENA_NAME "ARENA"
+# define TITLE_NAME "TITLE"
+# define REGIS_NAME "REGISTER"
+# define PROCS_NAME "PROCESSUS"
+# define INFOS_NAME "INFOS"
+
+typedef struct s_vm			t_vm;
+
 typedef struct s_process	t_process;
 
 typedef struct		s_viewer
@@ -94,37 +117,50 @@ void				draw_life_full(t_viewer *v, int i);
 void				draw_life_high(t_viewer *v, int i);
 void				draw_life_medium(t_viewer *v, int i);
 void				draw_life_low(t_viewer *v, int i);
-void				draw_life_dead(t_viewer *v, int i);
 
 /*
-** vw_draw_others.c
+** vw_draw_img.c
+*/
+void				draw_skull(t_viewer *v, int i);
+void				draw_laurels(t_viewer *v, int i);
+void				draw_cup(t_viewer *v, int i);
+void				draw_logo(t_viewer *v);
+
+/*
+** vw_draw_tools.c
 */
 void				heal(t_viewer *v, int i);
-void				draw_logo(t_viewer *v);
+void				maj_lifes(t_viewer *v);
+void				show_credits(t_viewer *v);
 
 /*
 ** vw_init_win.c
 */
-WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
-void				init_win_infos(t_viewer *v);
+WINDOW				*create_newwin(int arg[4], char *title);
+void				init_infos(t_viewer *v);
 void				init_arena(t_viewer *v);
 void				init_register(t_viewer *v);
 
 /*
 ** vw_init.c
 */
-void				viewer_init_colors();
+void				viewer_init_colors(void);
 void				viewer_init_ncurses(t_viewer *v);
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
+
+/*
+** vw_maj_process.c
+*/
+void				maj_process(t_viewer *v);
 
 /*
 ** vw_maj_win.c
 */
 void				maj_register(t_viewer *v, t_process *process);
 void				maj_arena(t_viewer *v);
-void				maj_win_infos(t_viewer *v);
-void				maj_process(t_viewer *v);
+void				maj_infos_input(t_viewer *v);
+void				maj_infos_cycle(t_viewer *v);
 
 /*
 ** vw_th_anim.c

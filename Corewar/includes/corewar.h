@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 20:35:38 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 14:07:59 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct		s_vm
 	t_player		p[MAX_PLAYERS];
 	int				nplayer;
 	int				nprocess;
+	int				nprocess_alive;
 	int				last_live_id;
 	int				ncycle;
 	int				ncycle_mod;

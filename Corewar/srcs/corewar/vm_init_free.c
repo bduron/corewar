@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 20:26:16 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 14:05:08 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void vm_init(t_vm *v)
 	ft_memset(v->a.type, -1, sizeof(char) * MEM_SIZE);
 	v->process_lst = NULL;
 	v->nprocess = 0;
+	v->nprocess_alive = 0;
 	v->ncycle = 0;
 	v->ncycle_mod = 0;
 	v->ncheck = 0;
