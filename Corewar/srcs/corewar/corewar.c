@@ -6,30 +6,86 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 10:45:28 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 12:52:44 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	print_help()
+{
+	ft_printf("This is help\n");
+	exit(0);
+}
+
+void	parse_opt(int argc, char **argv, t_vm *v)
+{
+	int i;
+	char *c;
+
+	i = 1;
+	while (i < argc)
+	{
+ 		if (!ft_strcmp("-i", argv[i]))
+ 			v->opt_flags |= FLAG_OPT_NCURSES;
+ 		else if (!ft_strcmp("-v", argv[i]))
+ 			v->opt_flags |= FLAG_OPT_VERBOSE;
+ 		else if (!ft_strcmp("-dump", argv[i]))
+ 		{
+ 			v->opt_flags |= FLAG_OPT_DUMP;
+			if (i + 1 < argc && ft_isdigit(*argv[i + 1])) 
+ 				v->dump_param = ft_atoi(argv[++i]);
+			else 
+ 				xerror("Error: invalid dump parameter", -1);
+ 		}
+		else if ((c = ft_strstr(argv[i], ".cor")) && c != argv[i] && !c[4])
+		{		
+ 			if (is_valid_player(argv[i]))
+			{
+				if (v->nplayer < 4)
+					save_player(argv[i], v, v->nplayer);
+				else
+ 					xerror("Error: too many players", -1);
+				v->nplayer++;
+			}
+ 			else
+ 				xerror("Error: invalid champion", -1);
+		}
+		else 
+ 			xerror("Error: invalid parameters", -1);
+		i++;	
+	}
+}	
+
+// [x] dump [dump + int obligatoire]
+// [x] visu 
+// [ ] players + num 
+// [x] verbosity
+// [ ] help
+
 
 int			main(int argc, char **argv)
 {
 	t_vm		vm;
 	t_viewer	v;
 
+	if (argc == 1)
+	   print_help();	
+
 	vm_init(&vm);
-	// vm.display_mode = (argc == 6 && !ft_strcmp("-n", argv[1])) ? 2 : 1;
-	vm.display_mode = (!ft_strcmp("-n", argv[1])) ? 2 : 1;
-	//vm.dump = (!ft_strncmp("-dump", argv[1], 5)) ? 1 : 0;
-	//vm.dump_cycle = (!ft_strncmp("-dump", argv[1], 5)) ? ft_atoi(&(argv[1][5])) : 0;
-	get_players(argc, argv, &vm);
+	parse_opt(argc, argv, &vm);
+	/***/
+	vm.display_mode = (vm.opt_flags & FLAG_OPT_NCURSES) ? 2 : 3;
+	vm.display_mode = (vm.opt_flags & FLAG_OPT_VERBOSE) ? 1 : 3;
+	/***/
+//	get_players(argc, argv, &vm);
 	load_arena(&vm);
 	if (vm.display_mode == 2)
 	{
 		viewer_init(&v, &vm);
 		viewer_run(&v);
 	}
-	else if (vm.display_mode == 1)
+	else //if (vm.display_mode == 1)
 	{
 //		print_processes(&vm);		// test print
 //		test_print_v(&vm, argc);		// test print
@@ -39,58 +95,4 @@ int			main(int argc, char **argv)
 //	vm_free();
 	return (0);
 }
-//
-// # define FLAG_OPT_VERBOSE 1
-// # define FLAG_OPT_VERBOSE_LIVES 1
-// # define FLAG_OPT_VERBOSE_CYCLES 1
-// # define FLAG_OPT_VERBOSE_OPERATIONS 1
-// # define FLAG_OPT_DUMP 2
-// # define FLAG_OPT_NCURSES 4
-//
-// int			main(int argc, char **argv)
-// {
-// 	t_vm		vm;
-// 	t_viewer	v;
-// 	int i;
-//
-// 	vm_init(&vm);
-// 	vm.option_flags = 0;
-// 	// vm.display_mode = (argc == 6 && !ft_strcmp("-n", argv[1])) ? 2 : 1;
-// 	i = 0;
-// 	while (++i < argc)
-// 	{
-// 		if (!ft_strcmp("-n", argv[i]))
-// 			vm.option_flags |= FLAG_OPT_NCURSES;
-// 		else if (!ft_strcmp("-v", argv[i]))
-// 			vm.option_flags |= FLAG_OPT_VERBOSE;
-// 		else if (!ft_strcmp("-dump", argv[i]))
-// 		{
-// 			vm.option_flags |= FLAG_OPT_DUMP;
-// 			vm.dump_param = ft_atoi(argv[++i]);
-// 		}
-// 		else if (!ft_strcmp(".cor", argv[i] + ft_strlen(argv[i]) - (ft_strlen(argv[i]) < 4 ? ft_strlen(argv[i]) : 4)))
-// 		{
-// 			if (is_valid_player(argv[i]))
-// 				save_player(argv[i], v, i - v->display_mode);
-// 			else
-// 				xerror("Error: invalid champion", -1);
-// 		}
-// 	}
-// 	vm.display_mode = (!ft_strcmp("-n", argv[1])) ? 2 : 1;
-// 	get_players(argc, argv, &vm);
-// 	load_arena(&vm);
-// 	if (vm.display_mode == 2)
-// 	{
-// 		viewer_init(&v, &vm);
-// 		viewer_run(&v);
-// 	}
-// 	else if (vm.display_mode == 1)
-// 	{
-// //		print_processes(&vm);		// test print
-// //		test_print_v(&vm, argc);		// test print
-// 		run_game(&vm);
-// 	}
-// //	get_winner();
-// //	vm_free();
-// 	return (0);
-// }
+

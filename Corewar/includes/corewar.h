@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 20:35:38 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 12:52:42 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@
 # define OCT_02(x)	((x & 0b1100) >> 2)
 # define OCT_01(x)	((x & 0b110000) >> 4)
 # define OCT_00(x)	((x & 0b11000000) >> 6)
+
+# define FLAG_OPT_VERBOSE 1
+# define FLAG_OPT_DUMP 2
+# define FLAG_OPT_NCURSES 4
 
 typedef struct		s_arena
 {
@@ -99,9 +103,9 @@ typedef struct		s_vm
 	int				ncheck; // nb ctd in a row w/o decrementing ctd
 	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
-	int				dump;
-	int				dump_cycle;
 	t_viewer		*v;
+	unsigned int	opt_flags;			
+	int				dump_param;			
 }					t_vm;
 
 void	is_player(t_vm *v, int live);
@@ -136,7 +140,7 @@ void	xerror(char *error_msg, int error_id); // move to libft
 /*** debug ***/
 void dump(t_player p);
 void print_arena(t_vm *v);
-void test_print_v(t_vm *v, int argc);
+void test_print_v(t_vm *v);
 void print_processes(t_vm *v);
 
 #endif

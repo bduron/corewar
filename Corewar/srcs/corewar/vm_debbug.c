@@ -68,13 +68,14 @@ void print_arena(t_vm *v)
 			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);
 
 	}
+	ft_printf("\n");
 }
 
-void test_print_v(t_vm *v, int argc)
+void test_print_v(t_vm *v)
 {
 
 	ft_printf("\n[Nb players = %d]\n\n", v->nplayer);
-	for (int i = 0; i < argc - v->display_mode; i++) //OMG a for loop !!!
+	for (int i = 0; i < v->nplayer; i++) //OMG a for loop !!!
 	{
 		ft_printf("nplayer = %d\n", v->p[i].nplayer);
 		ft_printf("name = %s\n", v->p[i].name);

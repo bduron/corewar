@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 20:35:12 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 12:49:37 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,11 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
-	//	if (v->ncycle == v->dump_cycle) 
-	//		print_arena(v);// DEBUG
+		if (v->ncycle == v->dump_param) 
+			print_arena(v);// DEBUG
 		update_vm(v);
-		printf("It is now cycle %d\n", v->ncycle); // DEBUG
+			if (v->display_mode == 1)
+				printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->process_lst)
 		{
 			init_processes_lst(v);

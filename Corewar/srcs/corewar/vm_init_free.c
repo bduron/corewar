@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/21 20:26:16 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 12:15:45 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void vm_init(t_vm *v)
 	v->nlive_bctd = 0;
 	v->cycle_to_die = CYCLE_TO_DIE;
 	v->is_ctd_modified = 0;
+	v->opt_flags = 0;
+	v->dump_param = -1;
+	v->nplayer = 0;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
