@@ -6,7 +6,7 @@
 #*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#             *#
-#*   Updated: 2017/04/20 18:15:16 by kcosta           ###   ########.fr       *#
+#*   Updated: 2017/04/22 16:21:51 by kcosta           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -46,7 +46,9 @@ ASM_SRCS_FILES		:=	op.c			\
 						parser.c		\
 						parser_init.c	\
 						parser_header.c	\
-						scanner.c
+						scanner.c		\
+						fixed_io.c		\
+						deasm_manage.c
 CORE_SRCS_FILES		:=	op.c		\
 						corewar.c
 ASM_HEADER_FILES	:=	op.h		\
@@ -55,6 +57,7 @@ ASM_HEADER_FILES	:=	op.h		\
 						lexer.h		\
 						label.h		\
 						asm.h		\
+						fixed_io.h	\
 						deasm.h
 CORE_HEADERS_FILES	:=	op.h		\
 			 			corewar.h

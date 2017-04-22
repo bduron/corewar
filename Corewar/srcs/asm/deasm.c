@@ -6,11 +6,11 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 16:04:32 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/20 19:41:08 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/22 16:22:28 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "deasm.h"
+#include "asm.h"
 
 static int	rev_parse_header(int input, int output)
 {
@@ -41,100 +41,17 @@ static int	rev_parse_header(int input, int output)
 	return (0);
 }
 
-static int	rev_parser_manage_octal(int input, int output, int opcode)
-{
-	int		args;
-	int		nb;
-	int		res;
-	char	*str;
-
-	nb = -1;
-	read(input, &args, 4);
-	while (++nb < g_op_tab[opcode].nb_arg)
-	{
-		write(output, g_op_tab[opcode].name, ft_strlen(g_op_tab[opcode].name));
-		write(output, " ", 1);
-		res = (args >> (6 - 2 * nb)) & 0b11;
-		if (res == T_IND)
-		{
-			read(input, &res, IND_SIZE);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		else if (res == T_DIR)
-		{
-			read(input, &res, g_op_tab[opcode].label ? DIR_SIZE / 2 : DIR_SIZE);
-			write(output, "%", 1);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		else
-		{
-			read(input, &res, 1);
-			write(output, "r", 1);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		if (nb < g_op_tab[opcode].nb_arg - 1)
-			write(output, ", ", 1);
-	}
-	write(output, "\n", 1);
-	return (0);
-}
-
-static int	rev_parser_manage_other(int input, int output, int opcode)
-{
-	int		nb;
-	int		res;
-	char	*str;
-
-	nb = -1;
-	while (++nb < g_op_tab[opcode].nb_arg)
-	{
-		write(output, g_op_tab[opcode].name, ft_strlen(g_op_tab[opcode].name));
-		write(output, " ", 1);
-		if (g_op_tab[opcode].args[nb] == T_IND)
-		{
-			read(input, &res, IND_SIZE);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		else if (g_op_tab[opcode].args[nb] == T_DIR)
-		{
-			read(input, &res, g_op_tab[opcode].label ? DIR_SIZE / 2 : DIR_SIZE);
-			write(output, "%", 1);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		else
-		{
-			read(input, &res, 1);
-			write(output, "r", 1);
-			str = ft_itoa(res);
-			write(output, str, ft_strlen(str));
-			ft_strdel(&str);
-		}
-		if (nb < g_op_tab[opcode].nb_arg - 1)
-			write(output, ", ", 1);
-	}
-	return (0);
-}
-
 static int	rev_parser(int input, int output)
 {
-	int		opcode;
-	char	code;
+	unsigned int	opcode;
+	unsigned char	code;
 
 	write(output, "\n", 1);
 	while (read(input, &code, 1) > 0)
 	{
 		opcode = code - 1;
-		printf("%d\n", code);
+		if (opcode > 16)
+			return (1);
 		if (g_op_tab[opcode].octal)
 			rev_parser_manage_octal(input, output, opcode);
 		else
@@ -154,6 +71,7 @@ int			ft_decompile(char *input_name, char *output_name)
 	if ((output = open(output_name, O_CREAT | O_RDWR, 0644)) < 0)
 		return (2);
 	rev_parse_header(input, output);
-	rev_parser(input, output);
+	if (rev_parser(input, output))
+		return (ft_error("Failed to finish disassembling.", 3));
 	return (0);
 }

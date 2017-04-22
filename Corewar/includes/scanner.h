@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 15:37:20 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/18 18:30:21 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/22 14:05:37 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct		s_char
 	int				line;
 }					t_char;
 
-ssize_t				fixed_write(int fildes, const void *buf, size_t nbyte);
 int					lexical_error(t_token token, int ft_errnum);
 
 t_char				scanner(int fd);
