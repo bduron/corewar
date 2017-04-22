@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/21 20:02:59 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 10:42:15 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <menu.h>
 # include <pthread.h>
 # include "corewar.h"
-// # include "event.h"
+# include "ressources.h"
+
 # define KEY_FPS_LL 'p'
 # define KEY_FPS_PP 'o'
 # define KEY_LPF_LL 'k'
@@ -46,71 +47,10 @@
 # define LIFE_FULL 100
 
 # define ONOFF(x) ((x) ? "ON" : "OFF")
-# define PRINT_NEXT_OP ((NEXT_OP >= 0 && NEXT_OP < 16) ? op_tab[NEXT_OP].name : "")
 # define PRINT_CARRY (CARRY ? 'C' : ' ')
 # define PRINT_LIVE (LIVE ? 'L' : ' ')
 
-# define LOGO_1  L"  ▄████▄   ▒█████   ██▀███  ▓█████  █     █░ ▄▄▄       ██▀███  "
-# define LOGO_2  L" ▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀ ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒"
-# define LOGO_3  L" ▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███   ▒█░ █ ░█ ▒██  ▀█▄  ▓██ ░▄█ ▒"
-# define LOGO_4  L" ▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄ ░█░ █ ░█ ░██▄▄▄▄██ ▒██▀▀█▄  "
-# define LOGO_5  L" ▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒░░██▒██▓  ▓█   ▓██▒░██▓ ▒██▒"
-# define LOGO_6  L" ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░░ ▓░▒ ▒   ▒▒   ▓▒█░░ ▒▓ ░▒▓░"
-# define LOGO_7  L"   ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░  ▒ ░ ░    ▒   ▒▒ ░  ░▒ ░ ▒░"
-# define LOGO_8  L" ░        ░ ░ ░ ▒    ░░   ░    ░     ░   ░    ░   ▒     ░░   ░ "
-# define LOGO_9  L" ░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     "
-# define LOGO_10 L" ░                          2016 pboutelo kcosta bduron cpoulet"
-
-# define LIFE_FULL_1 L"  ▓██▄ ▄██░"
-# define LIFE_FULL_2 L" ▓█████████░"
-# define LIFE_FULL_3 L"  ▓███████▒"
-# define LIFE_FULL_4 L"  ░▒████▒░"
-# define LIFE_FULL_5 L"    ░▐█░ "
-# define LIFE_FULL_6 L""
-
-# define LIFE_HIGH_1 L"  ▓██▄ ▄██░"
-# define LIFE_HIGH_2 L" ▓█████ ▐██░"
-# define LIFE_HIGH_3 L"  ▓████▐██▒"
-# define LIFE_HIGH_4 L"  ░▒████▒░"
-# define LIFE_HIGH_5 L"    ░▐░░"
-# define LIFE_HIGH_6 L"      ░"
-
-# define LIFE_MEDIUM_1 L"  ▓██  ▄██░"
-# define LIFE_MEDIUM_2 L" ▓███▒   ██░"
-# define LIFE_MEDIUM_3 L"  ▓██░  ▐█▒"
-# define LIFE_MEDIUM_4 L"  ░▒███▐▒░"
-# define LIFE_MEDIUM_5 L"    ░▐░░░"
-# define LIFE_MEDIUM_6 L"     ░ ░"
-
-# define LIFE_LOW_1 L"  ▓██░  ▄▄"
-# define LIFE_LOW_2 L" ▓█▒░    ██░"
-# define LIFE_LOW_3 L"  ░     ▐█▒"
-# define LIFE_LOW_4 L"   ▒▐█ ▐▒░"
-# define LIFE_LOW_5 L"    ░▐░ ░░"
-# define LIFE_LOW_6 L"     ░  ░"
-
-# define SKULL_1 L"   ▄▄▄▄▄▄"
-# define SKULL_2 L" ▄▀██▀▀███"
-# define SKULL_3 L" ▐ ▐█░ ▐██░"
-# define SKULL_4 L" ░█▄▄███▒░"
-# define SKULL_5 L"  ░███ ░░"
-# define SKULL_6 L" ░ ░    ░"
-
-
-# define SKULL_1 L"   ▄    ▄"
-# define SKULL_2 L" ▐█      ██"
-# define SKULL_3 L"░██       ▐██░"
-# define SKULL_4 L"  ██▄     █▀▒░"
-# define SKULL_5 L"   ▀█▐█▄ █░"
-# define SKULL_6 L"  ░   ▄▀▐▄   ░"
-
-
-# define SKULL_1 L" ░  ▄░  ░"
-# define SKULL_2 L"   ░██░░"
-# define SKULL_3 L"▄▄▄▐███▄▄▄"
-# define SKULL_4 L" ░░▄███▄░"
-# define SKULL_5 L"  ░█▀░░▀▄"
-# define SKULL_6 L""
+# define TERN(a, b, c) ((a) ? b : c)
 
 typedef struct s_vm	t_vm;
 
@@ -118,34 +58,27 @@ typedef struct		s_viewer
 {
 	unsigned char	arena[MEM_SIZE];
 	char			owner[MEM_SIZE];
-	int				arena_flag[MEM_SIZE]; // faire un cooldown pour que les modifs restents affichees plusieurs tours
+	int				arena_flag[MEM_SIZE];
 	WINDOW			*win_arena;
 	WINDOW			*win_title;
 	WINDOW			*win_champions[MAX_PLAYERS];
 	WINDOW			*win_processes;
 	WINDOW			*win_register;
 	WINDOW			*win_infos;
-
 	int				process_selected;
 	int				process_offset;
-
 	char			anim_state[MAX_PLAYERS];
-
 	int				fps;
 	int				lpf;
-
 	pthread_mutex_t	mutex;
 	pthread_cond_t	cond;
-
 	pthread_t		th_core;
 	pthread_t		th_render;
 	pthread_t		th_input;
 	pthread_t		th_timer;
 	pthread_t		th_anim[MAX_PLAYERS];
-
 	int				event_flags;
 	int				anim_flags;
-
 	t_vm			*vm;
 }					t_viewer;
 
@@ -157,15 +90,12 @@ typedef struct		s_anim
 
 WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
 void				destroy_win(WINDOW *local_win);
-
 void				*th_core_routine(void *p_data);
 void				*th_timer_routine(void *p_data);
 void				*th_input_routine(void *p_data);
 void				*th_render_routine(void *p_data);
 void				*th_anim_routine(void *p_data);
-
 void				new_anim(t_viewer *v, int i);
-
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
 void				maj_process(t_viewer *v);
