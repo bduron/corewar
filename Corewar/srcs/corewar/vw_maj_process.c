@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 11:38:36 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 17:39:12 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:35:26 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	maj_process_selected(t_viewer *v, t_process *selected)
 {
 	if (selected)
 	{
-		wattron(v->win_arena, COLOR_PAIR(7));
+		wattron(v->win_arena, COLOR_PAIR(14));
 		mvwprintw(v->win_arena, selected->pc / 64, (selected->pc % 64 * 3),
 			"%.2x", v->vm->a.arena[selected->pc]);
-		wattroff(v->win_arena, COLOR_PAIR(7));
+		wattroff(v->win_arena, COLOR_PAIR(14));
 		maj_register(v, selected);
 	}
 }
@@ -31,10 +31,10 @@ static void	maj_process_arena(t_viewer *v)
 	process = v->vm->process_lst;
 	while (process)
 	{
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2));
+		wattron(v->win_arena, COLOR_FG(v->vm->a.owner[PC]));
 		mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x",
 			v->vm->a.arena[PC]);
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2));
+		wattroff(v->win_arena, COLOR_FG(v->vm->a.owner[PC]));
 		process = process->next;
 	}
 }
@@ -59,20 +59,20 @@ static void	maj_process_print(t_viewer *v, t_list *process, t_process *selected,
 		if (i == v->process_selected)
 			selected = (t_process *)process->content;
 		wattron(v->win_processes, COLOR_PAIR(i == v->process_selected ?
-			7 : v->vm->a.owner[PC] + 2));
+			14 : (v->vm->a.owner[PC] % 4) + 2));
 		mvwprintw(v->win_processes, i - v->process_offset, 0,
 			"#%-5d %2dx%-2d [%c][%c]: ", NPRO, PC / 64 + 1, PC % 64 + 1,
 			PRINT_LIVE, PRINT_CARRY);
 		maj_process_print_msg(v, process, i);
 		wattroff(v->win_processes, COLOR_PAIR(i == v->process_selected ?
-			7 : v->vm->a.owner[PC] + 2));
+			14 : (v->vm->a.owner[PC] % 4) + 2));
 	}
 	if (i != v->process_selected)
 	{
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6));
+		wattron(v->win_arena, COLOR_BG(v->vm->a.owner[PC]));
 		mvwprintw(v->win_arena, PC / 64, (PC % 64 * 3), "%.2x",
 			v->vm->a.arena[PC]);
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[PC] + 2 + 6));
+		wattroff(v->win_arena, COLOR_BG(v->vm->a.owner[PC]));
 	}
 }
 

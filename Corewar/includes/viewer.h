@@ -6,16 +6,19 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 18:48:44 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:37:51 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 ** TODO :
 ** - faire un modulo sur la couleur du joueur pour gerer lorsque nplayer > nb INIT_COLOR_PAIR
-** - resoudre le conflit en fin de partie
-** - completer l'affichage des commandes (deplacement dans la liste des process)				[DONE]
+** - resoudre le conflit en fin de partie																	[DONE]
+** - completer l'affichage des commandes (deplacement dans la liste des process)							[DONE]
 ** - verifier le comportement de la liste des process si process_selected > nprocess_alive
+** - attention si plus de 8 joueurs alors BUG sur anim_flags !!!! utiliser un tableau de char a la place
+** - imprimer les noms des champions en couleur
+** - BUG dans l'affichage des registres !!!!
 */
 
 #ifndef VIEWER_H
@@ -56,6 +59,9 @@
 # define ONOFF(x) ((x) ? "ON" : "OFF")
 # define PRINT_CARRY (CARRY ? 'C' : ' ')
 # define PRINT_LIVE (LIVE ? 'L' : ' ')
+
+# define COLOR_FG(x) (COLOR_PAIR(((x) % 4) + 2))
+# define COLOR_BG(x) (COLOR_PAIR(((x) % 4) + 9))
 
 # define CHAMP_L 8
 # define CHAMP_C (68 / MAX_PLAYERS)
@@ -107,9 +113,9 @@ typedef struct		s_viewer
 	pthread_t		th_input;
 	pthread_t		th_timer;
 	pthread_t		th_anim[MAX_PLAYERS];
-	pthread_t		th_credits;
 	int				event_flags;
 	int				anim_flags;
+	int				credits_flag;
 	t_vm			*vm;
 }					t_viewer;
 
@@ -175,7 +181,6 @@ void				maj_infos_cycle(t_viewer *v);
 ** vw_th_anim.c
 */
 void				*th_anim_routine(void *p_data);
-void				*th_credits_routine(void *p_data);
 
 /*
 ** vw_th_core.c

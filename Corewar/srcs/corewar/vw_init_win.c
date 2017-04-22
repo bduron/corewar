@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:12:32 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 18:36:37 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:31:27 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	init_arena(t_viewer *v)
 	i = -1;
 	while (++i < MEM_SIZE)
 	{
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattron(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x ",
 			v->vm->a.arena[i]);
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattroff(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		v->arena[i] = v->vm->a.arena[i];
 		v->owner[i] = v->vm->a.owner[i];
 	}

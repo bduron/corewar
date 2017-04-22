@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:37:24 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 18:28:37 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:27:48 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@ static void	maj_arena_print_byte(t_viewer *v, int i)
 		|| v->owner[i] != v->vm->a.owner[i])
 	{
 		wattron(v->win_arena, A_BOLD);
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattron(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x",
 			v->vm->a.arena[i]);
 		v->arena[i] = v->vm->a.arena[i];
 		v->owner[i] = v->vm->a.owner[i];
 		v->arena_flag[i] = v->vm->ncycle + 50;
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattroff(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		wattroff(v->win_arena, A_BOLD);
 	}
 	else if (v->arena_flag[i] && v->arena_flag[i] < v->vm->ncycle)
 	{
-		wattron(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattron(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		mvwprintw(v->win_arena, i / 64, (i % 64 * 3), "%.2x",
 			v->vm->a.arena[i]);
-		wattroff(v->win_arena, COLOR_PAIR(v->vm->a.owner[i] + 2));
+		wattroff(v->win_arena, COLOR_FG(v->vm->a.owner[i]));
 		v->arena_flag[i] = 0;
 	}
 }

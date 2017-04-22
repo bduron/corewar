@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:09:07 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 18:50:45 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:35:21 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	update_anim(t_viewer *v, int i, char state)
 	{
 		v->anim_state[i] = state;
 		werase(v->win_champions[i]);
-		wattron(v->win_champions[i], COLOR_PAIR(i + 2));
+		wattron(v->win_champions[i], COLOR_FG(i));
 		if (state == LIFE_LOW)
 			draw_life_low(v, i);
 		else if (state == LIFE_MEDIUM)
@@ -40,7 +40,7 @@ static void	update_anim(t_viewer *v, int i, char state)
 			draw_life_high(v, i);
 		else if (state == LIFE_FULL)
 			draw_life_full(v, i);
-		wattroff(v->win_champions[i], COLOR_PAIR(i + 2));
+		wattroff(v->win_champions[i], COLOR_FG(i));
 		wrefresh(v->win_champions[i]);
 	}
 }
@@ -78,12 +78,13 @@ void		show_credits(t_viewer *v)
 	i = -1;
 	while (++i < v->vm->nplayer)
 	{
+		wattroff(v->win_champions[i], A_BOLD);
 		werase(v->win_champions[i]);
 		if (v->vm->last_live_id == i)
 		{
-			wattron(v->win_champions[i], COLOR_PAIR(i + 2));
+			wattron(v->win_champions[i], COLOR_PAIR(5));
 			draw_cup(v, i);
-			wattron(v->win_champions[i], COLOR_PAIR(i + 2));
+			wattron(v->win_champions[i], COLOR_PAIR(5));
 		}
 		else
 		{

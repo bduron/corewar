@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 18:49:48 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:22:55 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ static int	th_core_run(t_vm *v, int cooldown)
 {
 	if (!v->process_lst)
 	{
-		if (pthread_create(&v->v->th_credits, NULL, &th_credits_routine, v->v) < 0)
-			xerror("pthread_create error for th_credits\n", -33);
-		// show_credits(v->v);
+		v->v->credits_flag = 1;
+		show_credits(v->v);
 		pthread_mutex_unlock(&v->v->mutex);
 		return (0);
 	}

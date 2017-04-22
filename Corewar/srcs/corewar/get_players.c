@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 17:59:09 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:22:22 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ void is_player(t_vm *v, int live)
 			else
 			{
 				pthread_mutex_lock(&v->v->mutex);
-				if (v->display_mode == 2 && !(v->v->anim_flags & (1 << i)))
+				if (v->display_mode == 2
+					&& !(v->v->anim_flags & (1 << i))
+					&& !v->v->credits_flag)
 					heal(v->v, i);
 				pthread_mutex_unlock(&v->v->mutex);
 			}

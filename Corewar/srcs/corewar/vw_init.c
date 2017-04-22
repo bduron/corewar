@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/22 18:39:16 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:34:14 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ void	viewer_init_colors(void)
 	init_pair(4, COLOR_BLUE, COLOR_BLACK);
 	init_pair(5, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(6, COLOR_CYAN, COLOR_BLACK);
-	init_pair(7, COLOR_BLACK, COLOR_WHITE);
-	init_pair(8, COLOR_BLACK, COLOR_RED);
-	init_pair(9, COLOR_BLACK, COLOR_GREEN);
-	init_pair(10, COLOR_BLACK, COLOR_BLUE);
-	init_pair(11, COLOR_BLACK, COLOR_YELLOW);
-	init_pair(12, COLOR_BLACK, COLOR_CYAN);
+	init_pair(7, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(8, COLOR_BLACK, COLOR_WHITE);
+	init_pair(9, COLOR_BLACK, COLOR_RED);
+	init_pair(10, COLOR_BLACK, COLOR_GREEN);
+	init_pair(11, COLOR_BLACK, COLOR_BLUE);
+	init_pair(12, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(13, COLOR_BLACK, COLOR_CYAN);
+	init_pair(14, COLOR_BLACK, COLOR_MAGENTA);
 }
 
 void	viewer_init_ncurses(t_viewer *v)
@@ -71,9 +73,10 @@ void	viewer_init(t_viewer *v, t_vm *vm)
 	v->lpf = 1;
 	v->fps = 1048576;
 	v->event_flags |= FLAG_EVENT_PAUSE;
+	v->anim_flags = 0;
+	v->credits_flag = 0;
 	v->process_selected = 0;
 	v->process_offset = 0;
-	v->anim_flags = 0;
 	ft_memset(v->anim_state, 101, sizeof(char) * MAX_PLAYERS);
 	ft_memset(v->arena_flag, 0, sizeof(int) * MEM_SIZE);
 	pthread_mutex_init(&v->mutex, NULL);
