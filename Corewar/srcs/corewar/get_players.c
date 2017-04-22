@@ -42,20 +42,16 @@ void save_player(char *file, t_vm *v, int i)
 	close(fd);
 }
 
-void get_players(int argc, char **argv, t_vm *v)
+void get_player(char **argv, int i, t_vm *v)
 {
-	int i;
-
-	if (argc > MAX_PLAYERS + v->display_mode)
-		xerror("Error: too many champions", -1);
-	i = v->display_mode;
-	while (i < argc)
-	{
-		if (is_valid_player(argv[i]))
-			save_player(argv[i], v, i - v->display_mode);
-		else
-			xerror("Error: invalid champion", -1);
-		i++;
-	}
-	v->nplayer = argc - v->display_mode;
+ 			if (is_valid_player(argv[i]))
+			{
+				if (v->nplayer < 4)
+					save_player(argv[i], v, v->nplayer);
+				else
+ 					xerror("Error: too many players", -1);
+				v->nplayer++;
+			}
+ 			else
+ 				xerror("Error: invalid champion", -1);
 }
