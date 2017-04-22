@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 17:56:54 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:43:09 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void kill_processes_lst(t_vm *v)
 				v->process_lst = process->next;
 				//	KILL(process);
 				if (v->display_mode == 1)
-					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				free(process->content);
 				free(process);
 				process = v->process_lst;
@@ -63,7 +63,7 @@ void kill_processes_lst(t_vm *v)
 			{
 		//		printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
-					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				process = process->next;
 				//	KILL(prev->next);
 				free(previous->next->content);
