@@ -3,77 +3,127 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/06 10:18:22 by bduron            #+#    #+#             */
-/*   Updated: 2017/02/06 10:52:30 by bduron           ###   ########.fr       */
+/*   Created: 2016/11/29 16:19:31 by cpoulet           #+#    #+#             */
+/*   Updated: 2017/04/22 15:08:30 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef H_FT_PRINTF_H
-# define H_FT_PRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-# include "libft.h"
-# include <string.h>
+# include <unistd.h>
+# include <stdlib.h>
 # include <stdarg.h>
-# define BUFSIZE 4096
-# define HEX_L "0123456789abcdef"
-# define HEX_U "0123456789ABCDEF"
-# define RED   "\x1B[31m"
-# define GRN   "\x1B[32m"
-# define YEL   "\x1B[33m"
-# define BLU   "\x1B[34m"
-# define MAG   "\x1B[35m"
-# define CYN   "\x1B[36m"
-# define WHT   "\x1B[37m"
-# define RES	"\x1B[0m"
+# include <wchar.h>
+# include <limits.h>
+# include "libft.h"
 
-typedef struct	s_flags
+# define H	0
+# define L	1
+# define Z	2
+# define J	3
+# define LL	4
+# define HH	5
+
+# define BUFF 4096
+
+# define INIT	"\033[H\033[J"
+# define TOP	"\033[H"
+# define BLK	"\x1B[30m"
+# define RED	"\x1B[31m"
+# define GRN	"\x1B[32m"
+# define YEL	"\x1B[33m"
+# define BLU	"\x1B[34m"
+# define MAG	"\x1B[35m"
+# define CYN	"\x1B[36m"
+# define WHT	"\x1B[37m"
+# define EOC	"\x1B[0m"
+
+typedef struct	s_form
 {
-	int		flags[256];
-	int		mod[256];
-	char	str[256];
-	int		width;
-	int		precision;
-	va_list	ap;
-	size_t	plen;
-	char	id;
-	char	sign;
-	int		s_bool;
-	int		h_bool;
-}				t_flags;
+	char		minus;
+	char		plus;
+	char		space;
+	char		zero;
+	char		hash;
+	int			width;
+	int			pre;
+	int			preflag;
+	int			length;
+	int			nul;
+	int			apo;
+	int			dolls;
+}				t_form;
 
-int				ft_printf(const char *format, ...);
-void			fmt(t_flags *f, const char *format);
-char			*get_flags(char *flag, t_flags *f);
-int				is_flag(char c);
-int				is_id(char id);
-void			reset_flags(t_flags *f);
-int				is_mod(char c);
-void			launch_conv(t_flags *f);
-void			conv_d(t_flags *f);
-void			put_d(t_flags *f, char *s, int len);
-int				count_digits(int nb);
-int				max(int x, int y, int z);
-long long		get_arg_u(t_flags *f);
-long long		get_arg(t_flags *f);
-void			conv_d(t_flags *f);
-int				is_x(t_flags *f);
-void			put_c(t_flags *f);
-void			put_s(t_flags *f);
-void			put_s_maj(t_flags *f);
-void			conv_u(t_flags *f);
-char			*get_wildcards(t_flags *f, char *s);
-void			put_percent(t_flags *f);
-void			launch_conv_digits(t_flags *f);
-void			launch_conv_strings(t_flags *f);
-void			launch_conv_unsigned(t_flags *f);
-size_t			rem(size_t len, wchar_t *s);
-size_t			ft_wlen(wchar_t s);
-int				ft_printf_atoi(const char *str);
-char			*ft_printf_itoa(uintmax_t n);
-int				ft_putwchar(wchar_t c);
-int				isnt_id(t_flags *f);
-int				pad(int len, char c);
+typedef struct	s_data
+{
+	int			buff;
+	char		buffer[BUFF];
+	int			index;
+	char		field;
+	int			length;
+	int			error;
+	int			fd;
+	va_list		ap_cpy;
+	va_list		ap_svg;
+	char		*sprintf;
+}				t_data;
+
+typedef struct	s_fct
+{
+	char		c;
+	int			(*f)(va_list ap, t_form* form, t_data* data);
+}				t_fct;
+
+int					ft_printf(char *fmt, ...);
+int					ft_dprintf(int fd, char *fmt, ...);
+int					ft_sprintf(char *str, char *fmt, ...);
+int					parser(t_data *data, char **str, t_form *form, va_list ap);
+int					field(t_data *data, char **str);
+int					print_int(va_list ap, t_form *form, t_data *data);
+int					print_str(va_list ap, t_form *form, t_data *data);
+int					print_ptr(va_list ap, t_form *form, t_data *data);
+int					print_int(va_list ap, t_form *form, t_data *data);
+int					print_bin(va_list ap, t_form *form, t_data *data);
+int					print_oct(va_list ap, t_form *form, t_data *data);
+int					print_hex(va_list ap, t_form *form, t_data *data);
+int					get_len(va_list ap, t_form *form, t_data *data);
+int					print_uns_int(va_list ap, t_form *form, t_data *data);
+int					print_hex_low(va_list ap, t_form *form, t_data *data);
+int					print_hex_up(va_list ap, t_form *form, t_data *data);
+int					print_char(va_list ap, t_form *form, t_data *data);
+int					num_field(t_data *data, char **str);
+int					str_field(t_data *data, char **str);
+int					flags(char **str, t_form *form);
+int					width(va_list ap, char **str, t_form *form);
+int					precision(va_list ap, char **str, t_form *form);
+int					length(char **str, t_form *form);
+void				dolls(t_form *form, char **str);
+void				lst_arg(t_data *data, int i);
+wchar_t				unicode(wchar_t wc, t_data *data);
+void				fwp_int(long long nb, t_form *form, t_data *data);
+void				fwp_u_int(unsigned long long nb, t_form *form, t_data *data);
+void				fwp_bin(unsigned long nb, t_form *form, t_data *data);
+void				fwp_oct(unsigned long nb, t_form *form, t_data *data);
+void				fwp_hex(unsigned long long nb, t_form *form, t_data *data);
+void				fwp_ptr(unsigned long ptr, t_form *form, t_data *data);
+void				fwp_char(int c, t_form *form, t_data *data);
+void				fwp_str(char *str, t_form *form, t_data *data);
+int					fwp_wchar(wchar_t wc, t_form *form, t_data *data);
+int					fwp_wstr(wchar_t *w, t_form *form, t_data *data);
+long long			unsigned_cast(long long val, int mod);
+long long			signed_cast(long long val, int mod);
+int					addchar(t_data *data, char c, int pos);
+int					addwc(t_data *data, wchar_t wc, int pos, int len);
+int					ft_nblen(long long nb);
+int					ft_nblen_b(unsigned long long nb, int base);
+int					ft_u_nblen(unsigned long long nb);
+long int			ft_power(int n, unsigned int p);
+unsigned long int	ft_u_power(int n, unsigned int p);
+/*
+**int				ft_fprintf(FILE *stream, char *fmt, ...);
+*/
 
 #endif

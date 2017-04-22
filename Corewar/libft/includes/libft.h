@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 17:42:08 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/13 16:01:37 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/22 15:14:39 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include "ft_printf.h"
 
 # define BUFF_SIZE 1
 # define MAXV 100000
@@ -137,7 +138,6 @@ void			ft_strrev(char *s);
 int				ft_isspace(int c);
 int				ft_isdigitstr(char *s);
 int				get_next_line(int fd, char **line);
-int				ft_printf(const char *format, ...);
 int				ft_getline(const int fd, char **line);
 
 /*

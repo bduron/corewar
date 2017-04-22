@@ -6,7 +6,7 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 12:15:13 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 12:21:10 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/22 15:18:17 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->next_op = -1;
 		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int)); //PROBLEME NORMINETTE ICI
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;
-		printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);
 		i++;
 	}
@@ -64,7 +64,7 @@ void	load_champions(t_vm *v)
 	space = MEM_SIZE / v->nplayer;
 	i = 0;
 	n = 0;
-	printf("Introducing contestants...\n");
+	ft_printf("Introducing contestants...\n");
 	while (n < v->nplayer)
 	{
 		ft_memcpy(&(v->a.arena[i]), v->p[n].code, v->p[n].prog_len);
