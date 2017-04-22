@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 10:42:15 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 11:13:30 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 # include <libc.h>
 # include <locale.h>
 # include "libft.h"
+# include "corewar.h"
 # include <ncurses.h>
 # include <menu.h>
 # include <pthread.h>
-# include "corewar.h"
 # include "ressources.h"
 
 # define KEY_FPS_LL 'p'
@@ -50,9 +50,8 @@
 # define PRINT_CARRY (CARRY ? 'C' : ' ')
 # define PRINT_LIVE (LIVE ? 'L' : ' ')
 
-# define TERN(a, b, c) ((a) ? b : c)
-
 typedef struct s_vm	t_vm;
+typedef struct s_process	t_process;
 
 typedef struct		s_viewer
 {
@@ -88,17 +87,68 @@ typedef struct		s_anim
 	int				i;
 }					t_anim;
 
+/*
+** vw_draw_life.c
+*/
+void				draw_life_full(t_viewer *v, int i);
+void				draw_life_high(t_viewer *v, int i);
+void				draw_life_medium(t_viewer *v, int i);
+void				draw_life_low(t_viewer *v, int i);
+void				draw_life_dead(t_viewer *v, int i);
+
+/*
+** vw_draw_others.c
+*/
+void				heal(t_viewer *v, int i);
+void				draw_logo(t_viewer *v);
+
+/*
+** vw_init_win.c
+*/
 WINDOW				*create_newwin(int height, int width, int starty, int startx, char *title);
-void				destroy_win(WINDOW *local_win);
-void				*th_core_routine(void *p_data);
-void				*th_timer_routine(void *p_data);
-void				*th_input_routine(void *p_data);
-void				*th_render_routine(void *p_data);
-void				*th_anim_routine(void *p_data);
-void				new_anim(t_viewer *v, int i);
+void				init_win_infos(t_viewer *v);
+void				init_arena(t_viewer *v);
+void				init_register(t_viewer *v);
+
+/*
+** vw_init.c
+*/
+void				viewer_init_colors();
+void				viewer_init_ncurses(t_viewer *v);
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
-void				maj_process(t_viewer *v);
+
+/*
+** vw_maj_win.c
+*/
+void				maj_register(t_viewer *v, t_process *process);
 void				maj_arena(t_viewer *v);
+void				maj_win_infos(t_viewer *v);
+void				maj_process(t_viewer *v);
+
+/*
+** vw_th_anim.c
+*/
+void				*th_anim_routine(void *p_data);
+
+/*
+** vw_th_core.c
+*/
+void				*th_core_routine(void *p_data);
+
+/*
+** vw_th_input.c
+*/
+void				*th_input_routine(void *p_data);
+
+/*
+** vw_th_render.c
+*/
+void				*th_render_routine(void *p_data);
+
+/*
+** vw_th_timer.c
+*/
+void				*th_timer_routine(void *p_data);
 
 #endif

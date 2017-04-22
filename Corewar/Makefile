@@ -6,7 +6,7 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/21 12:05:59 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/22 11:06:12 by pboutelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,16 @@ operation_3.c \
 operation_4.c \
 op_shift.c \
 op.c \
-th_core.c \
-th_input.c \
-th_render.c \
-th_timer.c \
-th_anim.c \
-viewer.c
+vw_draw_life.c \
+vw_draw_others.c \
+vw_init_win.c \
+vw_init.c \
+vw_maj_win.c \
+vw_th_anim.c \
+vw_th_core.c \
+vw_th_input.c \
+vw_th_render.c \
+vw_th_timer.c
 
 OBJ= $(SRC:.c=.o)
 
