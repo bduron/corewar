@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:37:24 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 17:42:22 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:28:37 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ void		maj_arena(t_viewer *v)
 
 void		maj_infos_input(t_viewer *v)
 {
-	mvwprintw(v->win_infos, 0, 7, "%-10d", 1048576 / v->fps);
-	mvwprintw(v->win_infos, 1, 7, "%-10d", v->lpf);
-	mvwprintw(v->win_infos, 2, 7, "%-10s",
+	mvwprintw(v->win_infos, 1, 19, "%10d", 1048576 / v->fps);
+	mvwprintw(v->win_infos, 2, 19, "%10d", v->lpf);
+	mvwprintw(v->win_infos, 4, 19, "%10s",
 		ONOFF(v->event_flags & FLAG_EVENT_PAUSE));
 	wrefresh(v->win_infos);
 }
 
 void		maj_infos_cycle(t_viewer *v)
 {
-	mvwprintw(v->win_infos, 0, 69, "%-10d", v->vm->ncycle);
-	mvwprintw(v->win_infos, 1, 69, "%-10d", v->vm->ncycle_mod);
-	mvwprintw(v->win_infos, 2, 69, "%-10d", v->vm->cycle_to_die);
+	mvwprintw(v->win_infos, 1, 114, "%10d", v->vm->ncycle);
+	mvwprintw(v->win_infos, 2, 114, "%10d", v->vm->ncycle_mod);
+	mvwprintw(v->win_infos, 3, 114, "%10d", v->vm->cycle_to_die);
 	wrefresh(v->win_infos);
 }

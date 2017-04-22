@@ -6,13 +6,13 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 18:17:47 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/22 12:01:48 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int	get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
+int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
 {
 	int		ret;
 	u_char	label;
@@ -35,7 +35,7 @@ int	get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
 	return (ret);
 }
 
-int reverse_bytes(t_vm *v, unsigned int pc, int nbytes)
+int		reverse_bytes(t_vm *v, unsigned int pc, int nbytes)
 {
 	unsigned char two_bytes[2];
 	unsigned char four_bytes[4];

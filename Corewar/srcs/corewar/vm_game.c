@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 14:07:37 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 17:56:54 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void kill_processes_lst(t_vm *v)
 				v->process_lst = process->next;
 				//	KILL(process);
 				if (v->display_mode == 1)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
-				//free(process);
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+				free(process->content);
+				free(process);
 				process = v->process_lst;
 				previous = NULL;
 			}
@@ -62,10 +63,11 @@ void kill_processes_lst(t_vm *v)
 			{
 		//		printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
-					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
+					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = process->next;
 				//	KILL(prev->next);
-				//free(previous->next);
+				free(previous->next->content);
+				free(previous->next);
 				previous->next = process;
 			}
 			--v->nprocess_alive;
@@ -118,7 +120,7 @@ void update_vm(t_vm *v)
 			v->cycle_to_die -= CYCLE_DELTA;
 			v->is_ctd_modified = 1;
 			if (v->display_mode == 1)
-				printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+				ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 		}
 		v->ncheck = v->is_ctd_modified ? 0 : v->ncheck + 1;
 		if (v->ncheck % MAX_CHECKS == 0)
@@ -127,7 +129,7 @@ void update_vm(t_vm *v)
 			{
 				v->cycle_to_die -= CYCLE_DELTA;
 				if (v->display_mode == 1)
-					printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+					ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 			}
 		}
 
@@ -143,10 +145,14 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
-	//	if (v->ncycle == v->dump_cycle)
-	//		print_arena(v);// DEBUG
+		if (v->ncycle == v->dump_param)
+		{
+			print_arena(v);// DEBUG
+			exit(1);
+		}
 		update_vm(v);
-		printf("It is now cycle %d\n", v->ncycle); // DEBUG
+			if (v->display_mode == 1)
+				ft_printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->process_lst)
 		{
 			init_processes_lst(v);
@@ -155,7 +161,7 @@ void run_game(t_vm *v)
 				kill_processes_lst(v);
 		}
 	}
-	printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
+	ft_printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 11:27:02 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/22 15:59:01 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ void	op_add(t_vm *v, t_list *process)
 		{
 			val = REG[ARENA(PC + 2) - 1] + REG[ARENA(PC + 3) - 1];
 			if (v->display_mode == 1)
-				printf("P%5d | add r%d r%d r%d\n", NPRO, ARENA(PC + 2), ARENA(PC + 3), ARENA(PC + 4));
+			ft_printf("P%5d | add r%d r%d r%d\n",
+					NPRO, ARENA(PC + 2), ARENA(PC + 3), ARENA(PC + 4));
 			CARRY = val ? 0 : 1;
 			REG[ARENA(PC + 4) - 1] = val;
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, nb_arg));
-	PC = (PC + octal_shift(process, B_OCT, 4, nb_arg)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, nb_arg));
+	PC = (PC + octal_shift(B_OCT, 4, nb_arg)) % MEM_SIZE;
 }
 
 void	op_sub(t_vm *v, t_list *process)
@@ -50,14 +51,15 @@ void	op_sub(t_vm *v, t_list *process)
 		{
 			val = REG[ARENA(PC + 2) - 1] - REG[ARENA(PC + 3) - 1];
 			if (v->display_mode == 1)
-				printf("P%5d | sub r%d r%d r%d\n", NPRO, ARENA(PC + 2), ARENA(PC + 3), ARENA(PC + 4));
+			ft_printf("P%5d | sub r%d r%d r%d\n",
+					NPRO, ARENA(PC + 2), ARENA(PC + 3), ARENA(PC + 4));
 			CARRY = val ? 0 : 1;
 			REG[ARENA(PC + 4) - 1] = val;
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, nb_arg));
-	PC = (PC + octal_shift(process, B_OCT, 4, nb_arg)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, nb_arg));
+	PC = (PC + octal_shift(B_OCT, 4, nb_arg)) % MEM_SIZE;
 }
 
 void	op_and(t_vm *v, t_list *process)
@@ -82,14 +84,14 @@ void	op_and(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] & val[2];
 				if (v->display_mode == 1)
-					printf("P%5d | and %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
+				ft_printf("P%5d | and %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, 3));
-	PC = (PC + octal_shift(process, B_OCT, 4, 3)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, 3));
+	PC = (PC + octal_shift(B_OCT, 4, 3)) % MEM_SIZE;
 }
 
 void	op_or(t_vm *v, t_list *process)
@@ -114,14 +116,14 @@ void	op_or(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] | val[2];
 				if (v->display_mode == 1)
-					printf("P%5d | or %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
+				ft_printf("P%5d | or %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, 3));
-	PC = (PC + octal_shift(process, B_OCT, 4, 3)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, 3));
+	PC = (PC + octal_shift(B_OCT, 4, 3)) % MEM_SIZE;
 }
 
 void	op_xor(t_vm *v, t_list *process)
@@ -146,12 +148,12 @@ void	op_xor(t_vm *v, t_list *process)
 			{
 				REG[val[0]] = val[1] ^ val[2];
 				if (v->display_mode == 1)
-					printf("P%5d | xor %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
+				ft_printf("P%5d | xor %d %d r%d\n", NPRO, val[2], val[1], val[0] + 1);
 				CARRY = REG[val[0]] ? 0 : 1;
 			}
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(process, B_OCT, 4, 3));
-	PC = (PC + octal_shift(process, B_OCT, 4, 3)) % MEM_SIZE;
+		print_adv(v, process, octal_shift(B_OCT, 4, 3));
+	PC = (PC + octal_shift(B_OCT, 4, 3)) % MEM_SIZE;
 }

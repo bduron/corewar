@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:09:07 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 15:48:13 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:50:45 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void		heal(t_viewer *v, int i)
 	a->i = i;
 	v->anim_flags |= 1 << i;
 	if (pthread_create(&v->th_anim[i], NULL, &th_anim_routine, a) < 0)
-	{
-		ft_printf("pthread_create error for th_anim[%d]\n", i);
-		exit(-33);
-	}
+		xerror("pthread_create error for th_anim[]\n", -33 + i);
 }
 
 static void	update_anim(t_viewer *v, int i, char state)
@@ -85,7 +82,7 @@ void		show_credits(t_viewer *v)
 		if (v->vm->last_live_id == i)
 		{
 			wattron(v->win_champions[i], COLOR_PAIR(i + 2));
-			draw_laurels(v, i);
+			draw_cup(v, i);
 			wattron(v->win_champions[i], COLOR_PAIR(i + 2));
 		}
 		else

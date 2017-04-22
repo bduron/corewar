@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 14:07:59 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 17:58:52 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@
 # define OCT_02(x)	((x & 0b1100) >> 2)
 # define OCT_01(x)	((x & 0b110000) >> 4)
 # define OCT_00(x)	((x & 0b11000000) >> 6)
+
+# define FLAG_OPT_VERBOSE 1
+# define FLAG_OPT_DUMP 2
+# define FLAG_OPT_NCURSES 4
 
 typedef struct		s_arena
 {
@@ -100,14 +104,17 @@ typedef struct		s_vm
 	int				ncheck; // nb ctd in a row w/o decrementing ctd
 	int				is_ctd_modified;
 	int				display_mode; // pboutelo: 1: raw, 2: interactive
-	int				dump;
-	int				dump_cycle;
 	t_viewer		*v;
+	unsigned int	opt_flags;
+	int				dump_param;
 }					t_vm;
+
+void	print_help();
+void	parse_opt(int argc, char **argv, t_vm *v);
 
 void	is_player(t_vm *v, int live);
 void	save_player(char *file, t_vm *v, int i);
-void	get_players(int argc, char **argv, t_vm *v);
+void	get_player(char **argv, int i, t_vm *v);
 int		is_corewar_execmagic(char *file);
 int		get_prog_size(char *file);
 int		is_valid_player(char *file);
@@ -116,7 +123,6 @@ void	load_arena(t_vm *v);
 void	load_champions(t_vm *v);
 void	load_processes(t_vm *v);
 void	vm_init(t_vm *v);
-void	vm_free(t_vm *v);
 
 void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);
@@ -127,7 +133,7 @@ void	kill_processes_lst(t_vm *v);
 void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
 int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type);
-int		octal_shift(t_list *process, u_char n, u_char label_size, u_char arg_nb);
+int		octal_shift(u_char n, u_char label_size, u_char arg_nb);
 int		reverse_bytes(t_vm *v, unsigned int pc, int nbytes);
 int		check_arg(u_char arg, u_char n, u_char arg_nb);
 void	add_process(t_vm *v, t_list *process, unsigned int son_pc);
@@ -137,7 +143,7 @@ void	xerror(char *error_msg, int error_id); // move to libft
 /*** debug ***/
 void dump(t_player p);
 void print_arena(t_vm *v);
-void test_print_v(t_vm *v, int argc);
+void test_print_v(t_vm *v);
 void print_processes(t_vm *v);
 
 #endif

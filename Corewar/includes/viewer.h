@@ -6,9 +6,17 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 17:50:41 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:48:44 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** TODO :
+** - faire un modulo sur la couleur du joueur pour gerer lorsque nplayer > nb INIT_COLOR_PAIR
+** - resoudre le conflit en fin de partie
+** - completer l'affichage des commandes (deplacement dans la liste des process)				[DONE]
+** - verifier le comportement de la liste des process si process_selected > nprocess_alive
+*/
 
 #ifndef VIEWER_H
 # define VIEWER_H
@@ -99,6 +107,7 @@ typedef struct		s_viewer
 	pthread_t		th_input;
 	pthread_t		th_timer;
 	pthread_t		th_anim[MAX_PLAYERS];
+	pthread_t		th_credits;
 	int				event_flags;
 	int				anim_flags;
 	t_vm			*vm;
@@ -166,6 +175,7 @@ void				maj_infos_cycle(t_viewer *v);
 ** vw_th_anim.c
 */
 void				*th_anim_routine(void *p_data);
+void				*th_credits_routine(void *p_data);
 
 /*
 ** vw_th_core.c

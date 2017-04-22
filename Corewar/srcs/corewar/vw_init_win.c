@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:12:32 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 16:15:15 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:36:37 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,23 @@ WINDOW	*create_newwin(int arg[4], char *title)
 void	init_infos(t_viewer *v)
 {
 	werase(v->win_infos);
-	mvwprintw(v->win_infos, 0, 0, "FPS:              "
-		"CONTROLS: [ << '%c' ] [ '%c' >> ]", KEY_FPS_PP, KEY_FPS_LL);
-	mvwprintw(v->win_infos, 1, 0, "LPF:              "
-		"CONTROLS: [ << '%c' ] [ '%c' >> ]", KEY_LPF_LL, KEY_LPF_PP);
-	mvwprintw(v->win_infos, 2, 0, "PAUSE:            "
-		"CONTROLS: [ '%c' ]", KEY_PAUSE);
-	mvwprintw(v->win_infos, 3, 0, "QUIT:             "
-		"CONTROLS: [ '%c' ]", KEY_QUIT);
-	mvwprintw(v->win_infos, 0, 55, "CYCLE:");
-	mvwprintw(v->win_infos, 1, 55, "CYCLE_MOD:");
-	mvwprintw(v->win_infos, 2, 55, "CYCLE_TO_DIE:");
+	mvwprintw(v->win_infos, 0, 61, "CONTROLS");
+	mvwprintw(v->win_infos, 1, 0, "FRAMES PER SECOND: %-10d "
+		"                    [ << '%c' ]          [ '%c' >> ]",
+		0, KEY_FPS_PP, KEY_FPS_LL);
+	mvwprintw(v->win_infos, 2, 0, "LAPS PER FRAME:    %-10d "
+		"                    [ << '%c' ]          [ '%c' >> ]",
+		0, KEY_LPF_LL, KEY_LPF_PP);
+	mvwprintw(v->win_infos, 3, 0, "LIST OF PROCESS:              "
+		"                    [ << '%c' ]          [ '%c' >> ]",
+		KEY_PROCESS_PP, KEY_PROCESS_LL);
+	mvwprintw(v->win_infos, 4, 0, "PAUSE:                                   "
+		"                    [ '%c' ]", KEY_PAUSE);
+	mvwprintw(v->win_infos, 5, 0, "QUIT:                                    "
+		"                    [ '%c' ]", KEY_QUIT);
+	mvwprintw(v->win_infos, 1, 100, "CYCLE:");
+	mvwprintw(v->win_infos, 2, 100, "CYCLE_MOD:");
+	mvwprintw(v->win_infos, 3, 100, "CYCLE_TO_DIE:");
 	wrefresh(v->win_infos);
 }
 

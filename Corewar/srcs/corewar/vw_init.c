@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/22 15:48:38 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:39:16 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	viewer_init_colors(void)
 	if (has_colors() == FALSE)
 	{
 		endwin();
-		ft_printf("Your terminal does not support color\n");
-		exit(1);
+		xerror("Your terminal does not support color\n", -33);
 	}
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);

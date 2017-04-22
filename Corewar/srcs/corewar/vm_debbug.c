@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vm_debbug.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/04/22 17:59:57 by pboutelo          #+#    #+#             */
+/*   Updated: 2017/04/22 18:00:15 by pboutelo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
-# define RES "\x1B[0m"
+#define RES "\x1B[0m" //OH MON DIEU !
 
 void print_processes(t_vm *v)
 {
@@ -58,23 +70,41 @@ void print_arena(t_vm *v)
 
 	for (int i = 0; i < MEM_SIZE; i++)
 	{
+		if (i % 64 == 0 && i != 0)
+			ft_printf(" \n");
+		if (i % 64 == 0 && i != (MEM_SIZE - 1))
+			ft_printf("0x%04x :", i);
+		if (i % 1 == 0)
+			ft_printf(" ");
+		ft_printf("%02x", v->a.arena[i]);
+	}
+	ft_printf(" \n");
+}
+
+void print_arena_color(t_vm *v)
+{
+
+	for (int i = 0; i < MEM_SIZE; i++)
+	{
 		if (i % 64 == 0)
 			ft_printf("\n");
+		if (i % 64 == 0 && i != (MEM_SIZE - 1))
+			ft_printf("0x%04x :", i);
 		if (i % 1 == 0) //
 			ft_printf(" "); //
 		if (v->a.owner[i] == -1)
 			ft_printf("%02x", v->a.arena[i]);
 		else
 			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);
-
 	}
+	ft_printf("\n");
 }
 
-void test_print_v(t_vm *v, int argc)
+void test_print_v(t_vm *v)
 {
 
 	ft_printf("\n[Nb players = %d]\n\n", v->nplayer);
-	for (int i = 0; i < argc - v->display_mode; i++) //OMG a for loop !!!
+	for (int i = 0; i < v->nplayer; i++) //OMG a for loop !!!
 	{
 		ft_printf("nplayer = %d\n", v->p[i].nplayer);
 		ft_printf("name = %s\n", v->p[i].name);
