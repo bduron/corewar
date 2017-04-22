@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/21 19:34:40 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/21 20:35:12 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void kill_processes_lst(t_vm *v)
 			//		kill_process(&process, &previous);
 			if (process == v->process_lst)
 			{
-				//printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
+		//		printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
 				v->process_lst = process->next;
 				//	KILL(process);
 				if (v->display_mode == 1)
@@ -60,7 +60,7 @@ void kill_processes_lst(t_vm *v)
 			}
 			else
 			{
-			//	printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
+		//		printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = process->next;
@@ -142,6 +142,8 @@ void run_game(t_vm *v)
 {
 	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
 	{
+	//	if (v->ncycle == v->dump_cycle) 
+	//		print_arena(v);// DEBUG
 		update_vm(v);
 		printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->process_lst)

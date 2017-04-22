@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 10:33:45 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/22 10:45:28 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int			main(int argc, char **argv)
 	vm_init(&vm);
 	// vm.display_mode = (argc == 6 && !ft_strcmp("-n", argv[1])) ? 2 : 1;
 	vm.display_mode = (!ft_strcmp("-n", argv[1])) ? 2 : 1;
+	//vm.dump = (!ft_strncmp("-dump", argv[1], 5)) ? 1 : 0;
+	//vm.dump_cycle = (!ft_strncmp("-dump", argv[1], 5)) ? ft_atoi(&(argv[1][5])) : 0;
 	get_players(argc, argv, &vm);
 	load_arena(&vm);
 	if (vm.display_mode == 2)
