@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 15:21:58 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:38:03 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int			main(int argc, char **argv)
 //		test_print_v(&vm);		// Pour debugguer le contenu des joueurs 
 		run_game(&vm);
 	}
-//	get_winner();
-//	vm_free();
 	return (0);
 }
 

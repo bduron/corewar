@@ -6,14 +6,14 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/22 15:16:14 by bduron           ###   ########.fr        #
+#    Updated: 2017/04/22 15:35:20 by bduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COREWAR= corewar
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 LFLAGS	= -lncurses
 LIBFT = -Llibft -lft -lncurses -lpthread
 

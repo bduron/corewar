@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 12:15:45 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:36:41 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,4 @@ void vm_init(t_vm *v)
 		ft_memset(v->p[i].code, 0, CHAMP_MAX_SIZE);
 		i++;
 	}
-}
-
-void vm_free(t_vm *v)
-{
-	(void)v;
 }

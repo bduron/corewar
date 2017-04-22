@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 15:12:42 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:37:29 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	load_arena(t_vm *v);
 void	load_champions(t_vm *v);
 void	load_processes(t_vm *v);
 void	vm_init(t_vm *v);
-void	vm_free(t_vm *v);
 
 void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);

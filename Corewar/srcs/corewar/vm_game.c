@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 15:23:58 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:32:53 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void kill_processes_lst(t_vm *v)
 				free(process);
 				if (v->display_mode == 1)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
-				free(process->content);
-				free(process);
 				process = v->process_lst;
 				previous = NULL;
 			}
@@ -68,7 +66,8 @@ void kill_processes_lst(t_vm *v)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
 				process = process->next;
 				//	KILL(prev->next);
-				//free(previous->next);
+				free(previous->next->content);
+				free(previous->next);
 				previous->next = process;
 			}
 		}
@@ -120,7 +119,7 @@ void update_vm(t_vm *v)
 			v->cycle_to_die -= CYCLE_DELTA;
 			v->is_ctd_modified = 1;
 			if (v->display_mode == 1)
-				printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+				ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 		}
 		v->ncheck = v->is_ctd_modified ? 0 : v->ncheck + 1;
 		if (v->ncheck % MAX_CHECKS == 0)
@@ -129,7 +128,7 @@ void update_vm(t_vm *v)
 			{
 				v->cycle_to_die -= CYCLE_DELTA;
 				if (v->display_mode == 1)
-					printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+					ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
 			}
 		}
 
@@ -152,7 +151,7 @@ void run_game(t_vm *v)
 		}
 		update_vm(v);
 			if (v->display_mode == 1)
-				printf("It is now cycle %d\n", v->ncycle); // DEBUG
+				ft_printf("It is now cycle %d\n", v->ncycle); // DEBUG
 		if (v->process_lst)
 		{
 			init_processes_lst(v);
@@ -161,7 +160,7 @@ void run_game(t_vm *v)
 				kill_processes_lst(v);
 		}
 	}
-	printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
+	ft_printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
 }
 
 /*
