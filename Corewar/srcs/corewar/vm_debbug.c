@@ -59,14 +59,14 @@ void print_arena(t_vm *v)
 	for (int i = 0; i < MEM_SIZE; i++)
 	{
 		if (i % 64 == 0 && i != 0)
-			ft_printf("\n");
+			ft_printf(" \n");
 		if (i % 64 == 0 && i != (MEM_SIZE - 1))
 			ft_printf("0x%04x :", i);
 		if (i % 1 == 0) 
 			ft_printf(" "); 
 		ft_printf("%02x", v->a.arena[i]);
 	}
-	ft_printf("\n");
+	ft_printf(" \n");
 }
 
 void print_arena_color(t_vm *v)
@@ -84,7 +84,6 @@ void print_arena_color(t_vm *v)
 			ft_printf("%02x", v->a.arena[i]);
 		else
 			ft_printf("\033[%dm%02x" RES, 31 + v->a.owner[i], v->a.arena[i]);
-
 	}
 	ft_printf("\n");
 }
