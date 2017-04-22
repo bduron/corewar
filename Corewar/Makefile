@@ -6,14 +6,14 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/22 11:06:12 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/22 15:16:14 by bduron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 COREWAR= corewar
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 LFLAGS	= -lncurses
 LIBFT = -Llibft -lft -lncurses -lpthread
 
@@ -26,6 +26,7 @@ SRC= \
 corewar.c \
 get_players.c \
 get_players_errors.c \
+vm_parsing.c \
 vm_init_free.c \
 load_arena.c \
 vm_debbug.c \

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 13:55:04 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 15:23:58 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ void kill_processes_lst(t_vm *v)
 		//		printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
 				v->process_lst = process->next;
 				//	KILL(process);
+				free(process->content);
+				free(process);
 				if (v->display_mode == 1)
 					printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE - 1, v->cycle_to_die);
-				//free(process);
+				free(process->content);
+				free(process);
 				process = v->process_lst;
 				previous = NULL;
 			}
