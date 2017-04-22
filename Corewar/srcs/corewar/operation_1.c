@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 16:00:00 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 17:34:15 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	op_st(t_vm *v, t_list *process)
 void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
-		if (v->display_mode == 1)
-		ft_printf("P%5d | aff = |%d|\n", NPRO, (u_char)REG[ARENA(PC + 2) - 1]); // a mettre au bon format output
+		if (v->display_mode == 5) // remplacer 5 par FLAG_AFF == -a present
+			ft_printf("Aff: %d\n", (u_char)REG[ARENA(PC + 2) - 1]);
 	if (v->display_mode == 1)
 		print_adv(v, process, octal_shift(B_OCT, 4, 1));
 	PC = (PC + octal_shift(B_OCT, 4, 1)) % MEM_SIZE;

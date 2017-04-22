@@ -3,8 +3,9 @@
 RED="\x1B[1;31m"
 GREEN="\x1B[1;32m"
 EOC="\x1B[0m"
-from=25000
-until=25350
+from=25340
+until=25345
+gap=1
 champ=helltrain
 
 rm resources/log/*.log
@@ -22,5 +23,5 @@ do
 	else
 		echo -e "${GREEN}At cycle ${from} there is NO DIFF !${EOC}"
 	fi
-	((from=from+10))
+	((from=from+${gap}))
 done

@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 15:40:29 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 16:06:40 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct		s_process
 	int				carry;
 	int				reg[REG_NUMBER];
 	int				pc;
-	int				op_cast; // launch op when cast == 0
+	int				op_cast;
 	int				live_count;	// count emitted lives between CYCLE_TO_DIE
 	int				live_since;	// number of cycles between last live and death
 	unsigned char	next_op;
