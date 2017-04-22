@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 12:52:44 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/22 14:08:37 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			main(int argc, char **argv)
 	parse_opt(argc, argv, &vm);
 	/***/
 	vm.display_mode = (vm.opt_flags & FLAG_OPT_NCURSES) ? 2 : 3;
-	vm.display_mode = (vm.opt_flags & FLAG_OPT_VERBOSE) ? 1 : 3;
+	vm.display_mode = (vm.opt_flags & FLAG_OPT_VERBOSE) ? 1 : vm.display_mode;
 	/***/
 //	get_players(argc, argv, &vm);
 	load_arena(&vm);
