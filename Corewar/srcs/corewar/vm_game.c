@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 16:34:39 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 17:06:36 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void update_process(t_vm *v, t_list *process)
 	LIVE_SINCE++;
 }
 
-void kill_processes_lst(t_vm *v)
+void kill_processes_lst(t_vm *v) // VERBOSE DONE
 {
 	t_list *process;
 	t_list *previous;
@@ -41,7 +41,7 @@ void kill_processes_lst(t_vm *v)
 			if (process == v->process_lst)
 			{
 				v->process_lst = process->next;
-				if (v->display_mode == 1)
+				if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_DEATH))
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				free(process->content);
 				free(process);
@@ -50,7 +50,7 @@ void kill_processes_lst(t_vm *v)
 			}
 			else
 			{
-				if (v->display_mode == 1 && process)
+				if (v->display_mode == 1 && process && (v->verbose_param & FLAG_VERBOSE_DEATH))
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				process = process->next;
 				free(previous->next->content);

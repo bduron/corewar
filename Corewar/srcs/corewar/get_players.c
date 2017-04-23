@@ -6,13 +6,13 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 16:32:06 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 17:08:45 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void is_player(t_vm *v, int live)
+void is_player(t_vm *v, int live) // VERBOSE DONE
 {
 	int i;
 

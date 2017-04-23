@@ -6,13 +6,13 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 16:40:45 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 17:03:07 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	op_live(t_vm *v, t_list *process)
+void	op_live(t_vm *v, t_list *process) // VERBOSE DONE
 {
 	int live;
 
@@ -22,14 +22,14 @@ void	op_live(t_vm *v, t_list *process)
 	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
 		ft_printf("P %4d | live %d\n", NPRO, live);
 	is_player(v, live);
-	if (v->display_mode == 1)
+	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
 		print_adv(v, process, 5);
 	PC += 5;
 	PC %= MEM_SIZE;
 	LIVE_SINCE = -1;
 }
 
-void	op_ld(t_vm *v, t_list *process)
+void	op_ld(t_vm *v, t_list *process) // VERBOSE DONE
 {
 	int shift;
 
@@ -53,12 +53,12 @@ void	op_ld(t_vm *v, t_list *process)
 			CARRY = shift ? 0 : 1;
 		}
 	}
-	if (v->display_mode == 1)
+	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
 		print_adv(v, process, octal_shift(B_OCT, 4, 2));
 	PC = (PC + octal_shift(B_OCT, 4, 2)) % MEM_SIZE;
 }
 
-void	op_st(t_vm *v, t_list *process)
+void	op_st(t_vm *v, t_list *process) // VERBOSE DONE
 {
 	int				shift;
 	unsigned int	val;
@@ -76,20 +76,20 @@ void	op_st(t_vm *v, t_list *process)
 			val = REG[ARENA(PC + 2) - 1];
 			if (v->display_mode == 1  && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
 				ft_printf("P %4d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
-			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3);
+			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3); // cou COU cou -=- COU COU COU -=- cou COU cou -=- COU COU COU -=- cou COU cou
 		}
 	}
-	if (v->display_mode == 1)
+	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
 		print_adv(v, process, octal_shift(tmp, 4, 2));
 	PC = (PC + octal_shift(tmp, 4, 2)) % MEM_SIZE;
 }
 
-void	op_aff(t_vm *v, t_list *process)
+void	op_aff(t_vm *v, t_list *process) // VERBOSE DONE
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 		if (v->display_mode == 5 && (v->verbose_param & FLAG_VERBOSE_AFF))
 			ft_printf("Aff: %d\n", (u_char)REG[ARENA(PC + 2) - 1]);
-	if (v->display_mode == 1)
+	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
 		print_adv(v, process, octal_shift(B_OCT, 4, 1));
 	PC = (PC + octal_shift(B_OCT, 4, 1)) % MEM_SIZE;
 }
