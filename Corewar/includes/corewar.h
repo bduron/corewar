@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 13:15:42 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 18:16:01 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,16 @@ typedef struct		s_vm
 	t_viewer		*v;
 	unsigned int	opt_flags;
 	int				dump_param;
+	int				nplayer_cust;
 }					t_vm;
 
 void	print_help();
 void	parse_opt(int argc, char **argv, t_vm *v);
 
 void	is_player(t_vm *v, int live);
-void	save_player(char *file, t_vm *v, int i);
+void	save_player(char *file, t_vm *v, int i, int num);
 void	get_player(char **argv, int i, t_vm *v);
+void	get_player_custom(char **argv, int i, t_vm *v);
 int		is_corewar_execmagic(char *file);
 int		get_prog_size(char *file);
 int		is_valid_player(char *file);

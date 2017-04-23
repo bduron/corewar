@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 12:23:32 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 18:15:24 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void is_player(t_vm *v, int live)
 		}
 }
 
-void save_player(char *file, t_vm *v, int i)
+void save_player(char *file, t_vm *v, int i, int num)
 {
 	int	fd;
 	int len;
@@ -48,7 +48,7 @@ void save_player(char *file, t_vm *v, int i)
 		read(fd, &(v->p[i].comment), COMMENT_LENGTH);
 		lseek(fd, 4, SEEK_CUR); // ZAZ tweak skip
 		len = read(fd, &(v->p[i].code), CHAMP_MAX_SIZE);
-		v->p[i].nplayer = (i + 1) * -1;
+		v->p[i].nplayer = num;
 		v->p[i].prog_len = len;
 		v->p[i].nblive = 0;
 		v->p[i].last_live_cycle = 0;
@@ -58,16 +58,54 @@ void save_player(char *file, t_vm *v, int i)
 	close(fd);
 }
 
+void get_player_custom(char **argv, int i, t_vm *v)
+{
+	int num; 
+	int j;
+		
+	num = ft_atoi(argv[i + 1]);
+	j = 0;
+	while (j < v->nplayer) 
+		if (v->p[j++].nplayer == num)
+ 			xerror("Error: player number already assigned", -1);
+
+ 	if (is_valid_player(argv[i + 2]))
+ 	{
+ 		if (v->nplayer < MAX_PLAYERS)
+ 			save_player(argv[i + 2], v, v->nplayer, num);
+ 		else
+ 			xerror("Error: too many players", -1);
+ 		v->nplayer++;
+		v->nplayer_cust++;
+ 	}
+ 	else
+ 		xerror("Error: invalid champion", -1);
+}
+
 void get_player(char **argv, int i, t_vm *v)
 {
- 			if (is_valid_player(argv[i]))
-			{
-				if (v->nplayer < MAX_PLAYERS)
-					save_player(argv[i], v, v->nplayer);
-				else
- 					xerror("Error: too many players", -1);
-				v->nplayer++;
-			}
- 			else
- 				xerror("Error: invalid champion", -1);
+	int j;
+	int num;
+	int doublon;
+		
+	doublon = 0;
+	num = -v->nplayer - 1;
+	j = 0;
+	while (j < v->nplayer) 
+	{
+		if (v->p[j++].nplayer == num)
+			doublon = 1;
+		num -= doublon ? 1 : 0; 
+		doublon = 0;
+	}
+	if (is_valid_player(argv[i]))
+	{
+		if (v->nplayer < MAX_PLAYERS)
+			save_player(argv[i], v, v->nplayer, num);
+		else
+			xerror("Error: too many players", -1);
+		v->nplayer++;
+	}
+	else
+		xerror("Error: invalid champion", -1);
 }
