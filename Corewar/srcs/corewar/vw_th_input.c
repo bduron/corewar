@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:38:00 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 16:17:21 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 12:05:40 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static void	th_input_update_process(t_viewer *v, int input)
 	}
 	else if (input == KEY_PROCESS_PP)
 	{
-		if (v->process_selected != v->vm->nprocess_alive - 1)
+		if (v->process_selected < v->vm->nprocess_alive - 1)
 			++v->process_selected;
+		else
+			v->process_selected = v->vm->nprocess_alive - 1;
 		if (v->process_offset + getmaxy(v->win_processes) - 1
 			< v->process_selected)
 			++v->process_offset;
@@ -70,12 +72,15 @@ void		*th_input_routine(void *p_data)
 			pthread_mutex_unlock(&v->mutex);
 			pthread_exit(0);
 		}
-		else if (input == KEY_FPS_LL || input == KEY_FPS_PP
-			|| input == KEY_LPF_PP || input == KEY_LPF_LL
-			|| input == KEY_PAUSE)
-			th_input_update_infos(v, input);
-		else if (input == KEY_PROCESS_LL || input == KEY_PROCESS_PP)
-			th_input_update_process(v, input);
+		else if (!v->credits_flag)
+		{
+			if (input == KEY_FPS_LL || input == KEY_FPS_PP
+				|| input == KEY_LPF_PP || input == KEY_LPF_LL
+				|| input == KEY_PAUSE)
+				th_input_update_infos(v, input);
+			else if (input == KEY_PROCESS_LL || input == KEY_PROCESS_PP)
+				th_input_update_process(v, input);
+		}
 	}
 	pthread_exit(0);
 }

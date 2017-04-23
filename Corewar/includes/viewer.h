@@ -6,19 +6,19 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:37:51 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 12:06:40 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 ** TODO :
-** - faire un modulo sur la couleur du joueur pour gerer lorsque nplayer > nb INIT_COLOR_PAIR
+** - faire un modulo sur la couleur du joueur pour gerer lorsque nplayer > nb INIT_COLOR_PAIR				[DONE]
 ** - resoudre le conflit en fin de partie																	[DONE]
 ** - completer l'affichage des commandes (deplacement dans la liste des process)							[DONE]
-** - verifier le comportement de la liste des process si process_selected > nprocess_alive
-** - attention si plus de 8 joueurs alors BUG sur anim_flags !!!! utiliser un tableau de char a la place
+** - verifier le comportement de la liste des process si process_selected > nprocess_alive					[DONE]
+** - attention si plus de 8 joueurs alors BUG sur heal_flag !!!! utiliser un tableau de char a la place		[DONE]
 ** - imprimer les noms des champions en couleur
-** - BUG dans l'affichage des registres !!!!
+** - BUG dans l'affichage des registres !!!!																[DONE]
 */
 
 #ifndef VIEWER_H
@@ -64,7 +64,7 @@
 # define COLOR_BG(x) (COLOR_PAIR(((x) % 4) + 9))
 
 # define CHAMP_L 8
-# define CHAMP_C (68 / MAX_PLAYERS)
+# define CHAMP_C ((4 < (MAX_PLAYERS)) ? (68 / 4) : (68 / MAX_PLAYERS))
 # define TITLE_L 12
 # define TITLE_C 68
 # define ARENA_L (LINES - CHAMP_L)
@@ -94,13 +94,19 @@ typedef struct		s_viewer
 {
 	unsigned char	arena[MEM_SIZE];
 	char			owner[MEM_SIZE];
-	int				arena_flag[MEM_SIZE];
+	int				arena_flags[MEM_SIZE];
 	WINDOW			*win_arena;
+	WINDOW			*win_arena_box;
 	WINDOW			*win_title;
+	WINDOW			*win_title_box;
 	WINDOW			*win_champions[MAX_PLAYERS];
+	WINDOW			*win_champions_box[MAX_PLAYERS];
 	WINDOW			*win_processes;
+	WINDOW			*win_processes_box;
 	WINDOW			*win_register;
+	WINDOW			*win_register_box;
 	WINDOW			*win_infos;
+	WINDOW			*win_infos_box;
 	int				process_selected;
 	int				process_offset;
 	char			anim_state[MAX_PLAYERS];
@@ -114,7 +120,7 @@ typedef struct		s_viewer
 	pthread_t		th_timer;
 	pthread_t		th_anim[MAX_PLAYERS];
 	int				event_flags;
-	int				anim_flags;
+	int				heal_flag[MAX_PLAYERS];
 	int				credits_flag;
 	t_vm			*vm;
 }					t_viewer;
@@ -151,7 +157,8 @@ void				show_credits(t_viewer *v);
 /*
 ** vw_init_win.c
 */
-WINDOW				*create_newwin(int arg[4], char *title);
+void				create_newwin(int arg[4], char *title,
+						WINDOW **win_content, WINDOW **win_box);
 void				init_infos(t_viewer *v);
 void				init_arena(t_viewer *v);
 void				init_register(t_viewer *v);
@@ -159,10 +166,9 @@ void				init_register(t_viewer *v);
 /*
 ** vw_init.c
 */
-void				viewer_init_colors(void);
-void				viewer_init_ncurses(t_viewer *v);
 void				viewer_init(t_viewer *v, t_vm *vm);
 void				viewer_run(t_viewer *v);
+void				viewer_free(t_viewer *v);
 
 /*
 ** vw_maj_process.c

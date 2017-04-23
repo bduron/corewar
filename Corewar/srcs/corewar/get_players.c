@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:22:22 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 11:24:51 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void is_player(t_vm *v, int live)
 			{
 				pthread_mutex_lock(&v->v->mutex);
 				if (v->display_mode == 2
-					&& !(v->v->anim_flags & (1 << i))
-					&& !v->v->credits_flag)
+					&& !(v->v->heal_flag[i] || v->v->credits_flag))
 					heal(v->v, i);
 				pthread_mutex_unlock(&v->v->mutex);
 			}
@@ -64,7 +63,7 @@ void get_player(char **argv, int i, t_vm *v)
 {
  			if (is_valid_player(argv[i]))
 			{
-				if (v->nplayer < 4)
+				if (v->nplayer < MAX_PLAYERS)
 					save_player(argv[i], v, v->nplayer);
 				else
  					xerror("Error: too many players", -1);

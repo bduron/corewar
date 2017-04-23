@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 11:38:36 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:35:26 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 11:48:30 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ static void	maj_process_print_msg(t_viewer *v, t_list *process, int i)
 			"                 is looking for instruction.");
 }
 
-static void	maj_process_print(t_viewer *v, t_list *process, t_process *selected,
-	int i)
+static void	maj_process_print(t_viewer *v, t_list *process,
+				t_process **selected, int i)
 {
 	if (v->process_offset <= i && i - v->process_offset
 		< getmaxy(v->win_processes))
 	{
 		if (i == v->process_selected)
-			selected = (t_process *)process->content;
+			*selected = (t_process *)process->content;
 		wattron(v->win_processes, COLOR_PAIR(i == v->process_selected ?
 			14 : (v->vm->a.owner[PC] % 4) + 2));
 		mvwprintw(v->win_processes, i - v->process_offset, 0,
@@ -88,7 +88,7 @@ void		maj_process(t_viewer *v)
 	process = v->vm->process_lst;
 	while (process)
 	{
-		maj_process_print(v, process, selected, i);
+		maj_process_print(v, process, &selected, i);
 		process = process->next;
 		++i;
 	}

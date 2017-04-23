@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:09:07 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:35:21 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 11:16:36 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void		heal(t_viewer *v, int i)
 		return ;
 	a->v = v;
 	a->i = i;
-	v->anim_flags |= 1 << i;
+	v->heal_flag[i] = 1;
 	if (pthread_create(&v->th_anim[i], NULL, &th_anim_routine, a) < 0)
+	{
+		viewer_free(v);
 		xerror("pthread_create error for th_anim[]\n", -33 + i);
+	}
 }
 
 static void	update_anim(t_viewer *v, int i, char state)
@@ -53,7 +56,7 @@ void		maj_lifes(t_viewer *v)
 	i = -1;
 	while (++i < v->vm->nplayer)
 	{
-		if (!(v->anim_flags & (1 << i))
+		if (!v->heal_flag[i]
 			&& v->vm->p[i].last_live_cycle <=
 				(v->vm->ncycle - v->vm->ncycle_mod))
 		{

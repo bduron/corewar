@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:25:09 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:27:16 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 11:16:36 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		*th_anim_routine(void *p_data)
 	pthread_mutex_lock(&a->v->mutex);
 	wattroff(a->v->win_champions[a->i], A_BOLD);
 	wattroff(a->v->win_champions[a->i], COLOR_FG(a->i));
-	a->v->anim_flags ^= 1 << a->i;
+	a->v->heal_flag[a->i] = 0;
 	pthread_mutex_unlock(&a->v->mutex);
 	free(a);
 	pthread_exit(0);
