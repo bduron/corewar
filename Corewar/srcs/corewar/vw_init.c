@@ -6,7 +6,7 @@
 /*   By: wolrajht <wolrajht@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 15:20:09 by wolrajht          #+#    #+#             */
-/*   Updated: 2017/04/23 12:03:17 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 12:11:15 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		viewer_init(t_viewer *v, t_vm *vm)
 	v->vm = vm;
 	vm->v = v;
 	v->lpf = 1;
-	v->fps = 1048576;
+	v->fps = 32768;
 	v->event_flags |= FLAG_EVENT_PAUSE;
 	ft_memset(v->heal_flag, 0, sizeof(int) * MAX_PLAYERS);
 	v->credits_flag = 0;
