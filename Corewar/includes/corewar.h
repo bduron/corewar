@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 18:20:39 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 21:22:31 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define FLAG_OPT_DUMP 2
 # define FLAG_OPT_NCURSES 4
 
+# define DISPLAY (v->display_mode == 1)
 # define FLAG_VERBOSE_LIVES 1
 # define FLAG_VERBOSE_CYCLES 2
 # define FLAG_VERBOSE_OPERATIONS 4
@@ -127,6 +128,15 @@ void	load_arena(t_vm *v);
 void	load_champions(t_vm *v);
 void	load_processes(t_vm *v);
 void	vm_init(t_vm *v);
+t_list	*kill_head_lst(t_vm *v, t_list *process);
+t_list	*kill_elem_lst(t_vm *v, t_list *process, t_list **previous);
+void	exe_and(t_vm *v, t_list *process, int val[3]);
+void	exe_or(t_vm *v, t_list *process, int val[3]);
+void	exe_xor(t_vm *v, t_list *process, int val[3]);
+void	exe_lld(t_vm *v, t_list *process, int shift);
+void	exe_ldi(t_vm *v, t_list *process, int val[3]);
+void	exe_lldi(t_vm *v, t_list *process, int val[3]);
+void	exe_sti(t_vm *v, t_list *process, int val[3]);
 
 void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);

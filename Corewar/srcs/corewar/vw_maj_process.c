@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 11:38:36 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 11:48:30 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 20:53:15 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	maj_process_print_msg(t_viewer *v, t_list *process, int i)
 	if (NEXT_OP >= 0 && NEXT_OP < 16)
 		mvwprintw(v->win_processes, i - v->process_offset, 20,
 			"          will cast a \"%5s\" in %4d laps.",
-			op_tab[NEXT_OP].name, OP_CAST);
+			g_op_tab[NEXT_OP].name, OP_CAST);
 	else
 		mvwprintw(v->win_processes, i - v->process_offset, 20,
 			"                 is looking for instruction.");

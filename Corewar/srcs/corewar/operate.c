@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 12:01:48 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 20:52:50 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	init_next_op(t_vm *v, t_list *process)
 	else
 	{
 		NEXT_OP = ARENA(PC) - 1;
-		OP_CAST = op_tab[NEXT_OP].cycle - 1;
+		OP_CAST = g_op_tab[NEXT_OP].cycle - 1;
 	}
 }

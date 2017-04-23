@@ -6,7 +6,7 @@
 #    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/22 18:00:51 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/23 21:16:28 by cpoulet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,10 @@ vm_game.c \
 operate.c \
 operation_1.c \
 operation_2.c \
+operation_2b.c \
 operation_3.c \
 operation_4.c \
+operation_4b.c \
 op_shift.c \
 op.c \
 vw_draw_img.c \

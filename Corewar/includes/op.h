@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/23 11:31:09 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 20:50:02 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ void							op_lldi(t_vm *v, t_list *process);
 void							op_lfork(t_vm *v, t_list *process);
 void							op_aff(t_vm *v, t_list *process);
 
-extern t_op						op_tab[17];
+extern t_op						g_op_tab[17];
 
 #endif

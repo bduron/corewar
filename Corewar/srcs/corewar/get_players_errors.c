@@ -6,13 +6,13 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:13 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 11:31:18 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 20:54:06 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	xerror(char *error_msg, int error_id) // move to libft
+void	xerror(char *error_msg, int error_id)
 {
 	ft_putendl_fd(error_msg, 2);
 	exit(error_id);
@@ -49,7 +49,7 @@ int		get_prog_size(char *file)
 	else
 		xerror("Error: cannot open file", -1);
 	close(fd);
-	return (size - PROG_NAME_LENGTH - COMMENT_LENGTH); // substract something else (magic exec code ?)?
+	return (size - PROG_NAME_LENGTH - COMMENT_LENGTH);
 }
 
 int		is_cor_file(char *file)
