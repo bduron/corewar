@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 15:22:39 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 16:25:26 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	op_ldi(t_vm *v, t_list *process)
 			if (!arg_nb)
 			{
 				REG[val[0]] = reverse_bytes(v, PC + (val[1] + val[2]) % IDX_MOD, 4);
-				CARRY = REG[val[0]] ? 0 : 1;
 				if (v->display_mode == 1)
 				ft_printf("P %4d | ldi %d %d r%d\n       | -> load from %d + %d = %d (with pc and mod %d)\n",
 					NPRO, val[2], val[1], val[0] + 1, val[2], val[1], val[2] + val[1], PC +
@@ -118,7 +117,7 @@ void	op_sti(t_vm *v, t_list *process)
 
 	arg_nb = 3;
 	shift = 0;
-	save = B_OCT; //in case of writing on B_OCT
+	save = B_OCT; //in case of writing himself on B_OCT
 	if (check_arg(10, B_OCT, arg_nb))
 	{
 		while (arg_nb)
@@ -141,6 +140,6 @@ void	op_sti(t_vm *v, t_list *process)
 		}
 	}
 	if (v->display_mode == 1)
-		print_adv(v, process, octal_shift(B_OCT, 2, 3));
+		print_adv(v, process, octal_shift(save, 2, 3));
 	PC = (PC + octal_shift(save, 2, 3)) % MEM_SIZE;
 }
