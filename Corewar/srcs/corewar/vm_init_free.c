@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 12:19:30 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 16:36:50 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void vm_init(t_vm *v)
 	v->is_ctd_modified = 0;
 	v->opt_flags = 0;
 	v->dump_param = -1;
+	v->verbose_param = 0;
 	v->nplayer = 0;
 	i = 0;
 	while (i < MAX_PLAYERS)

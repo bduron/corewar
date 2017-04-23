@@ -6,9 +6,11 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 14:19:46 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 16:24:24 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// LIVE % MEM_SIZE
 
 #ifndef VIEWER_H
 # define VIEWER_H

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 16:57:28 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 17:10:49 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void update_process(t_vm *v, t_list *process)
 	LIVE_SINCE++;
 }
 
-void kill_processes_lst(t_vm *v)
+void kill_processes_lst(t_vm *v) // VERBOSE DONE
 {
 	t_list *process;
 	t_list *previous;
@@ -41,7 +41,7 @@ void kill_processes_lst(t_vm *v)
 			if (process == v->process_lst)
 			{
 				v->process_lst = process->next;
-				if (v->display_mode == 1)
+				if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_DEATH))
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				free(process->content);
 				free(process);
@@ -50,7 +50,7 @@ void kill_processes_lst(t_vm *v)
 			}
 			else
 			{
-				if (v->display_mode == 1 && process)
+				if (v->display_mode == 1 && process && (v->verbose_param & FLAG_VERBOSE_DEATH))
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				process = process->next;
 				free(previous->next->content);
@@ -91,7 +91,7 @@ void update_vm(t_vm *v)
 		{
 			v->cycle_to_die -= CYCLE_DELTA;
 			v->is_ctd_modified = 1;
-			if (v->display_mode == 1)
+			if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_CYCLES))
 				ft_printf("Cycle to die is now %d\n", v->cycle_to_die);
 		}
 		v->ncheck = v->is_ctd_modified ? 0 : v->ncheck + 1;
@@ -100,7 +100,7 @@ void update_vm(t_vm *v)
 			if (!v->is_ctd_modified && v->ncheck != 0)
 			{
 				v->cycle_to_die -= CYCLE_DELTA;
-				if (v->display_mode == 1)
+				if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_CYCLES))
 					ft_printf("Cycle to die is now %d\n", v->cycle_to_die);
 			}
 		}
@@ -121,7 +121,7 @@ void run_game(t_vm *v)
 			break ;
 		}
 		update_vm(v);
-			if (v->display_mode == 1)
+			if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_CYCLES))
 				ft_printf("It is now cycle %d\n", v->ncycle);
 		if (v->process_lst)
 		{
