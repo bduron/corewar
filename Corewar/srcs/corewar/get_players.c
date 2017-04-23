@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 11:24:51 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 12:20:52 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void is_player(t_vm *v, int live)
 		{
 			if (v->display_mode == 1)
 				ft_printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
-			else
+			else if (v->display_mode == 2)
 			{
 				pthread_mutex_lock(&v->v->mutex);
 				if (v->display_mode == 2
