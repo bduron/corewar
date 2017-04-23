@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 13:12:38 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 16:57:28 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void kill_processes_lst(t_vm *v)
 	previous = NULL;
 	while (process)
 	{
-		if (!LIVE)
+		if (!LIVE || v->cycle_to_die < 0)
 		{
 			if (process == v->process_lst)
 			{
