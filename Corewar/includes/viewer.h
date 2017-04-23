@@ -6,20 +6,9 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 12:06:40 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 14:19:46 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** TODO :
-** - faire un modulo sur la couleur du joueur pour gerer lorsque nplayer > nb INIT_COLOR_PAIR				[DONE]
-** - resoudre le conflit en fin de partie																	[DONE]
-** - completer l'affichage des commandes (deplacement dans la liste des process)							[DONE]
-** - verifier le comportement de la liste des process si process_selected > nprocess_alive					[DONE]
-** - attention si plus de 8 joueurs alors BUG sur heal_flag !!!! utiliser un tableau de char a la place		[DONE]
-** - imprimer les noms des champions en couleur
-** - BUG dans l'affichage des registres !!!!																[DONE]
-*/
 
 #ifndef VIEWER_H
 # define VIEWER_H
