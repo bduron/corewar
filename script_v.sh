@@ -44,7 +44,7 @@ then
 	./resources/corewar -v 31 $string > ${DIR}/${file}.log42
 fi
 
-./Corewar/corewar -v $string > ${DIR}/${file}.log
+./Corewar/corewar -v 31 $string > ${DIR}/${file}.log
 diff ${DIR}/${file}.log42 ${DIR}/${file}.log > ${DIR}/${file}.diff
 
 if [ -s ${DIR}/${file}.diff ]
