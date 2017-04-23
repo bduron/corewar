@@ -6,18 +6,11 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 19:43:09 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 13:12:38 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-//void kill_process(t_list **p, t_list **previous)
-//{
-//	(*previous)->next = (*p)->next;
-//	free(*p);
-//	*p = NULL;
-//}
 
 void update_process(t_vm *v, t_list *process)
 {
@@ -41,17 +34,13 @@ void kill_processes_lst(t_vm *v)
 
 	process = v->process_lst;
 	previous = NULL;
-//	printf("LIST_LEN_BEFORE = %d\n", ft_lstlen(v->process_lst)); /* DEBUG *****************************************************************/
 	while (process)
 	{
 		if (!LIVE)
 		{
-			//		kill_process(&process, &previous);
 			if (process == v->process_lst)
 			{
-		//		printf("LIST_HEAD\n"); /* DEBUG *****************************************************************/
 				v->process_lst = process->next;
-				//	KILL(process);
 				if (v->display_mode == 1)
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				free(process->content);
@@ -61,11 +50,9 @@ void kill_processes_lst(t_vm *v)
 			}
 			else
 			{
-		//		printf("LIST_INSIDE\n"); /* DEBUG *****************************************************************/
 				if (v->display_mode == 1 && process)
 					ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", NPRO, LIVE_SINCE, v->cycle_to_die);
 				process = process->next;
-				//	KILL(prev->next);
 				free(previous->next->content);
 				free(previous->next);
 				previous->next = process;
@@ -79,22 +66,7 @@ void kill_processes_lst(t_vm *v)
 			process = process->next;
 		}
 	}
-	//printf("LIST_LEN_AFTER = %d\n", ft_lstlen(v->process_lst)); /* DEBUG *****************************************************************/
 }
-
-void init_processes_lst(t_vm *v)
-{
-	t_list *process;
-
-	process = v->process_lst;
-	while (process)
-	{
-		if (!(NEXT_OP >= 0 && NEXT_OP <= 15))
-			init_next_op(v, process);
-		process = process->next;
-	}
-}
-
 
 void browse_processes_lst(t_vm *v)
 {
@@ -103,6 +75,8 @@ void browse_processes_lst(t_vm *v)
 	process = v->process_lst;
 	while (process)
 	{
+		if (!(NEXT_OP >= 0 && NEXT_OP <= 15))
+			init_next_op(v, process);
 		update_process(v, process);
 		process = process->next;
 	}
@@ -113,14 +87,12 @@ void update_vm(t_vm *v)
 	if (BCTD)
 	{
 		v->is_ctd_modified = 0;
-		//printf("================\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		if (v->nlive_bctd >= NBR_LIVE)
 		{
-			//printf("nblive emis total\n");
 			v->cycle_to_die -= CYCLE_DELTA;
 			v->is_ctd_modified = 1;
 			if (v->display_mode == 1)
-				ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+				ft_printf("Cycle to die is now %d\n", v->cycle_to_die);
 		}
 		v->ncheck = v->is_ctd_modified ? 0 : v->ncheck + 1;
 		if (v->ncheck % MAX_CHECKS == 0)
@@ -129,12 +101,10 @@ void update_vm(t_vm *v)
 			{
 				v->cycle_to_die -= CYCLE_DELTA;
 				if (v->display_mode == 1)
-					ft_printf("Cycle to die is now %d\n", v->cycle_to_die); // DEBUG
+					ft_printf("Cycle to die is now %d\n", v->cycle_to_die);
 			}
 		}
-
 		v->nlive_bctd = 0;
-		//	printf("A===============\nCTD = %d\nnlive_bctd = %d\nncheck = %d\n================\n", v->cycle_to_die, v->nlive_bctd, v->ncheck);
 		v->ncycle_mod = 0;
 	}
 	v->ncycle++;
@@ -143,25 +113,26 @@ void update_vm(t_vm *v)
 
 void run_game(t_vm *v)
 {
-	while (v->process_lst != NULL) //cpoulet : checker la position du C_T_D par rapport au browse
+	while (v->process_lst != NULL)
 	{
 		if (v->ncycle == v->dump_param)
 		{
-			print_arena(v);// DEBUG
-			exit(1);
+			print_arena(v);
+			break ;
 		}
 		update_vm(v);
 			if (v->display_mode == 1)
-				ft_printf("It is now cycle %d\n", v->ncycle); // DEBUG
+				ft_printf("It is now cycle %d\n", v->ncycle);
 		if (v->process_lst)
 		{
-			init_processes_lst(v);
 			browse_processes_lst(v);
 			if ((BCTD) || v->cycle_to_die < 0)
 				kill_processes_lst(v);
 		}
 	}
-	ft_printf("Contestant %d, \"%s\", has won !\n", -v->p[v->last_live_id].nplayer, v->p[v->last_live_id].name);
+	if (v->ncycle != v->dump_param)
+		ft_printf("Contestant %d, \"%s\", has won !\n",
+		v->last_live_id + 1, v->p[v->last_live_id].name);
 }
 
 /*

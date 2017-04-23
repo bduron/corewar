@@ -6,24 +6,11 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 15:58:34 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 13:25:23 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-void	print_adv(t_vm *v, t_list *process, int shift)
-{
-	int	i;
-
-	i = -1;
-	if (v->display_mode == 1)
-	ft_printf("ADV %d (0x%04x -> 0x%04x) ",
-				shift, PC, (PC + shift) % MEM_SIZE);
-	while (++i < shift)
-	ft_printf("%02x ", ARENA(PC + i));
-ft_printf("\n");
-}
 
 void	op_ldi(t_vm *v, t_list *process)
 {

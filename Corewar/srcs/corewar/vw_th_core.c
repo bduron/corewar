@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/22 19:22:55 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 13:16:22 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	th_core_run(t_vm *v, int cooldown)
 		update_vm(v);
 		if (v->process_lst)
 		{
-			init_processes_lst(v);
 			browse_processes_lst(v);
 			if ((BCTD) || v->cycle_to_die < 0)
 				kill_processes_lst(v);
