@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 15:09:59 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 18:15:57 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 18:18:32 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,27 @@ void	parse_opt(int argc, char **argv, t_vm *v)
 	i = 1;
 	while (i < argc)
 	{
- 		if (!ft_strcmp("-i", argv[i]))
- 			v->opt_flags |= FLAG_OPT_NCURSES;
- 		else if (!ft_strcmp("-v", argv[i]))
- 			v->opt_flags |= FLAG_OPT_VERBOSE;
- 		else if (!ft_strcmp("-dump", argv[i]))
- 		{
- 			v->opt_flags |= FLAG_OPT_DUMP;
-			if (i + 1 < argc && ft_isdigit(*argv[i + 1])) 
- 				v->dump_param = ft_atoi(argv[++i]);
-			else 
- 				xerror("Error: invalid dump parameter", -1);
- 		}
+		if (!ft_strcmp("-i", argv[i]))
+			v->opt_flags |= FLAG_OPT_NCURSES;
+		else if (!ft_strcmp("-v", argv[i]))
+		{
+			v->opt_flags |= FLAG_OPT_VERBOSE;
+			if (i + 1 < argc && ft_isdigit(*argv[i + 1]))
+				v->verbose_param += ft_atoi(argv[++i]);
+		}
+		else if (!ft_strcmp("-a", argv[i]))
+		{
+			v->opt_flags |= FLAG_OPT_VERBOSE;
+			v->verbose_param += FLAG_VERBOSE_AFF;
+		}
+		else if (!ft_strcmp("-dump", argv[i]))
+		{
+			v->opt_flags |= FLAG_OPT_DUMP;
+			if (i + 1 < argc && ft_isdigit(*argv[i + 1]))
+				v->dump_param = ft_atoi(argv[++i]);
+			else
+				xerror("Error: invalid dump parameter", -1);
+		}
 		else if ((c = ft_strstr(argv[i], ".cor")) && c != argv[i] && !c[4])
 			get_player(argv, i, v);		
  		else if (!ft_strcmp("-n", argv[i]))
@@ -61,4 +70,4 @@ void	parse_opt(int argc, char **argv, t_vm *v)
  			xerror("Error: invalid parameters", -1);
 		i++;	
 	}
-}	
+}

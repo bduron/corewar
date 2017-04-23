@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 12:15:13 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 14:08:16 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 17:09:38 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	load_champions(t_vm *v)
 		i += space;
 		n++;
 	}
+	v->last_live_id = v->nplayer - 1;
 }
 
 void	load_arena(t_vm *v)

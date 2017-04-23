@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 18:16:01 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 18:20:39 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
 # define ARENA(x)	v->a.arena[(unsigned int)(x) % MEM_SIZE]
 # define OWNER(x)	v->a.owner[(unsigned int)(x) % MEM_SIZE]
-/*
-** pboutelo
-** proposition :
-**     # define PC process->pc à la place
-** cast du t_list dans les appels de fonction, pour éviter de caster n fois...
-*/
+
 # define PC			(((t_process *)process->content)->pc)
 # define NPRO		(((t_process *)process->content)->nprocess)
 # define CARRY		(((t_process *)process->content)->carry)
@@ -52,6 +47,13 @@
 # define FLAG_OPT_VERBOSE 1
 # define FLAG_OPT_DUMP 2
 # define FLAG_OPT_NCURSES 4
+
+# define FLAG_VERBOSE_LIVES 1
+# define FLAG_VERBOSE_CYCLES 2
+# define FLAG_VERBOSE_OPERATIONS 4
+# define FLAG_VERBOSE_DEATH 8
+# define FLAG_VERBOSE_PCMOVE 16
+# define FLAG_VERBOSE_AFF 32
 
 typedef struct		s_arena
 {
@@ -107,6 +109,7 @@ typedef struct		s_vm
 	unsigned int	opt_flags;
 	int				dump_param;
 	int				nplayer_cust;
+	int				verbose_param;
 }					t_vm;
 
 void	print_help();

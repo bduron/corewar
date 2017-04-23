@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 17:37:52 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 16:16:06 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 18:18:53 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void vm_init(t_vm *v)
 	v->is_ctd_modified = 0;
 	v->opt_flags = 0;
 	v->dump_param = -1;
+	v->verbose_param = 0;
 	v->nplayer = 0;
 	v->nplayer_cust = 0;
 	i = 0;

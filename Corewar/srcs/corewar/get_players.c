@@ -6,13 +6,13 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 18:15:24 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/23 18:22:06 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void is_player(t_vm *v, int live)
+void is_player(t_vm *v, int live) // VERBOSE DONE
 {
 	int i;
 
@@ -20,7 +20,7 @@ void is_player(t_vm *v, int live)
 	while (++i < v->nplayer)
 		if (live == v->p[i].nplayer)
 		{
-			if (v->display_mode == 1)
+			if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_LIVES))
 				ft_printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
 			else if (v->display_mode == 2)
 			{
