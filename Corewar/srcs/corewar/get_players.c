@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:06 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 12:23:32 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/23 16:32:06 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void is_player(t_vm *v, int live)
 	while (++i < v->nplayer)
 		if (live == v->p[i].nplayer)
 		{
-			if (v->display_mode == 1)
+			if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_LIVES))
 				ft_printf("Player %d (%s) is said to be alive\n", i + 1, v->p[i].name);
 			else if (v->display_mode == 2)
 			{

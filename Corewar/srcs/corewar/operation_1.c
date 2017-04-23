@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 14:27:51 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 16:40:45 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	op_live(t_vm *v, t_list *process)
 	LIVE++;
 	v->nlive_bctd++;
 	live = reverse_bytes(v, PC + 1, 4);
-	if (v->display_mode == 1)
-	ft_printf("P %4d | live %d\n", NPRO, live);
+	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
+		ft_printf("P %4d | live %d\n", NPRO, live);
 	is_player(v, live);
 	if (v->display_mode == 1)
 		print_adv(v, process, 5);
@@ -47,8 +47,8 @@ void	op_ld(t_vm *v, t_list *process)
 				shift = reverse_bytes(v, PC + shift, 4);
 			}
 			REG[ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) - 1] = shift;
-			if (v->display_mode == 1)
-			ft_printf("P %4d | ld %d r%d\n",
+			if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
+				ft_printf("P %4d | ld %d r%d\n",
 				NPRO, shift, ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)));
 			CARRY = shift ? 0 : 1;
 		}
@@ -74,8 +74,8 @@ void	op_st(t_vm *v, t_list *process)
 		{
 			shift = reverse_bytes(v, PC + 3, 2);
 			val = REG[ARENA(PC + 2) - 1];
-			if (v->display_mode == 1)
-			ft_printf("P %4d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
+			if (v->display_mode == 1  && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
+				ft_printf("P %4d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
 			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3);
 		}
 	}
@@ -87,7 +87,7 @@ void	op_st(t_vm *v, t_list *process)
 void	op_aff(t_vm *v, t_list *process)
 {
 	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
-		if (v->display_mode == 5) // remplacer 5 par FLAG_AFF == -a present
+		if (v->display_mode == 5 && (v->verbose_param & FLAG_VERBOSE_AFF))
 			ft_printf("Aff: %d\n", (u_char)REG[ARENA(PC + 2) - 1]);
 	if (v->display_mode == 1)
 		print_adv(v, process, octal_shift(B_OCT, 4, 1));
