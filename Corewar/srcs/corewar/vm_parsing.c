@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 15:09:59 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 16:42:12 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 18:18:32 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,24 @@ void	parse_opt(int argc, char **argv, t_vm *v)
 				xerror("Error: invalid dump parameter", -1);
 		}
 		else if ((c = ft_strstr(argv[i], ".cor")) && c != argv[i] && !c[4])
-			get_player(argv, i, v);
-		else
-			xerror("Error: invalid parameters", -1);
-		i++;
+			get_player(argv, i, v);		
+ 		else if (!ft_strcmp("-n", argv[i]))
+		{
+			if (i + 1 < argc && (ft_isdigitstr(argv[i + 1]))) 
+			{
+				if ((c = ft_strstr(argv[i + 2], ".cor")) && c != argv[i + 2] && !c[4]) 
+				{
+					get_player_custom(argv, i, v);	
+					i += 2;
+				}
+				else 
+ 					xerror("Error: invalid parameters", -1);
+			}
+			else 
+ 				xerror("Error: invalid parameters", -1);
+		}	
+		else 
+ 			xerror("Error: invalid parameters", -1);
+		i++;	
 	}
 }
