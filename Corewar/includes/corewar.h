@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/22 19:43:36 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 13:15:42 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include "libft.h"
 # include "op.h"
 # include "viewer.h"
-# include <stdio.h> // to be removed
 
 # define COREWAR_EXEC_MAGIC_L 0xf383ea
 # define ARENA(x)	v->a.arena[(unsigned int)(x) % MEM_SIZE]
@@ -128,7 +127,6 @@ void	print_adv(t_vm *v, t_list *process, int shift);
 void	update_vm(t_vm *v);
 void	run_game(t_vm *v);
 void	browse_processes_lst(t_vm *v);
-void	init_processes_lst(t_vm *v);
 void	kill_processes_lst(t_vm *v);
 void	init_next_op(t_vm *v, t_list *process);
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);

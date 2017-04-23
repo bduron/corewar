@@ -6,11 +6,23 @@
 /*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 16:39:19 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/23 13:24:51 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	print_adv(t_vm *v, t_list *process, int shift)
+{
+	int	i;
+
+	i = -1;
+	if (v->display_mode == 1)
+		ft_printf("ADV %d (0x%04x -> 0x%04x) ", shift, PC, PC + shift);
+	while (++i < shift)
+		ft_printf("%02x ", ARENA(PC + i));
+	ft_printf("\n");
+}
 
 void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr)
 {
