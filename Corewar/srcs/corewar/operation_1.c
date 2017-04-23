@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 17:03:07 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/23 20:01:08 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	op_ld(t_vm *v, t_list *process) // VERBOSE DONE
 {
 	int shift;
 
-	if (B_OCT == 0x90 || B_OCT == 0xd0)
+	if (OCT_01(B_OCT) == 1 && (OCT_00(B_OCT) == 2 || OCT_00(B_OCT) == 3))
 	{
 		if ((ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) >= 1) &&
 			(ARENA(PC + 6 - ((B_OCT & 0x60) >> 5)) <= 16))
 		{
-			if (B_OCT == 0x90)
+			if (OCT_00(B_OCT) == 2)
 				shift = reverse_bytes(v, PC + 2, 4);
 			else
 			{
@@ -65,18 +65,21 @@ void	op_st(t_vm *v, t_list *process) // VERBOSE DONE
 	u_char			tmp;
 
 	tmp = B_OCT;
-	if ((B_OCT == 0x50 || B_OCT == 0x70) &&
-		ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
+	if (OCT_00(B_OCT) == 1 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 	{
-		if (B_OCT == 0x50 && ARENA(PC + 3) >= 1 && ARENA(PC + 3) <= 16)
+		if (OCT_01(B_OCT) == 1 && ARENA(PC + 3) >= 1 && ARENA(PC + 3) <= 16)
+		{
 			REG[ARENA(PC + 3) - 1] = REG[ARENA(PC + 2) - 1];
-		else if (B_OCT == 0x70)
+			if (v->display_mode == 1  && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
+				ft_printf("P %4d | st r%d %d\n", NPRO, ARENA(PC + 2), ARENA(PC + 3));
+		}
+		else if (OCT_01(B_OCT) == 0b11)
 		{
 			shift = reverse_bytes(v, PC + 3, 2);
 			val = REG[ARENA(PC + 2) - 1];
 			if (v->display_mode == 1  && (v->verbose_param & FLAG_VERBOSE_OPERATIONS))
 				ft_printf("P %4d | st r%d %d\n", NPRO, ARENA(PC + 2), shift);
-			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3); // cou COU cou -=- COU COU COU -=- cou COU cou -=- COU COU COU -=- cou COU cou
+			print_reg(v, process, val, PC + (shift % IDX_MOD) + 3);
 		}
 	}
 	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
@@ -86,7 +89,7 @@ void	op_st(t_vm *v, t_list *process) // VERBOSE DONE
 
 void	op_aff(t_vm *v, t_list *process) // VERBOSE DONE
 {
-	if (B_OCT == 0x40 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
+	if (OCT_00(B_OCT) == 1 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 		if (v->display_mode == 5 && (v->verbose_param & FLAG_VERBOSE_AFF))
 			ft_printf("Aff: %d\n", (u_char)REG[ARENA(PC + 2) - 1]);
 	if (v->display_mode == 1 && (v->verbose_param & FLAG_VERBOSE_PCMOVE))

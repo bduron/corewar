@@ -13,6 +13,14 @@ then
 	mkdir $DIR
 fi
 
+if ! [[ $# == 1 ]]
+then
+	echo "Usage: $0 [number of champ 1-4] <champ name> <...>"
+	echo "		champ name are given without the .cor"
+	echo "      champ have to be placed in the folder /resources/champions"
+	exit 1
+fi
+
 if ! [[ ${NBC} -gt 0 && ${NBC} -lt 5 ]]
 then
 	echo "Usage: $0 [number of champ 1-4] <champ name> <...>"
