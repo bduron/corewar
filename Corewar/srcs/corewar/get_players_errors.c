@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_players_errors.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:13 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 20:54:06 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 13:38:11 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		get_prog_size(char *file)
 	else
 		xerror("Error: cannot open file", -1);
 	close(fd);
-	return (size - PROG_NAME_LENGTH - COMMENT_LENGTH);
+	return (size - sizeof(t_header));//PROG_NAME_LENGTH - COMMENT_LENGTH);
 }
 
 int		is_cor_file(char *file)
