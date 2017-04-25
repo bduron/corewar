@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:12:32 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 10:35:07 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/24 19:43:03 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	init_infos(t_viewer *v)
 		"                    [ '%c' ]", KEY_PAUSE);
 	mvwprintw(v->win_infos, 5, 0, "QUIT:                                    "
 		"                    [ '%c' ]", KEY_QUIT);
-	mvwprintw(v->win_infos, 1, 100, "CYCLE:");
-	mvwprintw(v->win_infos, 2, 100, "CYCLE_MOD:");
-	mvwprintw(v->win_infos, 3, 100, "CYCLE_TO_DIE:");
+	mvwprintw(v->win_infos, 1, 80, "CYCLE:");
+	mvwprintw(v->win_infos, 2, 80, "CYCLE_MOD:");
+	mvwprintw(v->win_infos, 3, 80, "CYCLE_TO_DIE:");
 	wrefresh(v->win_infos);
 }
 

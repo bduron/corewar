@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 13:18:18 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 17:10:49 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 08:55:18 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void update_process(t_vm *v, t_list *process)
 {
-	if (OP_CAST == 0)
+	if (!OP_CAST)
 	{
-		if (NEXT_OP >= 0 && NEXT_OP < 16)
-		{
+		if (0 <= NEXT_OP && NEXT_OP < 16)
 			op_tab[NEXT_OP].f(v, process);
-			NEXT_OP = -1;
-		}
+		else
+			PC = (PC + 1) % MEM_SIZE;
 	}
-	else
-		OP_CAST -= 1;
+	OP_CAST -= 1;
 	LIVE_SINCE++;
 }
 
@@ -75,9 +73,14 @@ void browse_processes_lst(t_vm *v)
 	process = v->process_lst;
 	while (process)
 	{
-		if (!(NEXT_OP >= 0 && NEXT_OP <= 15))
-			init_next_op(v, process);
 		update_process(v, process);
+		process = process->next;
+	}
+	process = v->process_lst;
+	while (process)
+	{
+		if (OP_CAST < 0)
+			init_next_op(v, process);
 		process = process->next;
 	}
 }
@@ -113,6 +116,15 @@ void update_vm(t_vm *v)
 
 void run_game(t_vm *v)
 {
+	t_list *process;
+
+	process = v->process_lst;
+	while (process)
+	{
+		init_next_op(v, process);
+		process = process->next;
+	}
+
 	while (v->process_lst != NULL)
 	{
 		if (v->ncycle == v->dump_param)

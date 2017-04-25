@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:37:24 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 11:12:47 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/24 07:50:44 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void		maj_infos_input(t_viewer *v)
 
 void		maj_infos_cycle(t_viewer *v)
 {
-	mvwprintw(v->win_infos, 1, 114, "%10d", v->vm->ncycle);
-	mvwprintw(v->win_infos, 2, 114, "%10d", v->vm->ncycle_mod);
-	mvwprintw(v->win_infos, 3, 114, "%10d", v->vm->cycle_to_die);
+	mvwprintw(v->win_infos, 1, 94, "%10d", v->vm->ncycle);
+	mvwprintw(v->win_infos, 2, 94, "%10d", v->vm->ncycle_mod);
+	mvwprintw(v->win_infos, 3, 94, "%10d", v->vm->cycle_to_die);
 	wrefresh(v->win_infos);
 }

@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 12:15:13 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 17:09:38 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 08:54:58 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	add_process(t_vm *v, t_list *process, unsigned int son_pc)
 	((t_process *)v->process_lst->content)->nprocess = v->nprocess;
 	((t_process *)v->process_lst->content)->pc = son_pc;
 	((t_process *)v->process_lst->content)->live_count = LIVE;
-	((t_process *)v->process_lst->content)->op_cast = 0;
 	((t_process *)v->process_lst->content)->next_op = -1;
+	((t_process *)v->process_lst->content)->op_cast = 0;
+	init_next_op(v, v->process_lst);
 	k = 16;
 	while (k--)
 		((t_process *)v->process_lst->content)->reg[k] = REG[k];

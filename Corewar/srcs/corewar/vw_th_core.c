@@ -6,7 +6,7 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:37:11 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 13:16:22 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/24 08:15:27 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,24 @@ void		*th_core_routine(void *p_data)
 {
 	t_viewer	*v;
 	int			cooldown;
+	t_list		*process;
 
 	v = (t_viewer *)p_data;
 	pthread_mutex_lock(&v->mutex);
+	process = v->vm->process_lst;
+	while (process)
+	{
+		init_next_op(v->vm, process);
+		process = process->next;
+	}
 	while (1)
 		if (v->event_flags & FLAG_EVENT_QUIT)
 		{
 			pthread_mutex_unlock(&v->mutex);
 			pthread_exit(0);
 		}
-		else if (v->event_flags & FLAG_EVENT_CORE
-			|| v->event_flags & FLAG_EVENT_PAUSE)
+		else if (v->event_flags & FLAG_EVENT_CORE)
+			// || v->event_flags & FLAG_EVENT_PAUSE) // TO COMMIT
 			pthread_cond_wait(&v->cond, &v->mutex);
 		else
 		{

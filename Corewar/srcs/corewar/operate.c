@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 12:01:48 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 07:59:31 by wolrajhti        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,14 @@ int		reverse_bytes(t_vm *v, unsigned int pc, int nbytes)
 
 void	init_next_op(t_vm *v, t_list *process)
 {
-	if (ARENA(PC) > 16 || ARENA(PC) <= 0)
-	{
-		NEXT_OP = -1;
-		PC++;
-		PC %= MEM_SIZE;
-	}
-	else
+	if (0 < ARENA(PC) && ARENA(PC) < 17)
 	{
 		NEXT_OP = ARENA(PC) - 1;
 		OP_CAST = op_tab[NEXT_OP].cycle - 1;
+	}
+	else
+	{
+		NEXT_OP = -1;
+		OP_CAST = 0;
 	}
 }
