@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:30:42 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 21:45:43 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 14:41:48 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	op_ldi(t_vm *v, t_list *process)
 		{
 			type = (B_OCT >> (arg_nb-- * 2)) & 0b11;
 			if (type == 1 &&
-				(ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+				(ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[arg_nb] = !arg_nb ? ARENA(PC + 2 + shift) - 1 :
 				get_ar(v, process, &shift, type + 4);
@@ -81,7 +81,7 @@ void	op_lldi(t_vm *v, t_list *process)
 		{
 			type = (B_OCT >> (arg_nb-- * 2)) & 0b11;
 			if (type == 1 &&
-				(ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+				(ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[arg_nb] = !arg_nb ? ARENA(PC + 2 + shift) - 1 :
 				get_ar(v, process, &shift, type + 4);
@@ -106,10 +106,10 @@ void	op_sti(t_vm *v, t_list *process)
 	save = B_OCT;
 	if (check_arg(10, B_OCT, arg_nb))
 	{
-		while (arg_nb)
+		while (arg_nb--)
 		{
-			if (((B_OCT >> (arg_nb-- * 2)) & 0b11) == 1 &&
-				(ARENA(PC + 2 + shift) >= 16 || !ARENA(PC + 2 + shift)))
+			if (((B_OCT >> ((arg_nb + 1) * 2)) & 0b11) == 1 &&
+				(ARENA(PC + 2 + shift) > 16 || !ARENA(PC + 2 + shift)))
 				break ;
 			val[arg_nb] = arg_nb == 2 ? ARENA(PC + 2 + shift++) - 1 :
 		get_ar(v, process, &shift, ((B_OCT >> ((arg_nb + 1) * 2)) & 0b11) + 4);
