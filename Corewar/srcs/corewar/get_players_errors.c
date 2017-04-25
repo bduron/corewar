@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:13 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/25 13:38:11 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/25 18:00:52 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		get_prog_size(char *file)
 	else
 		xerror("Error: cannot open file", -1);
 	close(fd);
-	return (size - sizeof(t_header));//PROG_NAME_LENGTH - COMMENT_LENGTH);
+	return (size - sizeof(t_header));
 }
 
 int		is_cor_file(char *file)

@@ -6,13 +6,13 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:04:38 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 20:57:35 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 17:35:29 by bduron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_vm		vm;
 	t_viewer	v;
