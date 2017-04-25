@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operate.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 13:55:14 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 20:52:50 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 14:53:04 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
 	{
 		ret = reverse_bytes(v, PC + 2 + *shift, 2) % IDX_MOD;
 		ret = reverse_bytes(v, PC + ret, 4);
-		ret = type >> 2 ? ret % IDX_MOD : ret;
 		*shift += 2;
 	}
 	return (ret);
