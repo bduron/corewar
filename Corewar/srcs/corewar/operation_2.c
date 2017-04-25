@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 16:32:40 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 21:08:56 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/25 15:21:42 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	op_or(t_vm *v, t_list *process)
 
 	nb_arg = 3;
 	shift = 0;
-	if (check_arg(5, B_OCT, nb_arg))
+	if (check_arg(6, B_OCT, nb_arg))
 	{
 		while (nb_arg)
 		{
@@ -127,7 +127,7 @@ void	op_xor(t_vm *v, t_list *process)
 
 	nb_arg = 3;
 	shift = 0;
-	if (check_arg(5, B_OCT, nb_arg))
+	if (check_arg(7, B_OCT, nb_arg))
 	{
 		while (nb_arg)
 		{

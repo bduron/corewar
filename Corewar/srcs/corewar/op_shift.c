@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/28 17:50:19 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/25 14:12:21 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/25 15:35:09 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,12 @@ int		check_arg(u_char arg, u_char n, u_char arg_nb)
 
 	k = 0;
 	shift = 6;
-	while (k < 4)
+	while (arg_nb--)
 	{
 		n01 = (n >> shift) & 0b11;
 		n00 = n01 ? 1 << (n01 - 1) : 0;
-		if (arg_nb > 0 && !(n00 & g_op_tab[arg].args[k]))
+		if (!(n00 & g_op_tab[arg].args[k]))
 			return (0);
-		else if (n00 && arg_nb <= 0)
-			return (0);
-		arg_nb -= arg_nb ? 1 : 0;
 		k++;
 		shift -= 2;
 	}
