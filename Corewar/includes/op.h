@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcosta <kcosta@42.fr>                      +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/16 14:49:34 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/23 20:50:02 by cpoulet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OP_H
 # define OP_H
-
+# include "libft.h"
 /*
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
@@ -49,7 +49,8 @@
 # define NBR_LIVE				21
 # define MAX_CHECKS				10
 
-typedef char					t_arg_type;
+typedef unsigned char			t_arg_type;
+typedef unsigned char			u_char;
 
 # define T_REG					1
 # define T_DIR					2
@@ -60,13 +61,15 @@ typedef char					t_arg_type;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct					header_s
+typedef struct					s_header
 {
-  unsigned int					magic;
-  char							prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int					prog_size;
-  char							comment[COMMENT_LENGTH + 1];
-}								header_t;
+	unsigned int				magic;
+	char						prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int				prog_size;
+	char						comment[COMMENT_LENGTH + 1];
+}								t_header;
+
+typedef	struct s_vm				t_vm;
 
 typedef struct					s_op
 {
@@ -77,9 +80,27 @@ typedef struct					s_op
 	unsigned int				cycle;
 	char						*description;
 	unsigned char				octal;
-	unsigned char				unknown;
+	unsigned char				dir_size;
+	void						(*f)(t_vm *v, t_list *process);
 }								t_op;
 
-extern t_op						op_tab[17];
+void							op_live(t_vm *v, t_list *process);
+void							op_ld(t_vm *v, t_list *process);
+void							op_st(t_vm *v, t_list *process);
+void							op_add(t_vm *v, t_list *process);
+void							op_sub(t_vm *v, t_list *process);
+void							op_and(t_vm *v, t_list *process);
+void							op_or(t_vm *v, t_list *process);
+void							op_xor(t_vm *v, t_list *process);
+void							op_zjmp(t_vm *v, t_list *process);
+void							op_ldi(t_vm *v, t_list *process);
+void							op_sti(t_vm *v, t_list *process);
+void							op_fork(t_vm *v, t_list *process);
+void							op_lld(t_vm *v, t_list *process);
+void							op_lldi(t_vm *v, t_list *process);
+void							op_lfork(t_vm *v, t_list *process);
+void							op_aff(t_vm *v, t_list *process);
+
+extern t_op						g_op_tab[17];
 
 #endif
