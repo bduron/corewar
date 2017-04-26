@@ -6,7 +6,7 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#              #
-#    Updated: 2017/04/26 13:09:08 by kcosta           ###   ########.fr        #
+#    Updated: 2017/04/26 13:46:31 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,9 +99,11 @@ CORE_SRCS		:= $(addprefix $(CORE_PATH), $(CORE_SRCS_FILES))
 # ============================== #
 
 # ========== Objects =========== #
-OBJS_PATH		:= objs/
-ASM_OBJS		:= $(addprefix $(OBJS_PATH), $(ASM_SRCS_FILES:.c=.o))
-CORE_OBJS 		:= $(addprefix $(OBJS_PATH), $(CORE_SRCS_FILES:.c=.o))
+OBJS_PATH			:= objs/
+ASM_OBJS_PATH		:= objs/asm/
+CORE_OBJS_PATH		:= objs/corewar/
+ASM_OBJS		:= $(addprefix $(ASM_OBJS_PATH), $(ASM_SRCS_FILES:.c=.o))
+CORE_OBJS 		:= $(addprefix $(CORE_OBJS_PATH), $(CORE_SRCS_FILES:.c=.o))
 # ============================== #
 
 # ========== Includes ========== #
@@ -124,12 +126,14 @@ all: libft $(ASM) $(COREWAR)
 libft:
 	@make -C $(LIBFT_PATH)
 
-$(OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS)
+$(ASM_OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@mkdir $(ASM_OBJS_PATH) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
 
-$(OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS)
+$(CORE_OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@mkdir $(CORE_OBJS_PATH) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
 
 $(ASM): $(ASM_OBJS)
