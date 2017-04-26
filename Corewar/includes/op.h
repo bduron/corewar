@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/23 20:50:02 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/26 13:10:37 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct					s_op
 	unsigned int				cycle;
 	char						*description;
 	unsigned char				octal;
-	unsigned char				dir_size;
+	unsigned char				label;
 	void						(*f)(t_vm *v, t_list *process);
 }								t_op;
 

@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner.h                                          :+:      :+:    :+:   */
+/*   deasm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/14 15:37:20 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/22 14:05:37 by kcosta           ###   ########.fr       */
+/*   Created: 2017/04/20 16:04:06 by kcosta            #+#    #+#             */
+/*   Updated: 2017/04/22 16:31:40 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCANNER_H
-# define SCANNER_H
+#ifndef DEASM_H
+# define DEASM_H
 
-# include <stdlib.h>
+# include "libft.h"
 
-# include "lexer.h"
-
-typedef struct		s_char
-{
-	char			c;
-	int				col;
-	int				line;
-}					t_char;
-
-int					lexical_error(t_token token, int ft_errnum);
-
-t_char				scanner(int fd);
+int		ft_decompile(char *input_name, char *output_name);
+int		rev_parser_manage_octal(int input, int output, unsigned int opcode);
+int		rev_parser_manage_other(int input, int output, unsigned int opcode);
 
 #endif

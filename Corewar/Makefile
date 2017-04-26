@@ -3,92 +3,148 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bduron <bduron@student.42.fr>              +#+  +:+       +#+         #
+#    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/02/07 13:02:54 by bduron            #+#    #+#              #
-#    Updated: 2017/04/23 21:16:28 by cpoulet          ###   ########.fr        #
+#    Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#              #
+#    Updated: 2017/04/26 13:09:08 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-COREWAR= corewar
+# =========== Colors =========== #
+CLEAR			:= "\033[2K"
+UP				:= "\033[A"
+EOC				:= "\033[0;0m"
+BLACK			:= "\033[0;30m"
+RED				:= "\033[0;31m"
+GREEN			:= "\033[0;32m"
+YELLOW			:= "\033[0;33m"
+BLUE			:= "\033[0;34m"
+PURPLE			:= "\033[0;35m"
+CYAN			:= "\033[0;36m"
+WHITE			:= "\033[0;37m"
+# ============================== #
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-LFLAGS	= -lncurses
-LIBFT = -Llibft -lft -lncurses -lpthread
+# ========== Editable ========== #
+ASM				:= asm
+COREWAR			:= corewar
+# ============================== #
 
-MKDIR= mkdir -p
-RM= rm -rf
+# ========== Standard ========== #
+CC				:= gcc
+FLAGS			:= -g -Wall -Wextra -Werror -fsanitize=address
+# ============================== #
 
-INC_DIR= includes/
+# =========== Files ============ #
+ASM_SRCS_FILES		:=	op.c			\
+						asm.c			\
+						deasm.c			\
+						asm_utils.c		\
+						lexer.c			\
+						label.c			\
+						label_init.c	\
+						label_utils.c	\
+						parser.c		\
+						parser_init.c	\
+						parser_header.c	\
+						scanner.c		\
+						fixed_io.c		\
+						deasm_manage.c
+CORE_SRCS_FILES		:=	corewar.c \
+						get_players.c \
+						get_players_errors.c \
+						vm_parsing.c \
+						vm_init_free.c \
+						load_arena.c \
+						vm_debbug.c \
+						vm_game.c \
+						operate.c \
+						operation_1.c \
+						operation_2.c \
+						operation_2b.c \
+						operation_3.c \
+						operation_4.c \
+						operation_4b.c \
+						op_shift.c \
+						op.c \
+						vw_draw_img.c \
+						vw_draw_life.c \
+						vw_draw_tools.c \
+						vw_init_win.c \
+						vw_init.c \
+						vw_maj_process.c \
+						vw_maj_win.c \
+						vw_th_anim.c \
+						vw_th_core.c \
+						vw_th_input.c \
+						vw_th_render.c \
+						vw_th_timer.c
+ASM_HEADER_FILES	:=	op.h		\
+						parser.h	\
+						scanner.h	\
+						lexer.h		\
+						label.h		\
+						asm.h		\
+						fixed_io.h	\
+						deasm.h
+CORE_HEADERS_FILES	:=	op.h		\
+			 			corewar.h	\
+						ft_fct_tab.h
+# ============================== #
 
-SRC= \
-corewar.c \
-get_players.c \
-get_players_errors.c \
-vm_parsing.c \
-vm_init_free.c \
-load_arena.c \
-vm_debbug.c \
-vm_game.c \
-operate.c \
-operation_1.c \
-operation_2.c \
-operation_2b.c \
-operation_3.c \
-operation_4.c \
-operation_4b.c \
-op_shift.c \
-op.c \
-vw_draw_img.c \
-vw_draw_life.c \
-vw_draw_tools.c \
-vw_init_win.c \
-vw_init.c \
-vw_maj_process.c \
-vw_maj_win.c \
-vw_th_anim.c \
-vw_th_core.c \
-vw_th_input.c \
-vw_th_render.c \
-vw_th_timer.c
+# ========== Sources =========== #
+ASM_PATH		:= srcs/asm/
+CORE_PATH		:= srcs/corewar/
+ASM_SRCS		:= $(addprefix $(ASM_PATH), $(ASM_SRCS_FILES))
+CORE_SRCS		:= $(addprefix $(CORE_PATH), $(CORE_SRCS_FILES))
+# ============================== #
 
-OBJ= $(SRC:.c=.o)
+# ========== Objects =========== #
+OBJS_PATH		:= objs/
+ASM_OBJS		:= $(addprefix $(OBJS_PATH), $(ASM_SRCS_FILES:.c=.o))
+CORE_OBJS 		:= $(addprefix $(OBJS_PATH), $(CORE_SRCS_FILES:.c=.o))
+# ============================== #
 
-VPATH= srcs/corewar
+# ========== Includes ========== #
+INCLUDES_PATH	:= includes/
+INCLUDES		:= -I $(INCLUDES_PATH)
+ASM_HEADERS		:= $(addprefix $(INCLUDES_PATH), $(ASM_HEADERS_FILES))
+CORE_HEADERS	:= $(addprefix $(INCLUDES_PATH), $(CORE_HEADERS_FILES))
+# ============================== #
 
-########################
-#    Makefile rules    #
-########################
+# ========== Libraries ========= #
+LIBFT_PATH		:= libft/
+LIBFT_INCLUDES	:= -I libft/includes
+LIBFT			:= -L $(LIBFT_PATH) -lft -lncurses -lpthread
+# ============================== #
 
-all: libft $(COREWAR)
+.PHONY: all libft clean fclean re
+
+all: libft $(ASM) $(COREWAR)
 
 libft:
-	@make -C libft
+	@make -C $(LIBFT_PATH)
 
-# Executables
+$(OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS)
+	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
 
-$(COREWAR): $(OBJ)
-	@$(CC) -o $@ $(CFLAGS) $(LFLAGS) $^ -I $(INC_DIR) $(LIBFT)
-	@echo "Compiling [$@]"
+$(OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS)
+	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
 
-# Object files
+$(ASM): $(ASM_OBJS)
+	$(CC) $(FLAGS) $(LIBFT) $(ASM_OBJS) -o $@
 
-$(OBJ): $(SRC)
-	@$(CC) -c $^ $(CFLAGS) -I $(INC_DIR)
-	@echo "Compiling [$^]"
-
-# Cleaning rules
+$(COREWAR): $(CORE_OBJS)
+	$(CC) $(FLAGS) $(LIBFT) $(CORE_OBJS) -o $@
 
 clean:
-	@rm -f $(OBJ)
-	@echo "Cleaning [$(OBJ)]"
+	@make -C $(LIBFT_PATH) clean &> /dev/null
+	@rm -fv $(ASM_OBJS) $(CORE_OBJS)
+	@rmdir $(OBJS_PATH) 2> /dev/null || true
 
 fclean: clean
-	@rm -rf $(COREWAR)
-	@make fclean -C libft
-	@echo "Cleaning [libft corewar]"
+	@make -C $(LIBFT_PATH) fclean &> /dev/null
+	@rm -fv $(ASM) $(COREWAR)
 
 re: fclean all
-
-.PHONY: clean fclean re libft

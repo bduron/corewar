@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner.h                                          :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/14 15:37:20 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/22 14:05:37 by kcosta           ###   ########.fr       */
+/*   Created: 2017/03/17 13:55:28 by kcosta            #+#    #+#             */
+/*   Updated: 2017/04/18 17:12:21 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCANNER_H
-# define SCANNER_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdlib.h>
-
-# include "lexer.h"
-
-typedef struct		s_char
+typedef struct		s_arg
 {
-	char			c;
-	int				col;
-	int				line;
-}					t_char;
+	char			type;
+	int				value;
+	int				size;
+}					t_arg;
 
-int					lexical_error(t_token token, int ft_errnum);
+int					parse_header(int in, int out, t_token *token, int *value);
+int					parse_opcode(int in, int out, t_token *token, int opcode);
 
-t_char				scanner(int fd);
+int					ft_compile(char *input_name, char *output_name);
 
 #endif

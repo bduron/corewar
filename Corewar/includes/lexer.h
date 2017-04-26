@@ -6,30 +6,27 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 17:07:55 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/17 17:14:59 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/26 13:09:46 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stdio.h>
-# include <fcntl.h>
-
-# include "libft.h"
-# include "op.h"
-# include "scanner.h"
-
 # define WHITESPACE_CHARS		"\t\n\v\f\r "
 # define SYMBOL_CHARS			"#:%,.-+"
+# define COMMENT_CHAR_2			';'
 
 typedef enum		e_types
 {
-	None,
+	Unknown = -1,
+	None = 0,
+	Comment,
 	Whitespace,
+	Newline,
 	Label,
 	Keyword,
-	Comment,
+	Register,
 	Symbol,
 	String,
 	Number
@@ -37,10 +34,10 @@ typedef enum		e_types
 
 typedef struct		s_token
 {
-	char			*cargo;
-	unsigned short	line_index;
-	unsigned short	col_index;
+	char			str[COMMENT_LENGTH + 1];
 	t_types			type;
+	int				col;
+	int				line;
 }					t_token;
 
 t_token				lexer(int fd);

@@ -15,3 +15,6 @@ http://parsingintro.sourceforge.net/
 
 How to write a simple assembler :
 http://www1.idc.ac.il/tecs/book/chapter%2006.pdf
+
+LL and LR Parsing Demystified :
+http://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html

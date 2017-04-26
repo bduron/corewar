@@ -6,60 +6,80 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/02/09 15:44:30 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/20 18:04:19 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
 #include "asm.h"
-#include "libft.h"
 
-static int	ft_error(char *msg, int ft_errnum)
+int				label_error(char *str, int ft_errnum)
 {
-	ft_putendl_fd(msg, 2);
+	ft_putstr("No such label ");
+	ft_putstr(str);
+	ft_putstr(" while attempting to dereference token \":");
+	ft_putstr(str);
+	ft_putendl("\"");
 	return (ft_errnum);
 }
 
-static char	*ft_check_file(char *filename)
+static char		*ft_rev_check_file(char *filename)
 {
 	char	*extension;
 	char	*output;
 
 	output = NULL;
-	extension = ft_strchr(filename, '.');
+	extension = ft_strrchr(filename, '.');
+	if (!extension)
+		return (NULL);
+	if (ft_strcmp(extension, ".cor"))
+		return (NULL);
+	output = ft_strnew(extension - filename + 2);
+	ft_strncpy(output, filename, extension - filename + 1);
+	ft_strncpy(ft_strrchr(output, '.') + 1, "s", 1);
+	return (output);
+}
+
+static char		*ft_check_file(char *filename)
+{
+	char	*extension;
+	char	*output;
+
+	output = NULL;
+	extension = ft_strrchr(filename, '.');
 	if (!extension)
 		return (NULL);
 	if (ft_strcmp(extension, ".s"))
 		return (NULL);
 	output = ft_strnew(extension - filename + 4);
 	ft_strncpy(output, filename, extension - filename + 1);
-	ft_strncpy(ft_strchr(output, '.') + 1, "cor", 3);
+	ft_strncpy(ft_strrchr(output, '.') + 1, "cor", 3);
 	return (output);
 }
 
-static int	ft_compile(char *in_name, char *out_name)
-{
-	int		input;
-	int		output;
-
-	if ((input = open(in_name, O_RDONLY)) < 0)
-		return (1);
-	if ((output = open(out_name, O_WRONLY | O_CREAT, 0644)) < 0)
-		return (1);
-	write(output, (int[4]){0x01, 0x02, 0x03, 0x04}, sizeof(int[4]));
-	close(input);
-	close(output);
-	return (0);
-}
-
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char	*output;
+	int		ret;
 
-	if (argc != 2)
-		return (ft_error("usage: ./asm champion.s", 1));
-	if (!(output = ft_check_file(argv[1])))
-		return (ft_error("Invalid file\nusage: ./asm champion.s", 1));
-	if (ft_compile(argv[1], output))
-		return (ft_error(strerror(errno), 2));
+	if (argc < 2 || argc > 3)
+		return (ft_error("usage: ./asm [-d champion.cor] | champion.s", 1));
+	if (!ft_strcmp(argv[1], "-d"))
+	{
+		if (!(output = ft_rev_check_file(argv[2])))
+			return (ft_error("Can't read source file\n", 1));
+		if ((ret = ft_decompile(argv[2], output)))
+			return (ret);
+		ft_putstr("Writing output program to ");
+		ft_putendl(output);
+	}
+	else
+	{
+		if (!(output = ft_check_file(argv[1])))
+			return (ft_error("Can't read source file\n", 1));
+		if ((ret = ft_compile(argv[1], output)))
+			return (ret);
+		ft_putstr("Writing output program to ");
+		ft_putendl(output);
+	}
+	return (0);
 }

@@ -6,47 +6,38 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/14 15:52:23 by kcosta            #+#    #+#             */
-/*   Updated: 2017/03/16 16:02:57 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/22 14:03:56 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scanner.h"
+#include "asm.h"
 
-/*int					main(int argc, char **argv)
+int						lexical_error(t_token token, int ft_errnum)
 {
-	t_character		character;
-	int				fd;
-	if (argc != 2)
-		return (1);
-	if ((fd = open(argv[1], O_RDONLY)) < 0)
-		return (2);
-	while (1)
-	{
-		character = scanner(fd);
-		printf("%5d\t%5d\t%5d\t%c\n", character.source_index, character.line_index, character.col_index, character.cargo);
-		if (character.cargo == 0)
-			return (0);
-	}
-}*/
+	ft_putstr("Lexical error at [");
+	ft_putnbr(token.line);
+	ft_putstr(":");
+	ft_putnbr(token.col);
+	ft_putendl("]");
+	return (ft_errnum);
+}
 
-t_character		scanner(int fd)
+t_char					scanner(int fd)
 {
-	static unsigned short	source_index = -1;
-	static unsigned short	line_index = 0;
-	static unsigned short	col_index = -1;
-	static char				c = 0;
-	t_character				character;
+	static int			col = 0;
+	static int			line = 1;
+	char				c;
 
-	source_index++;
-	if (c == '\n')
-	{
-		line_index++;
-		col_index = -1;
-	}
-	col_index++;
+	col++;
 	if (read(fd, &c, 1) > 0)
-		character = (t_character){c, source_index, line_index, col_index};
+	{
+		if (c == '\n')
+		{
+			col = 0;
+			line++;
+		}
+		return ((t_char){c, col, line});
+	}
 	else
-		character = (t_character){-1, source_index, line_index, col_index};
-	return (character);
+		return ((t_char){-1, col, line});
 }
