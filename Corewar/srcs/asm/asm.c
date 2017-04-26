@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/20 18:04:19 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/26 22:56:27 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int				main(int argc, char **argv)
 		return (ft_error("usage: ./asm [-d champion.cor] | champion.s", 1));
 	if (!ft_strcmp(argv[1], "-d"))
 	{
+		if (argc != 3)
+			return (ft_error("usage: ./asm [-d champion.cor] | champion.s", 1));
 		if (!(output = ft_rev_check_file(argv[2])))
 			return (ft_error("Can't read source file\n", 1));
 		if ((ret = ft_decompile(argv[2], output)))
 			return (ret);
-		ft_putstr("Writing output program to ");
-		ft_putendl(output);
 	}
 	else
 	{
@@ -78,8 +78,8 @@ int				main(int argc, char **argv)
 			return (ft_error("Can't read source file\n", 1));
 		if ((ret = ft_compile(argv[1], output)))
 			return (ret);
-		ft_putstr("Writing output program to ");
-		ft_putendl(output);
 	}
+	ft_putstr("Writing output program to ");
+	ft_putendl(output);
 	return (0);
 }
