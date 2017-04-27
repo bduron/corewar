@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 15:09:59 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/25 21:05:26 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/27 12:56:52 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parse_opt_n(int argc, char **argv, t_vm *v, int *i)
 {
 	char	*c;
 
-	if (*i + 1 < argc && (ft_isdigitstr(argv[*i + 1])))
+	if (*i + 1 < argc && (ft_isdigitstr(argv[*i + 1])) && *i + 2 < argc)
 	{
 		if ((c = ft_strstr(argv[*i + 2], ".cor")) && c != argv[*i + 2] && !c[4])
 		{
@@ -83,12 +83,12 @@ void	parse_opt(int argc, char **argv, t_vm *v)
 	}
 }
 
-/* 
+/*
 ** void	parse_opt(int argc, char **argv, t_vm *v)
 ** {
 ** 	int		i;
 ** 	char	*c;
-** 
+**
 ** 	i = 1;
 ** 	while (i < argc)
 ** 	{
