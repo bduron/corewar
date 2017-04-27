@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigitstr.c                                    :+:      :+:    :+:   */
+/*   ft_lstinttab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bduron <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/09 18:00:24 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/23 16:55:42 by bduron           ###   ########.fr       */
+/*   Created: 2017/04/27 14:27:58 by kcosta            #+#    #+#             */
+/*   Updated: 2017/04/27 14:30:04 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigitstr(char *s)
+int			*ft_lstinttab(t_list *alst)
 {
-	if (!s)
-		return (0);
-	while (*s == ' ')
-		s++;
-	if (*s == '-')
-		s++;
-	while (*s)
+	int		*tab;
+	int		len;
+	int		i;
+
+	if (!alst)
+		return (NULL);
+	len = ft_lstlen(alst);
+	tab = malloc(sizeof(int) * len);
+	i = 0;
+	while (i < len)
 	{
-		if (ft_isdigit(*s) || *s == ' ')
-			s++;
-		else 
-			break;
+		tab[i++] = *(int *)(alst->content);
+		alst = alst->next;
 	}
-	return ((*s == '\0') ? 1 : 0);
+	return (tab);
 }

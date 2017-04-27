@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulet <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 16:19:31 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/22 15:08:30 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/27 14:26:02 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,41 +41,41 @@
 # define WHT	"\x1B[37m"
 # define EOC	"\x1B[0m"
 
-typedef struct	s_form
+typedef struct		s_form
 {
-	char		minus;
-	char		plus;
-	char		space;
-	char		zero;
-	char		hash;
-	int			width;
-	int			pre;
-	int			preflag;
-	int			length;
-	int			nul;
-	int			apo;
-	int			dolls;
-}				t_form;
+	char			minus;
+	char			plus;
+	char			space;
+	char			zero;
+	char			hash;
+	int				width;
+	int				pre;
+	int				preflag;
+	int				length;
+	int				nul;
+	int				apo;
+	int				dolls;
+}					t_form;
 
-typedef struct	s_data
+typedef struct		s_data
 {
-	int			buff;
-	char		buffer[BUFF];
-	int			index;
-	char		field;
-	int			length;
-	int			error;
-	int			fd;
-	va_list		ap_cpy;
-	va_list		ap_svg;
-	char		*sprintf;
-}				t_data;
+	int				buff;
+	char			buffer[BUFF];
+	int				index;
+	char			field;
+	int				length;
+	int				error;
+	int				fd;
+	va_list			ap_cpy;
+	va_list			ap_svg;
+	char			*sprintf;
+}					t_data;
 
-typedef struct	s_fct
+typedef struct		s_fct
 {
-	char		c;
-	int			(*f)(va_list ap, t_form* form, t_data* data);
-}				t_fct;
+	char			c;
+	int				(*f)(va_list ap, t_form* form, t_data* data);
+}					t_fct;
 
 int					ft_printf(char *fmt, ...);
 int					ft_dprintf(int fd, char *fmt, ...);
@@ -104,7 +104,8 @@ void				dolls(t_form *form, char **str);
 void				lst_arg(t_data *data, int i);
 wchar_t				unicode(wchar_t wc, t_data *data);
 void				fwp_int(long long nb, t_form *form, t_data *data);
-void				fwp_u_int(unsigned long long nb, t_form *form, t_data *data);
+void				fwp_u_int(unsigned long long nb, t_form *form,
+															t_data *data);
 void				fwp_bin(unsigned long nb, t_form *form, t_data *data);
 void				fwp_oct(unsigned long nb, t_form *form, t_data *data);
 void				fwp_hex(unsigned long long nb, t_form *form, t_data *data);
