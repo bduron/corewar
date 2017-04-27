@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 15:09:59 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/27 12:56:52 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/27 14:46:39 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void	parse_opt(int argc, char **argv, t_vm *v)
 			parse_opt_dump(argc, argv, v, &i);
 		else if ((c = ft_strstr(argv[i], ".cor")) && c != argv[i] && !c[4])
 			get_player(argv, i, v);
- 		else if (!ft_strcmp("-n", argv[i]))
+		else if (!ft_strcmp("-n", argv[i]))
 			parse_opt_n(argc, argv, v, &i);
 		else
- 			xerror("Error: invalid parameters", -1);
+			xerror("Error: invalid parameters", -1);
 		i++;
 	}
 }
@@ -119,7 +119,8 @@ void	parse_opt(int argc, char **argv, t_vm *v)
 ** 		{
 ** 			if (i + 1 < argc && (ft_isdigitstr(argv[i + 1])))
 ** 			{
-** 				if ((c = ft_strstr(argv[i + 2], ".cor")) && c != argv[i + 2] && !c[4])
+** 				if ((c = ft_strstr(argv[i + 2], ".cor")) && c != argv[i + 2]
+**					&& !c[4])
 ** 				{
 ** 					get_player_custom(argv, i, v);
 ** 					i += 2;

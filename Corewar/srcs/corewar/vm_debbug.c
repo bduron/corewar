@@ -6,16 +6,16 @@
 /*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:59:57 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/25 18:17:04 by bduron           ###   ########.fr       */
+/*   Updated: 2017/04/27 14:46:50 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-#define RES "\x1B[0m"
 
-void print_arena(t_vm *v)
+void	print_arena(t_vm *v)
 {
 	int i;
+
 	i = 0;
 	while (i < MEM_SIZE)
 	{
@@ -30,6 +30,7 @@ void print_arena(t_vm *v)
 	}
 	ft_printf(" \n");
 }
+
 /*
 ** void print_processes(t_vm *v)
 ** {
@@ -41,11 +42,16 @@ void print_arena(t_vm *v)
 ** 	while (tmp)
 ** 	{
 ** 		ft_printf("\n============ %d ============\n", i);
-** 		ft_printf("|_carry:                  %d\n", ((t_process *)tmp->content)->carry);
-** 		ft_printf("|_pc:                     %d\n", ((t_process *)tmp->content)->pc);
-** 		ft_printf("|_live count:             %d\n", ((t_process *)tmp->content)->live_count);
-** 		ft_printf("|_op cast:                %d\n", ((t_process *)tmp->content)->op_cast);
-** 		ft_printf("| r1| r2| r3| r4| r5| r6| r7| r8| r9|r10|r11|r12|r13|r14|r15|r16|\n");
+** 		ft_printf("|_carry:                  %d\n",
+**			((t_process *)tmp->content)->carry);
+** 		ft_printf("|_pc:                     %d\n",
+**			((t_process *)tmp->content)->pc);
+** 		ft_printf("|_live count:             %d\n",
+**			((t_process *)tmp->content)->live_count);
+** 		ft_printf("|_op cast:                %d\n",
+**			((t_process *)tmp->content)->op_cast);
+** 		ft_printf("| r1| r2| r3| r4| r5| r6| r7| r8|
+**			r9|r10|r11|r12|r13|r14|r15|r16|\n");
 ** 		for (int j = 0; j < REG_NUMBER; j++)
 ** 			ft_printf("|% 3d", ((t_process *)tmp->content)->reg[j]);
 ** 		ft_printf("|\n\n");
@@ -65,7 +71,8 @@ void print_arena(t_vm *v)
 ** 	j = 0;
 ** 	while (j <= p.prog_len)
 ** 	{
-** 		(j == p.prog_len) ? ft_printf("%*c", (((16 - j % 16) * 5) / 2), ' ') : 0;
+** 		(j == p.prog_len) ? ft_printf("%*c",
+**			(((16 - j % 16) * 5) / 2), ' ') : 0;
 ** 		if (j % 16 == 0 || p.prog_len == j)
 ** 		{
 ** 			ft_printf("  ");

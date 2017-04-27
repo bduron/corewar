@@ -6,7 +6,7 @@
 /*   By: cpoulet <cpoulet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 12:15:13 by cpoulet           #+#    #+#             */
-/*   Updated: 2017/04/23 17:09:38 by cpoulet          ###   ########.fr       */
+/*   Updated: 2017/04/27 14:47:50 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	load_processes(t_vm *v)
 		((t_process *)v->process_lst->content)->op_cast = 0;
 		((t_process *)v->process_lst->content)->live_count = 0;
 		((t_process *)v->process_lst->content)->live_since = 0;
-		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0, REG_NUMBER * sizeof(int)); //PROBLEME NORMINETTE ICI
+		ft_memset(&(((t_process *)v->process_lst->content)->reg), 0,
+			(REG_NUMBER) * sizeof(int));
 		((t_process *)v->process_lst->content)->reg[0] = v->p[i].nplayer;
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				i + 1, v->p[i].prog_len, v->p[i].name, v->p[i].comment);

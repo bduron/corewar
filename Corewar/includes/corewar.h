@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/27 14:35:01 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/27 14:45:07 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define LIVE_SINCE	(((t_process *)process->content)->live_since)
 # define BCTD		(v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0)
 # define B_OCT		(ARENA(PC + 1))
+
+# define RES "\x1B[0m"
 
 # define OCT_03(x)	(x & 0b11)
 # define OCT_02(x)	((x & 0b1100) >> 2)
