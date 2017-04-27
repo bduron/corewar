@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/26 13:10:37 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/27 14:40:48 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define MAX_CHECKS				10
 
 typedef unsigned char			t_arg_type;
-typedef unsigned char			u_char;
+typedef unsigned char			t_uchar;
 
 # define T_REG					1
 # define T_DIR					2
