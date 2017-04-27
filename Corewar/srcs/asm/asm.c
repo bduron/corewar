@@ -6,11 +6,18 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/27 13:07:32 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/27 13:35:37 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
+
+static int		ft_clean(int ret)
+{
+	ft_lstdel(&(getlabels()->label), &ft_delete_label);
+	ft_lstdel(&(getlabels_use()->label), &ft_delete_label);
+	return (ret);
+}
 
 int				label_error(char *str, int ft_errnum)
 {
@@ -70,17 +77,17 @@ int				main(int argc, char **argv)
 		if (!(output = ft_rev_check_file(argv[2])))
 			return (ft_error("Can't read source file\n", 1));
 		if ((ret = ft_decompile(argv[2], output)))
-			return (ret);
+			return (ft_clean(ret));
 	}
 	else
 	{
 		if (!(output = ft_check_file(argv[1])))
 			return (ft_error("Can't read source file\n", 1));
 		if ((ret = ft_compile(argv[1], output)))
-			return (ret);
+			return (ft_clean(ret));
 	}
 	ft_putstr("Writing output program to ");
 	ft_putendl(output);
-	free(output);
-	return (0);
+	ft_strdel(&output);
+	return (ft_clean(0));
 }

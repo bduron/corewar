@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vw_init_win.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:12:32 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 10:35:07 by wolrajhti        ###   ########.fr       */
+/*   Updated: 2017/04/27 13:25:47 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	create_newwin(int arg[4], char *title,
 	*win_box = newwin(arg[0], arg[1], arg[2], arg[3]);
 	box(*win_box, 0, 0);
 	*win_content = derwin(*win_box, arg[0] - 2, arg[1] - 4, 1, 2);
-	len = strlen(title);
+	len = ft_strlen(title);
 	wmove(*win_box, 0, (arg[1] - len) / 2 - 3);
 	wprintw(*win_box, " - %s - ", title);
 	wrefresh(*win_box);
