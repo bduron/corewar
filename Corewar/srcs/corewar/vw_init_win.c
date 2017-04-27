@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vw_init_win.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 10:12:32 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/27 13:25:47 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/27 14:39:57 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	create_newwin(int arg[4], char *title,
 			WINDOW **win_content, WINDOW **win_box)
 {
-	// WINDOW	*win_box;
-	// WINDOW	*win_content;
 	size_t	len;
 
 	*win_box = newwin(arg[0], arg[1], arg[2], arg[3]);
@@ -27,7 +25,6 @@ void	create_newwin(int arg[4], char *title,
 	wprintw(*win_box, " - %s - ", title);
 	wrefresh(*win_box);
 	wrefresh(*win_content);
-	// return (win_content);
 }
 
 void	init_infos(t_viewer *v)

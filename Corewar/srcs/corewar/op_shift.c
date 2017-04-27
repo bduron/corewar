@@ -36,10 +36,10 @@ void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr)
 	}
 }
 
-int		check_arg(u_char arg, u_char n, u_char arg_nb)
+int		check_arg(t_uchar arg, t_uchar n, t_uchar arg_nb)
 {
-	u_char	n00;
-	u_char	n01;
+	t_uchar	n00;
+	t_uchar	n01;
 	int		shift;
 	int		k;
 
@@ -57,7 +57,7 @@ int		check_arg(u_char arg, u_char n, u_char arg_nb)
 	return (1);
 }
 
-int		octal_shift(u_char n, u_char label_size, u_char arg_nb)
+int		octal_shift(t_uchar n, t_uchar label_size, t_uchar arg_nb)
 {
 	int shift;
 

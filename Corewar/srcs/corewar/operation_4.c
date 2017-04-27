@@ -14,9 +14,9 @@
 
 void	op_ldi(t_vm *v, t_list *process)
 {
-	u_char	arg_nb;
-	u_char	type;
-	u_char	shift;
+	t_uchar	arg_nb;
+	t_uchar	type;
+	t_uchar	shift;
 	int		val[3];
 
 	arg_nb = 3;
@@ -42,7 +42,7 @@ void	op_ldi(t_vm *v, t_list *process)
 
 void	op_lld(t_vm *v, t_list *process)
 {
-	u_char	arg_nb;
+	t_uchar	arg_nb;
 	int		shift;
 
 	arg_nb = 2;
@@ -68,9 +68,9 @@ void	op_lld(t_vm *v, t_list *process)
 
 void	op_lldi(t_vm *v, t_list *process)
 {
-	u_char	arg_nb;
-	u_char	type;
-	u_char	shift;
+	t_uchar	arg_nb;
+	t_uchar	type;
+	t_uchar	shift;
 	int		val[3];
 
 	arg_nb = 3;
@@ -96,10 +96,10 @@ void	op_lldi(t_vm *v, t_list *process)
 
 void	op_sti(t_vm *v, t_list *process)
 {
-	u_char	arg_nb;
-	u_char	shift;
+	t_uchar	arg_nb;
+	t_uchar	shift;
 	int		val[3];
-	u_char	save;
+	t_uchar	save;
 
 	arg_nb = 3;
 	shift = 0;

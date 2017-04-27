@@ -12,10 +12,10 @@
 
 #include "corewar.h"
 
-int		get_ar(t_vm *v, t_list *process, u_char *shift, u_char type)
+int		get_ar(t_vm *v, t_list *process, t_uchar *shift, t_uchar type)
 {
 	int		ret;
-	u_char	label;
+	t_uchar	label;
 
 	label = type >> 2 ? 2 : 4;
 	if ((type & 0b11) == 1)

@@ -65,8 +65,8 @@ void	op_sub(t_vm *v, t_list *process)
 void	op_and(t_vm *v, t_list *process)
 {
 	int		nb_arg;
-	u_char	type;
-	u_char	shift;
+	t_uchar	type;
+	t_uchar	shift;
 	int		val[3];
 
 	nb_arg = 3;
@@ -93,8 +93,8 @@ void	op_and(t_vm *v, t_list *process)
 void	op_or(t_vm *v, t_list *process)
 {
 	int		nb_arg;
-	u_char	type;
-	u_char	shift;
+	t_uchar	type;
+	t_uchar	shift;
 	int		val[3];
 
 	nb_arg = 3;
@@ -121,8 +121,8 @@ void	op_or(t_vm *v, t_list *process)
 void	op_xor(t_vm *v, t_list *process)
 {
 	int		nb_arg;
-	u_char	type;
-	u_char	shift;
+	t_uchar	type;
+	t_uchar	shift;
 	int		val[3];
 
 	nb_arg = 3;

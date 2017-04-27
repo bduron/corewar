@@ -61,7 +61,7 @@ void	op_ld(t_vm *v, t_list *process)
 void	op_st(t_vm *v, t_list *process)
 {
 	int				shift;
-	u_char			tmp;
+	t_uchar			tmp;
 
 	tmp = B_OCT;
 	if (OCT_00(B_OCT) == 1 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
@@ -91,7 +91,7 @@ void	op_aff(t_vm *v, t_list *process)
 {
 	if (OCT_00(B_OCT) == 1 && ARENA(PC + 2) >= 1 && ARENA(PC + 2) <= 16)
 		if (v->display_mode == 5 && (v->verbose_param & FLAG_VERBOSE_AFF))
-			ft_printf("Aff: %d\n", (u_char)REG[ARENA(PC + 2) - 1]);
+			ft_printf("Aff: %d\n", (t_uchar)REG[ARENA(PC + 2) - 1]);
 	if (DISPLAY && (v->verbose_param & FLAG_VERBOSE_PCMOVE))
 		print_adv(v, process, octal_shift(B_OCT, 4, 1));
 	PC = (PC + octal_shift(B_OCT, 4, 1)) % MEM_SIZE;
