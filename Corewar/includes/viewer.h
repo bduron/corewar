@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   viewer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboutelo <pboutelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 17:42:21 by pboutelo          #+#    #+#             */
-/*   Updated: 2017/04/23 16:24:24 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/27 14:47:32 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// LIVE % MEM_SIZE
-
 #ifndef VIEWER_H
 # define VIEWER_H
+
 # include <libc.h>
 # include <locale.h>
 # include <ncurses.h>

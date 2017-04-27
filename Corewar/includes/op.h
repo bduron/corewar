@@ -6,13 +6,15 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:11:06 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/27 14:40:48 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/27 14:44:10 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OP_H
 # define OP_H
+
 # include "libft.h"
+
 /*
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
