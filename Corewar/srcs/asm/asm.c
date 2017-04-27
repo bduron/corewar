@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/09 13:14:44 by kcosta            #+#    #+#             */
-/*   Updated: 2017/04/26 22:56:27 by kcosta           ###   ########.fr       */
+/*   Updated: 2017/04/27 13:07:32 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int				main(int argc, char **argv)
 	}
 	ft_putstr("Writing output program to ");
 	ft_putendl(output);
+	free(output);
 	return (0);
 }

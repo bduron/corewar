@@ -6,7 +6,7 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#              #
-#    Updated: 2017/04/26 13:46:31 by kcosta           ###   ########.fr        #
+#    Updated: 2017/04/27 12:59:59 by pboutelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ COREWAR			:= corewar
 
 # ========== Standard ========== #
 CC				:= gcc
-FLAGS			:= -g -Wall -Wextra -Werror -fsanitize=address
+FLAGS			:= -g -Wall -Wextra -Werror
 # ============================== #
 
 # =========== Files ============ #
