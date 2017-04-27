@@ -6,7 +6,7 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 10:00:00 by kcosta            #+#    #+#              #
-#    Updated: 2017/04/27 14:31:43 by kcosta           ###   ########.fr        #
+#    Updated: 2017/04/27 14:32:59 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,7 +156,7 @@ HEADERS			:= $(addprefix $(INCLUDES_PATH), $(HEADERS_FILES))
 
 all: $(NAME)
 
-$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(HEADER)
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(HEADERS)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
 	@mkdir $(OBJS_DIRS) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<

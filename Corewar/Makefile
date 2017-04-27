@@ -6,7 +6,7 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/07 12:10:08 by kcosta            #+#    #+#              #
-#    Updated: 2017/04/27 12:59:59 by pboutelo         ###   ########.fr        #
+#    Updated: 2017/04/27 14:37:25 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ CORE_SRCS_FILES		:=	corewar.c \
 						vw_th_input.c \
 						vw_th_render.c \
 						vw_th_timer.c
-ASM_HEADER_FILES	:=	op.h		\
+ASM_HEADERS_FILES	:=	op.h		\
 						parser.h	\
 						scanner.h	\
 						lexer.h		\
@@ -126,12 +126,12 @@ all: libft $(ASM) $(COREWAR)
 libft:
 	@make -C $(LIBFT_PATH)
 
-$(ASM_OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS)
+$(ASM_OBJS_PATH)%.o: $(ASM_PATH)%.c $(ASM_HEADERS) $(LIBFT_PATH)libft.a
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
 	@mkdir $(ASM_OBJS_PATH) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
 
-$(CORE_OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS)
+$(CORE_OBJS_PATH)%.o: $(CORE_PATH)%.c $(CORE_HEADERS) $(LIBFT_PATH)libft.a
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
 	@mkdir $(CORE_OBJS_PATH) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) $(LIBFT_INCLUDES) -o $@ -c $<
