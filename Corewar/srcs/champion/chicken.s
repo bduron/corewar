@@ -10,14 +10,14 @@
 #MOD 200: 1879310536-165
 #MOD 300: 1879310636-265
 #MOD 350: 1879310686-315
-#MOD 388: 1879310724-353
+#MOD 388: 1879310724-353 anti_zork
 #MOD 400: 1879310736-365
 #MOD 425: 1879310761-390
 #MOD 450: 1879310786-415
 #MOD 465: 1879310801-430 MAX_DISTANCE
 
 .name		"mychicken"
-.comment	"one is good, two is better..."
+.comment	"jump, jump, jump..."
 
 		ld	116, r16
 		sti r1, %:live, %1
