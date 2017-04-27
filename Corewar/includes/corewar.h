@@ -6,7 +6,7 @@
 /*   By: bduron <bduron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:16:21 by bduron            #+#    #+#             */
-/*   Updated: 2017/04/27 14:45:07 by pboutelo         ###   ########.fr       */
+/*   Updated: 2017/04/27 14:54:04 by pboutelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define OP_CAST	(((t_process *)process->content)->op_cast)
 # define LIVE		(((t_process *)process->content)->live_count)
 # define LIVE_SINCE	(((t_process *)process->content)->live_since)
-# define BCTD		(v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0)
+# define BCTD	(v->ncycle_mod % v->cycle_to_die == 0 && v->ncycle_mod != 0)
 # define B_OCT		(ARENA(PC + 1))
 
 # define RES "\x1B[0m"
@@ -72,8 +72,8 @@ typedef struct		s_process
 	int				reg[REG_NUMBER];
 	int				pc;
 	int				op_cast;
-	int				live_count;	// count emitted lives between CYCLE_TO_DIE
-	int				live_since;	// number of cycles between last live and death
+	int				live_count;
+	int				live_since;
 	unsigned char	next_op;
 }					t_process;
 
@@ -86,7 +86,7 @@ typedef struct		s_player
 	int				prog_len;
 	int				exec_magic;
 	int				pc_address;
-	int 			nblive;
+	int				nblive;
 	int				last_live_cycle;
 }					t_player;
 
@@ -103,11 +103,11 @@ typedef struct		s_vm
 	int				last_live_id;
 	int				ncycle;
 	int				ncycle_mod;
-	int				nlive_bctd; // lives emitted bctd
-	int				cycle_to_die; // Decrement under certain conditions
-	int				ncheck; // nb ctd in a row w/o decrementing ctd
+	int				nlive_bctd;
+	int				cycle_to_die;
+	int				ncheck;
 	int				is_ctd_modified;
-	int				display_mode; // pboutelo: 1: raw, 2: interactive
+	int				display_mode;
 	t_viewer		*v;
 	unsigned int	opt_flags;
 	int				dump_param;
@@ -115,50 +115,55 @@ typedef struct		s_vm
 	int				verbose_param;
 }					t_vm;
 
-void	print_help();
-void	parse_opt(int argc, char **argv, t_vm *v);
+void				print_help();
+void				parse_opt(int argc, char **argv, t_vm *v);
 
-void	is_player(t_vm *v, int live);
-void	save_player(char *file, t_vm *v, int i, int num);
-void	get_player(char **argv, int i, t_vm *v);
-void	get_player_custom(char **argv, int i, t_vm *v);
-int		is_corewar_execmagic(char *file);
-int		get_prog_size(char *file);
-int		is_valid_player(char *file);
-int		is_cor_file(char *file);
-void	load_arena(t_vm *v);
-void	load_champions(t_vm *v);
-void	load_processes(t_vm *v);
-void	vm_init(t_vm *v);
-t_list	*kill_head_lst(t_vm *v, t_list *process);
-t_list	*kill_elem_lst(t_vm *v, t_list *process, t_list **previous);
-void	exe_and(t_vm *v, t_list *process, int val[3]);
-void	exe_or(t_vm *v, t_list *process, int val[3]);
-void	exe_xor(t_vm *v, t_list *process, int val[3]);
-void	exe_lld(t_vm *v, t_list *process, int shift);
-void	exe_ldi(t_vm *v, t_list *process, int val[3]);
-void	exe_lldi(t_vm *v, t_list *process, int val[3]);
-void	exe_sti(t_vm *v, t_list *process, int val[3]);
+void				is_player(t_vm *v, int live);
+void				save_player(char *file, t_vm *v, int i, int num);
+void				get_player(char **argv, int i, t_vm *v);
+void				get_player_custom(char **argv, int i, t_vm *v);
+int					is_corewar_execmagic(char *file);
+int					get_prog_size(char *file);
+int					is_valid_player(char *file);
+int					is_cor_file(char *file);
+void				load_arena(t_vm *v);
+void				load_champions(t_vm *v);
+void				load_processes(t_vm *v);
+void				vm_init(t_vm *v);
+t_list				*kill_head_lst(t_vm *v, t_list *process);
+t_list				*kill_elem_lst(t_vm *v, t_list *process,
+														t_list **previous);
+void				exe_and(t_vm *v, t_list *process, int val[3]);
+void				exe_or(t_vm *v, t_list *process, int val[3]);
+void				exe_xor(t_vm *v, t_list *process, int val[3]);
+void				exe_lld(t_vm *v, t_list *process, int shift);
+void				exe_ldi(t_vm *v, t_list *process, int val[3]);
+void				exe_lldi(t_vm *v, t_list *process, int val[3]);
+void				exe_sti(t_vm *v, t_list *process, int val[3]);
 
-void	print_adv(t_vm *v, t_list *process, int shift);
-void	update_vm(t_vm *v);
-void	run_game(t_vm *v);
-void	browse_processes_lst(t_vm *v);
-void	kill_processes_lst(t_vm *v);
-void	init_next_op(t_vm *v, t_list *process);
-void	print_reg(t_vm *v, t_list *process, unsigned int val, int addr);
-int		get_ar(t_vm *v, t_list *process, t_uchar *shift, t_uchar type);
-int		octal_shift(t_uchar n, t_uchar label_size, t_uchar arg_nb);
-int		reverse_bytes(t_vm *v, unsigned int pc, int nbytes);
-int		check_arg(t_uchar arg, t_uchar n, t_uchar arg_nb);
-void	add_process(t_vm *v, t_list *process, unsigned int son_pc);
+void				print_adv(t_vm *v, t_list *process, int shift);
+void				update_vm(t_vm *v);
+void				run_game(t_vm *v);
+void				browse_processes_lst(t_vm *v);
+void				kill_processes_lst(t_vm *v);
+void				init_next_op(t_vm *v, t_list *process);
+void				print_reg(t_vm *v, t_list *process,
+												unsigned int val, int addr);
+int					get_ar(t_vm *v, t_list *process,
+												t_uchar *shift, t_uchar type);
+int					octal_shift(t_uchar n, t_uchar label_size, t_uchar arg_nb);
+int					reverse_bytes(t_vm *v, unsigned int pc, int nbytes);
+int					check_arg(t_uchar arg, t_uchar n, t_uchar arg_nb);
+void				add_process(t_vm *v, t_list *process, unsigned int son_pc);
 
-void	xerror(char *error_msg, int error_id); // move to libft
+void				xerror(char *error_msg, int error_id);
 
-/*** debug ***/
-void dump(t_player p);
-void print_arena(t_vm *v);
-void test_print_v(t_vm *v);
-void print_processes(t_vm *v);
+/*
+** debug
+*/
+void				dump(t_player p);
+void				print_arena(t_vm *v);
+void				test_print_v(t_vm *v);
+void				print_processes(t_vm *v);
 
 #endif
